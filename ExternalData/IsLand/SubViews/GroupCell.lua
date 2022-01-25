@@ -84,7 +84,7 @@ end
 
 function SetUpCellId(startId, currentIndex, maxId)
     for i = 1, #CellPaths do
-		CellIds[i] = startId + i - 1
+		local id = startId + i - 1
 
         local text = LuaGo.Find(CellTextPaths[i])
         
@@ -92,26 +92,28 @@ function SetUpCellId(startId, currentIndex, maxId)
 
         local btn = LuaGo.Find(CellPaths[i])
 
+        btn.UnregisterButtonPressedCallback()
+
         btn.RegisterButtonPressedCallback(function ()
-		    IsLand.LuaCall_JoinCellView(CellIds[i])
+		    IsLand.LuaCall_JoinCellView(id)
         end)
 
         local obj = LuaGo.Find(CellCirclePaths[i])
 
         local obj2 = LuaGo.Find(CellPaths[i])
 
-        if CellIds[i] == currentIndex then
+        if id == currentIndex then
             obj.SetActive(true)
 
             IsLand.LuaCall_MoveToCell(btn)
 
             lockIcon.SetActive(false)
             text.SetActive(true)
-            text.SetText(CellIds[i])
+            text.SetText(id)
         else
             obj.SetActive(false)
 
-            if CellIds[i] > currentIndex then
+            if id > currentIndex then
                 obj2.SetSprite(LockSprite)
 
                 lockIcon.SetActive(true)
@@ -121,13 +123,13 @@ function SetUpCellId(startId, currentIndex, maxId)
 
                 lockIcon.SetActive(false)
                 text.SetActive(true)
-                text.SetText(CellIds[i])
+                text.SetText(id)
             end
         end
 
-        if CellIds[i] > maxId then
-            btn.SetActive(false)
-        end
+        --if CellIds[i] > maxId then
+            --btn.SetActive(false)
+        --end
     end
 end
 

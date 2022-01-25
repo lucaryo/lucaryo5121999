@@ -2,7 +2,7 @@ function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/IsLand/MapIsLand.prefab",
 		Config = "{\"planetPath\":\"Assets/PolygonSciFiSpace/Scenes/PlanetView_1.prefab\"}",
-		Anchor = "Cam",
+		Anchor = "CamScale",
 		AnchorPreset = "StretchAll",
 		SizeDelta = "{x: 0, y: 0}"
     }

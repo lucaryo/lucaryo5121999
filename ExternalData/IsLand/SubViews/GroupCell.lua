@@ -6,68 +6,68 @@
 end
 
 local CellPaths ={
-    "Cell_1",
-    "Cell_2",
-    "Cell_3",
-    "Cell_4",
-    "Cell_5",
-    "Cell_6",
-    "Cell_7",
-    "Cell_8",
-    "Cell_9",
-    "Cell_10"
+    "Group/Cell_1",
+    "Group/Cell_2",
+    "Group/Cell_3",
+    "Group/Cell_4",
+    "Group/Cell_5",
+    "Group/Cell_6",
+    "Group/Cell_7",
+    "Group/Cell_8",
+    "Group/Cell_9",
+    "Group/Cell_10"
 }
 
 local CellTextPaths ={
-    "Cell_1/Text",
-    "Cell_2/Text",
-    "Cell_3/Text",
-    "Cell_4/Text",
-    "Cell_5/Text",
-    "Cell_6/Text",
-    "Cell_7/Text",
-    "Cell_8/Text",
-    "Cell_9/Text",
-    "Cell_10/Text"
+    "Group/Cell_1/Text",
+    "Group/Cell_2/Text",
+    "Group/Cell_3/Text",
+    "Group/Cell_4/Text",
+    "Group/Cell_5/Text",
+    "Group/Cell_6/Text",
+    "Group/Cell_7/Text",
+    "Group/Cell_8/Text",
+    "Group/Cell_9/Text",
+    "Group/Cell_10/Text"
 }
 
 local CellCirclePaths ={
-    "Cell_1/CircleImg",
-    "Cell_2/CircleImg",
-    "Cell_3/CircleImg",
-    "Cell_4/CircleImg",
-    "Cell_5/CircleImg",
-    "Cell_6/CircleImg",
-    "Cell_7/CircleImg",
-    "Cell_8/CircleImg",
-    "Cell_9/CircleImg",
-    "Cell_10/CircleImg"
+    "Group/Cell_1/CircleImg",
+    "Group/Cell_2/CircleImg",
+    "Group/Cell_3/CircleImg",
+    "Group/Cell_4/CircleImg",
+    "Group/Cell_5/CircleImg",
+    "Group/Cell_6/CircleImg",
+    "Group/Cell_7/CircleImg",
+    "Group/Cell_8/CircleImg",
+    "Group/Cell_9/CircleImg",
+    "Group/Cell_10/CircleImg"
 }
 
 local CellLockIconPaths ={
-    "Cell_1/LockIcon",
-    "Cell_2/LockIcon",
-    "Cell_3/LockIcon",
-    "Cell_4/LockIcon",
-    "Cell_5/LockIcon",
-    "Cell_6/LockIcon",
-    "Cell_7/LockIcon",
-    "Cell_8/LockIcon",
-    "Cell_9/LockIcon",
-    "Cell_10/LockIcon"
+    "Group/Cell_1/LockIcon",
+    "Group/Cell_2/LockIcon",
+    "Group/Cell_3/LockIcon",
+    "Group/Cell_4/LockIcon",
+    "Group/Cell_5/LockIcon",
+    "Group/Cell_6/LockIcon",
+    "Group/Cell_7/LockIcon",
+    "Group/Cell_8/LockIcon",
+    "Group/Cell_9/LockIcon",
+    "Group/Cell_10/LockIcon"
 }
 
 local CellStarPaths ={
-    "Cell_1/Star_",
-    "Cell_2/Star_",
-    "Cell_3/Star_",
-    "Cell_4/Star_",
-    "Cell_5/Star_",
-    "Cell_6/Star_",
-    "Cell_7/Star_",
-    "Cell_8/Star_",
-    "Cell_9/Star_",
-    "Cell_10/Star_"
+    "Group/Cell_1/Star_",
+    "Group/Cell_2/Star_",
+    "Group/Cell_3/Star_",
+    "Group/Cell_4/Star_",
+    "Group/Cell_5/Star_",
+    "Group/Cell_6/Star_",
+    "Group/Cell_7/Star_",
+    "Group/Cell_8/Star_",
+    "Group/Cell_9/Star_",
+    "Group/Cell_10/Star_"
 }
 
 local CellIds ={}

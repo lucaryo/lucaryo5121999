@@ -125,6 +125,8 @@ function Refresh()
 	UpdateCurrency()
 
 	UpdateView()
+
+	UpdateSpriteBtnBackAndNext()
 end
 
 function UpdateCurrency()
@@ -141,6 +143,21 @@ end
 
 function ShowPopupNoInternet()
 	_popupNet.SetActive(true)
+end
+
+function UpdateSpriteBtnBackAndNext()
+	if Pvp.Model.Index + 2 > #_modeDes then
+		_btnNext.SetSprite("nextNotAllow")
+	else
+		_btnNext.SetSprite("nextAllow")
+	end
+
+	if Pvp.Model.Index < 1 then
+		_btnBack.SetSprite("backNotAllow")
+	else
+		_btnBack.SetSprite("backAllow")
+	end
+
 end
 
 function Hide()

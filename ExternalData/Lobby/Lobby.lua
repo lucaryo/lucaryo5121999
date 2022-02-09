@@ -70,7 +70,7 @@ end
 function SetupButtonPVP(btnPath)
 	local btn = LuaGo.Find(btnPath)
 	btn.RegisterButtonPressedCallback(function ()
-		Lobby.LuaCall_QuestionTest()
+		Lobby.LuaCall_JoinPvp()
     end)
 end
 

@@ -75,7 +75,7 @@ end
 function SetupButtonPVP(btnPath)
 	local btn = LuaGo.Find(btnPath)
 	btn.RegisterButtonPressedCallback(function ()
-		MainMenu.LuaCall_QuestionTest()
+		MainMenu.LuaCall_JoinPVP()
 		SetSelectColorButton(btnPath)
     end)
 end

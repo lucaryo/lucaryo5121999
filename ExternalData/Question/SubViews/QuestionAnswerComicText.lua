@@ -9,9 +9,11 @@ local _desImgInputField = "DesGroup/Input"
 
 local _txtInputField = "DesGroup/Input/TextArea/InputField"
 local _desImgBg = "DesGroup/GroupAnswer"
-local _desTxtPath = "DesGroup/des"
+local _desTitleImage = "DesGroup/ImageDes"
+local _desTxtPath = "DesGroup/ImageDes/des"
 local _desGroupPath = "DesGroup"
 local _text = nil;
+local _btnNextAnswerPath = "DesGroup/GameObject/correct/correct/btn_Next"
 local _desPathAnswer ={
 	"DesGroup/GroupAnswer/txtGroup1/answer_1",
 	"DesGroup/GroupAnswer/txtGroup1/answer_2",
@@ -52,10 +54,14 @@ function SetActiveUI(isActive)
 
 		local co = coroutine.create(function ()
 
-			
+			--Wait(3)
+			local objTitleDes = LuaGo.Find(_desTitleImage)
+			objTitleDes.DoFadeImage(1.0,0.75,objTitleDes)
+
 			local objText = LuaGo.Find(_desTxtPath)
 			objText.SetText("")
 			objText.SetTextDoTweenAnimation(_text,3.0,objText)
+
 			Wait(3)
 			local objBg = LuaGo.Find(_desImgBg)
 			objBg.DoFadeImage(1.0, 0.75, objBg)
@@ -70,6 +76,7 @@ function SetActiveUI(isActive)
 			objImgInput.DoFadeImage(1.0,0.76,objImgInput)
 			local objTextInput = LuaGo.Find(_txtInputField)
 			objTextInput.SetTextDoTweenAnimation("Text will appear here", 0.5,objTextInput)
+			objTextInput.SetTextOpacity(0.2)
 			Wait(0.25)
 			local btnCheck = LuaGo.Find(_checkBtnPath)
 			btnCheck.DoFadeImage(1.0,0.76,btnCheck)

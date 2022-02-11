@@ -128,7 +128,22 @@ local _pausePanelPath = "PopupGroup/PausePanel"
 local _endQuizitResetBtnPath = "PopupGroup/EndPanelQuizit/ButtonGroup/ResetBtn"
 local _endQuizitQuitBtnPath = "PopupGroup/EndPanelQuizit/ButtonGroup/QuitBtn"
 
+local _popupPath = "PopupGroup/PopupPanel"
+local _popupTitlePath = "PopupGroup/PopupPanel/OptionPopup/titleTxt"
+local _popupMessagePath = "PopupGroup/PopupPanel/OptionPopup/messageTxt"
+local _popupImgPath = "PopupGroup/PopupPanel/OptionPopup/img"
+local _popupAudioBtnPath = "PopupGroup/PopupPanel/OptionPopup/smallBtnAudio"
+local _popupBigAuidoBtnPath = "PopupGroup/PopupPanel/OptionPopup/bigBtnAudio"
+
+local _popup = nil
+local _popupTitle = nil
+local _popupMessage = nil
+local _popupImg = nil
+local _popupAudioBtn = nil
+local _popupBigAudioBtn = nil
+
 function OnReady()
+	FindUI()
 
 	SetupButtonNext(_nextBtnPath)
 	SetupButtonNext(_panelCorrectPath)
@@ -164,6 +179,15 @@ function OnReady()
 	Question.LuaCall_CreatePages()
 
 	SetActiveFalseWrongPanel2()
+end
+
+function FindUI()
+	_popup = LuaGo.Find(_popupPath)
+	_popupTitle = LuaGo.Find(_popupTitlePath)
+	_popupMessage = LuaGo.Find(_popupMessagePath)
+	_popupImg = LuaGo.Find(_popupImgPath)
+	_popupAudioBtn = LuaGo.Find(_popupAudioBtnPath)
+	_popupBigAudioBtn = LuaGo.Find(_popupBigAuidoBtnPath)
 end
 
 function SetupButtonNext(btnPath)
@@ -277,6 +301,14 @@ function SetupBtnPlayAudio()
 	obj.RegisterButtonPressedCallback(function ()
 		Question.LuaCall_PlayAudio()
     end)
+
+	_popupAudioBtn.RegisterButtonPressedCallback(function ()
+		Question.LuaCall_PlayAudio()
+    end)
+
+	_popupBigAudioBtn.RegisterButtonPressedCallback(function ()
+		Question.LuaCall_PlayAudio()
+    end)
 end
 
 function SetupBtnInfo()
@@ -306,7 +338,79 @@ function ActivePopupBallon()
 	coroutine.resume(PopupBalloonCo)
 end
 
+function PlayAnimPopup(popup, anim, time)
+	local PopupCo = coroutine.create(function ()
+		popup.SetActive(true)
+		popup.AnimationPlay(anim)
+		Wait(time)
+		popup.SetActive(false)
+	end)
+end
 
+function ShowPopup()
+	ActivePopupTitle()
+
+	ActivePopupMessage()
+
+	ActivePopupImage()
+
+	ActivePopupAudioBtn()
+
+	ActivePopup()
+end
+
+function ActivePopupTitle()
+	if Question.Model.PopupTitle == "" then
+		_popupTitle.SetActive(false)
+	else
+		_popupTitle.SetActive(true)
+		_popupTitle.SetText(Question.Model.PopupTitle)
+	end
+end
+
+function ActivePopupMessage()
+	if Question.Model.PopupMessage == "" then
+		_popupMessage.SetActive(false)
+	else
+		_popupMessage.SetActive(true)
+		_popupMessage.SetText(Question.Model.PopupMessage)
+	end
+end
+
+function ActivePopupAudioBtn()
+	if Question.Model.PopupAudioName == "" then
+		_popupAudioBtn.SetActive(false)
+	else
+		_popupAudioBtn.SetActive(true)
+	end
+
+	if Question.Model.PopupImageName == "" and Question.Model.PopupAudioName != "" then
+		_popupBigAudioBtn.SetActive(true)
+	else
+		_popupBigAudioBtn.SetActive(false)
+	end
+end
+
+function ActivePopupImage()
+	if Question.Model.PopupImageName == "" then
+		_popupImg.SetActive(false)
+	else
+		_popupImg.SetActive(true)
+		_popupImg.SetSprite(PopupImageName)
+	end
+end
+
+function ActivePopup()
+	_popup.SetActive(true)
+
+	if Question.Model.PopupAnimName != "" then
+		PlayAnimPopup(_popup, Question.Model.PopupAnimName, Question.Model.PopupAnimTime)
+	end
+
+	if Question.Model.PopupAudioName != "" then
+		Question.LuaCall_PlayAudio()
+	end
+end
 
 function SetupTutorialButtons()
 	local obj = LuaGo.Find(_tutorialCloseBtnPath)

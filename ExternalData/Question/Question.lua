@@ -365,6 +365,7 @@ end
 
 function ClosePopup()
 	_popup.RegisterButtonPressedCallback(function ()
+		Question.LuaCall_StopAudio()
 		_popup.SetActive(false)
     end)
 end

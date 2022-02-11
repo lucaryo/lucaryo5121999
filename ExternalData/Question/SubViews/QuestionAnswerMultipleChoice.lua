@@ -42,26 +42,36 @@ end
 
 local _correctBtnId
 
-function SetupBtnOnclick(btnId, isCorrect, word, mean)
+function SetupBtnOnclick(btnId, isCorrect, word, mean, idPopup)
 		local obj = LuaGo.Find(_buttonPaths[btnId])
 		obj.RegisterButtonPressedCallback(function ()
-			ChooseAnswer(isCorrect, btnId, word, mean)
+			ChooseAnswer(isCorrect, btnId, word, mean, idPopup)
 		end)	
 end
 
 
 
-function ChooseAnswer(isCorrect, btnId, word, mean)
+function ChooseAnswer(isCorrect, btnId, word, mean, idPopup)
 	if isCorrect then
 		CorrectAnswerMultipleChoiceWithId(btnId)
 		ClearAllButtonClick()
-		Question.LuaCall_EndQuestionPanelData(isCorrect, word, mean)
+
+		if idPopup == "" then
+			Question.LuaCall_EndQuestionPanelData(isCorrect, word, mean)
+		else
+			Question.LuaCall_ShowButtonNext()
+		end
 	else
 		WrongAnswerMultipleChoiceWithId(btnId)
-		Question.LuaCall_SetActiveWrongPanel2(word, mean)
+
+		if idPopup == "" then
+			Question.LuaCall_SetActiveWrongPanel2(word, mean)
+		end
 	end
 
-
+	if idPopup != "" then
+		Question.LuaCall_ShowPopup(idPopup)
+	end
 end
 
 function CorrectAnswerMultipleChoice()

@@ -145,6 +145,10 @@ local _popupBigAudioBtn = nil
 function OnReady()
 	FindUI()
 
+	ClosePopup()
+
+	SetupBtnPlayAudio()
+
 	SetupButtonNext(_nextBtnPath)
 	SetupButtonNext(_panelCorrectPath)
 	SetupButtonNext(_panelWrongPath)
@@ -359,8 +363,14 @@ function ShowPopup()
 	ActivePopup()
 end
 
+function ClosePopup()
+	_popup.RegisterButtonPressedCallback(function ()
+		_popup.SetActive(false)
+    end)
+end
+
 function ActivePopupTitle()
-	if Question.Model.PopupTitle == "" then
+	if Question.Model.PopupTitle == "" or Question.Model.PopupTitle == nil then
 		_popupTitle.SetActive(false)
 	else
 		_popupTitle.SetActive(true)
@@ -369,7 +379,7 @@ function ActivePopupTitle()
 end
 
 function ActivePopupMessage()
-	if Question.Model.PopupMessage == "" then
+	if Question.Model.PopupMessage == "" or Question.Model.PopupMessage == nil then
 		_popupMessage.SetActive(false)
 	else
 		_popupMessage.SetActive(true)
@@ -378,13 +388,13 @@ function ActivePopupMessage()
 end
 
 function ActivePopupAudioBtn()
-	if Question.Model.PopupAudioName == "" then
+	if Question.Model.PopupAudioName == "" or Question.Model.PopupAudioName == nil then
 		_popupAudioBtn.SetActive(false)
 	else
 		_popupAudioBtn.SetActive(true)
 	end
 
-	if Question.Model.PopupImageName == "" and Question.Model.PopupAudioName != "" then
+	if (Question.Model.PopupImageName == "" or Question.Model.PopupImageName == nil) and (Question.Model.PopupAudioName != "" and Question.Model.PopupAudioName != nil) then
 		_popupBigAudioBtn.SetActive(true)
 	else
 		_popupBigAudioBtn.SetActive(false)
@@ -392,11 +402,11 @@ function ActivePopupAudioBtn()
 end
 
 function ActivePopupImage()
-	if Question.Model.PopupImageName == "" then
+	if Question.Model.PopupImageName == "" or Question.Model.PopupImageName == nil then
 		_popupImg.SetActive(false)
 	else
 		_popupImg.SetActive(true)
-		_popupImg.SetSprite(PopupImageName)
+		_popupImg.SetSprite(Question.Model.PopupImageName)
 	end
 end
 

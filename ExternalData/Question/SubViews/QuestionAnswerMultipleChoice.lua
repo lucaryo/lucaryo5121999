@@ -56,17 +56,14 @@ function ChooseAnswer(isCorrect, btnId, word, mean, idPopup)
 		CorrectAnswerMultipleChoiceWithId(btnId)
 		ClearAllButtonClick()
 
-		if idPopup == "" then
-			Question.LuaCall_EndQuestionPanelData(isCorrect, word, mean)
-		else
-			Question.LuaCall_ShowButtonNext()
-		end
+		Question.LuaCall_ShowButtonNext()
+
+		--Question.LuaCall_EndQuestionPanelData(isCorrect, word, mean)
 	else
+
 		WrongAnswerMultipleChoiceWithId(btnId)
 
-		if idPopup == "" then
-			Question.LuaCall_SetActiveWrongPanel2(word, mean)
-		end
+		--Question.LuaCall_SetActiveWrongPanel2(word, mean)
 	end
 
 	if idPopup != "" then

@@ -414,12 +414,8 @@ end
 function ActivePopup()
 	_popup.SetActive(true)
 
-	if Question.Model.PopupAnimName != "" then
+	if Question.Model.PopupAnimName != "" and Question.Model.PopupAnimName != nil then
 		PlayAnimPopup(_popup, Question.Model.PopupAnimName, Question.Model.PopupAnimTime)
-	end
-
-	if Question.Model.PopupAudioName != "" then
-		Question.LuaCall_PlayAudio()
 	end
 end
 

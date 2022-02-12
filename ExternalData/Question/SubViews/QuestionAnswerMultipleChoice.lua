@@ -23,7 +23,7 @@ local _buttonTextPaths = {
 
 local _correctBtnPath ="mqc_green_correct"
 local _wrongBtnPath ="mqc_red_wrong"
-local _normalBtnPath ="mqc_answer_dark blue"
+local _normalBtnPath ="mqc_answer_dark_blue"
 
 local _correctTextColor = nil
 local _wrongTextColor = nil

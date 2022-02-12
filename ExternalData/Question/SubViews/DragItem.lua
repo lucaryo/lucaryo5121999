@@ -22,7 +22,7 @@ function SetSprite(imgPath)
 	obj.SetSprite(imgPath)
 end
 
-local _spritePath = "mqc_answer_dark blue"
+local _spritePath = "mqc_answer_dark_blue"
 
 RandomFunc = function(x)
     local r = math.random(1,#x)

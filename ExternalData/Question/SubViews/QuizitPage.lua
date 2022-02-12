@@ -5,7 +5,7 @@
     }
 end
 
-local _desTxtPath = "DesGroup/desTxt"
+local _desTxtPath = "DesGroup/BG_Des/desTxt"
 
 local _desPath = "DesGroup"
 
@@ -93,9 +93,9 @@ function ShowWhenTimeOut()
 	Question.LuaCall_ColorCurrentScore(0)
 end
 
-local _correctBtnPath ="button_green_long"
-local _wrongBtnPath ="button_red_long"
-local _normalBtnPath ="button_blue_long"
+local _correctBtnPath ="mqc_green_correct"
+local _wrongBtnPath ="mqc_red_wrong"
+local _normalBtnPath ="mqc_answer_dark_blue"
 
 function CorrectAnswerMultipleChoice()
 		local obj = LuaGo.Find(_buttonPaths[_correctBtnId])

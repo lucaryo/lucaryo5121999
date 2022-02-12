@@ -118,7 +118,7 @@ local _commingSoonBtnPath = "PopupGroup/CommingSoonPanel"
 
 local _commingSoonCloseBtnPath = "PopupGroup/CommingSoonPanel/CommingSoonPopup/quitBtn"
 
-local _pauseBtnPath = "head/QuizitHead/pauseBtn"
+local _pauseBtnPath = "head/QuizitHead/PauseBtnBG/pauseBtn"
 local _continuedBtnPath = "PopupGroup/PausePanel/Popup/continuedBtn"
 local _resetQuizitPath = "PopupGroup/PausePanel/Popup/resetBtn"
 local _quitQuizitPath = "PopupGroup/PausePanel/Popup/quitBtn"
@@ -252,6 +252,7 @@ end
 
 function LoadQuestionMainPage(type)
 	local content = LuaGo.Find(_questionContainer);
+	Log('LoadQuestionMainPage: '.. type )
 	CreateSubView(_mainPagePath[type], content.Transform)
 end
 
@@ -534,13 +535,15 @@ function SetWrongPanelData2( meanTxt)
 	mean.SetText(meanTxt)
 end
 
+local _numberQuizitPath = "head/QuizitHead/headBar/BGQuizitNumber/txtNumberQuizit"
+local _questionHead = "head/headBg"
 local _quiztHeadPath = "head/QuizitHead"
 local _quizitFootPath = "foot/QuizitFoot"
 local _leftPath = "head/QuizitHead/questionLeft/text"
 local _correctPath = "head/QuizitHead/questionCorrect/text"
 local _wrongPath = "head/QuizitHead/questionWrong/text"
 local _titleTextPath = "head/QuizitHead/titleBg/text"
-local _namePath = "head/QuizitHead/bg2/name"
+local _namePath = "head/QuizitHead/bg2/bgFrame/ImageBGName/name"
 
 local _finishOptionPath = "PopupGroup/PausePanel/Popup/pageFinish"
 local _scorePath = "PopupGroup/PausePanel/Popup/sc"
@@ -577,6 +580,9 @@ local _scoreIconPathGroup = {
 function SetActiveQuizitUI(isActive)
 	local _quizitHead = LuaGo.Find(_quiztHeadPath)
 	_quizitHead.SetActive(isActive)
+	local _questionHead = LuaGo.Find(_questionHead)
+	_questionHead.SetActive(false)
+
 	local _quizitFoot = LuaGo.Find(_quizitFootPath)
 	_quizitFoot.SetActive(isActive)
 
@@ -621,12 +627,17 @@ function SetTitle(title)
 	local obj2 = LuaGo.Find(_endQuizitTitlePath)
 	obj2.SetText(title)
 end
-
+local numQuizit = 0
 function SetActiveCountDown(isActive)
+	
+	
 	local obj = LuaGo.Find(_countDownPanel)
 	obj.SetActive(isActive)
 
 	if (isActive) then
+		numQuizit = numQuizit + 1
+		local objTextNumber = LuaGo.Find(_numberQuizitPath)
+		objTextNumber.SetText(numQuizit)
 		local obj2 = LuaGo.Find(_countDownObject)
 		obj2.AnimationPlay("123GO")
 	end

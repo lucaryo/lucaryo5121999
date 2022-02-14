@@ -10,6 +10,8 @@ end
 local _isLandItem = "MapIsLand/SubViews/MapIsLandSubViews"
 local _btnJoinIsLand = "Bg/body/btnJoinIsLand"
 local _btnBackLobby = "Bg/body/btnBack"
+local _buttonRight = "Bg/body/button Right"
+local _buttonLeft = "Bg/body/button Left"
 local _goHorizontalSnap = "Horizontal Scroll Snap"
 
 local _planetLocation = "Horizontal Scroll Snap/Content/planet";
@@ -26,6 +28,7 @@ function OnReady()
 	--SetupBtnPlanet()
 	SetupButtonBackLobby(_btnBackLobby)
 	SetupHorizontalSnap(_goHorizontalSnap)
+    SetupAnimationButtonLeftRight(3)
 end
 
 function SetPlanetTxtLevel(level)
@@ -59,7 +62,6 @@ function DisableInfo()
 end
 
 function SetupHorizontalSnap(goPath)
-
 	local go = LuaGo.Find(goPath)
     MapIsLand.LuaCall_AddSetupHorizontalSnap(go)
 end
@@ -87,7 +89,14 @@ function SetupButtonBackLobby(btnPath)
 		MapIsLand.LuaCall_BackLobby()
     end)
 end
-
+function SetupAnimationButtonLeftRight(loops)
+    SetupAnimation(_buttonLeft, loops)
+    SetupAnimation(_buttonRight, loops)
+end
+function SetupAnimation(buttonPath, loops)
+    local button = LuaGo.Find(buttonPath)
+    MapIsLand.LuaCall_BlinkingAnimation(button, loops)
+end
 function CreateSubViewIsLand(sum)
 	_scrollContent = LuaGo.Find("Bg/body/Scroll/pannel")
 	for i = 1, sum do
@@ -95,5 +104,3 @@ function CreateSubViewIsLand(sum)
     end
 end
 
-function Hide()
-end

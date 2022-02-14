@@ -42,16 +42,16 @@ end
 
 local _correctBtnId
 
-function SetupBtnOnclick(btnId, isCorrect, word, mean, idPopup)
+function SetupBtnOnclick(btnId, isCorrect, idPopup)
 		local obj = LuaGo.Find(_buttonPaths[btnId])
 		obj.RegisterButtonPressedCallback(function ()
-			ChooseAnswer(isCorrect, btnId, word, mean, idPopup)
+			ChooseAnswer(isCorrect, btnId, idPopup)
 		end)	
 end
 
 
 
-function ChooseAnswer(isCorrect, btnId, word, mean, idPopup)
+function ChooseAnswer(isCorrect, btnId, idPopup)
 	if isCorrect then
 		CorrectAnswerMultipleChoiceWithId(btnId)
 		ClearAllButtonClick()

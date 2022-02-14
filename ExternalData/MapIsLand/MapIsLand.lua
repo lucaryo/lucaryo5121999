@@ -104,3 +104,6 @@ function CreateSubViewIsLand(sum)
     end
 end
 
+function Hide()
+end
+

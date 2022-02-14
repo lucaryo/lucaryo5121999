@@ -52,11 +52,11 @@ end
 
 local _correctBtnId
 
-function SetupBtnOnclick(btnId, isCorrect, word, mean)
+function SetupBtnOnclick(btnId, isCorrect, idPopup)
 		local obj = LuaGo.Find(_buttonPaths[btnId])
 		obj.RegisterButtonPressedCallback(function ()
 			Question.LuaCall_PlayFXOnclickMCQAnswer(btnId)
-			ChooseAnswer(isCorrect, btnId, word, mean)
+			ChooseAnswer(isCorrect, btnId, idPopup)
 		end)	
 end
 
@@ -74,15 +74,19 @@ function SetupColor(wrongTextColor, correctTextColor, wrongButtonColor)
 	_wrongButtonColor = wrongButtonColor
 end
 
-function ChooseAnswer(isCorrect, btnId, word, mean)
+function ChooseAnswer(isCorrect, btnId, idPopup)
 	if isCorrect then
 		CorrectAnswerMultipleChoiceWithId(btnId)
-
 		ClearAllButtonClick()
-		Question.LuaCall_EndQuestionPanelData(isCorrect, word, mean)
+
+		Question.LuaCall_ShowButtonNext()
 	else
+
 		WrongAnswerMultipleChoiceWithId(btnId)
-		Question.LuaCall_SetActiveWrongPanel2(word, mean)
+	end
+
+	if idPopup != "" then
+		Question.LuaCall_ShowPopup(idPopup)
 	end
 end
 

@@ -142,6 +142,10 @@ local _popupImg = nil
 local _popupAudioBtn = nil
 local _popupBigAudioBtn = nil
 
+local _resetPopupAnim = "ResetPopup"
+local _pauseIcon = "Btn_pause"
+local _playIcon = "Btn_Play"
+
 function OnReady()
 	FindUI()
 
@@ -350,6 +354,8 @@ function PlayAnimPopup(popup, anim, time)
 		Wait(time)
 		popup.SetActive(false)
 	end)
+
+	coroutine.resume(PopupCo)
 end
 
 function ShowPopup()
@@ -417,6 +423,8 @@ function ActivePopup()
 
 	if Question.Model.PopupAnimName != "" and Question.Model.PopupAnimName != nil then
 		PlayAnimPopup(_popup, Question.Model.PopupAnimName, Question.Model.PopupAnimTime)
+	else
+		_popup.AnimationPlay(_resetPopupAnim)
 	end
 end
 

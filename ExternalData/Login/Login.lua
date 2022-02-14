@@ -11,15 +11,24 @@ end
 
 
 local _buttonsLoginGuestPath = "Login/Bot/btnLoginGuest"
+local _btnCreateNow = "Login/Body/ObjLogin/btnCreateNow"
 
 local _inputFieldNamePath = "Login/Body/ObjLogin/inputFileldUserName"
 local _inputFieldPassPath = "Login/Body/ObjLogin/inputFileldPassWord"
 
 local _txtVersion = "Login/Bot/txtInfoApp"
 local _txtVersionBg = "Login/Bot/iconBg"
-local _versionBtn = "Login/Bot/iconBtn"
+local _versionBtnLogin = "Login/Bot/iconBtn"
 
 local _buttonShowPassPath = "Login/Body/ObjLogin/inputFileldPassWord/btnShowPass"
+
+local _objCreate = "Create"
+local _objLogin ="Login"
+local _objPopup = "Popup"
+local _versionBtnCreate = "Create/Bot/iconBtn"
+local _btnCreateAccount = "Create/Body/ObjCreate/btnCreateAccount"
+local _btnClosePopupOutScreen ="Popup/btnCloseOutOfScreen"
+local _btnClosePopup ="Popup/BgPopup/btnClose"
 
 local _isShowPass = false
 
@@ -33,7 +42,15 @@ function OnReady()
 	SetButtonShowPass(_buttonShowPassPath)
 
 	SetActiveInfoObject(_isActiveInfo)
-	SetButtonInfo()
+	SetButtonInfo(_versionBtnLogin)
+	SetButtonInfo(_versionBtnCreate)
+	SetActiveObjCreate(false)
+	SetActivePopup(false)
+	SetupButtonCreateNow(_btnCreateNow)
+	SetupButtonCreateAccount(_btnCreateAccount)
+	SetupButtonClosePopup(_btnClosePopupOutScreen)
+	SetupButtonClosePopup(_btnClosePopup)
+
 end
 
 
@@ -83,7 +100,21 @@ function SetButtonShowPass(btnPath)
 		SetSpriteButtonShowPass(btnPath)
     end)
 end
-
+function SetupButtonCreateNow(btnpath)
+	local btn = LuaGo.Find(btnpath)
+	btn.RegisterButtonPressedCallback(function ()
+		Login.LuaCall_CreateNow()
+		
+	end)
+	
+end
+function SetupButtonCreateAccount(btnpath)
+	local btn = LuaGo.Find(btnpath)
+	btn.RegisterButtonPressedCallback(function ()
+		Login.LuaCall_CreateAccount()
+	end)
+	
+end
 function SetSpriteButtonShowPass(btnPath)
 	local btn = LuaGo.Find(btnPath)
 	if _isShowPass then
@@ -118,12 +149,38 @@ function SetActiveInfoObject(isActive)
 	obj2.SetActive(isActive)
 end
 
-function SetButtonInfo()
-	local btn = LuaGo.Find(_versionBtn)
+function SetButtonInfo(btnpath)
+	local btn = LuaGo.Find(btnpath)
 	btn.RegisterButtonPressedCallback(function ()
 		SetActiveInfo()	
     end)
 end
+function SetActiveObjCreate(isActive)
+	local objCreate = LuaGo.Find(_objCreate)
+	objCreate.SetActive(isActive)
+	
+end
+function ShowCreateNowPanel()
+	SetActiveObjCreate(true)
+	
+end
+function CloseCreateNowPanel()
+	SetActiveObjCreate(false)
+	
+	
 
+end
+function SetupButtonClosePopup(btnpath)
+	local btn = LuaGo.Find(btnpath)
+	btn.RegisterButtonPressedCallback(function ()
+		Login.LuaCall_ClosePopup()
+		
+	end)
+end
+function SetActivePopup(isActive)
+	local objPop = LuaGo.Find(_objPopup)
+	objPop.SetActive(isActive)
+	
+end
 function Hide()
 end

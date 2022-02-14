@@ -43,10 +43,5 @@ function SetActiveUI(isActive)
 	end
 end
 
-function SetActiveKeyBoard(isActive)
-	local obj = LuaGo.Find(_keyBoardPath)
-	obj.SetActive(isActive)
-end
-
 function Hide()
 end

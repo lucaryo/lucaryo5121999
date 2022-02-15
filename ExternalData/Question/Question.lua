@@ -217,6 +217,9 @@ function SetupOptionBtn(btnPath, isActive)
 	btn.RegisterButtonPressedCallback(function ()
 		SetActiveOptionPanel(isActive)
     end)
+	if(isActive) then
+		numQuizit = 0
+	end
 end
 
 function SetupButtonReset(btnPath)
@@ -690,13 +693,13 @@ function SetMoveToScore(index)
 end
 
 function SetColorScore(color)
-	_currentScore.SetImgColor(color)	
+	_currentScore.SetSprite(color)	
 end
 
 function ResetScoreGroup(color)
 	for i = 1, #_scorePathGroup do
 		local obj = LuaGo.Find(_scorePathGroup[i])
-		obj.SetImgColor(color)
+		obj.SetSprite(color)
 		obj.SetActive(false)
 	end
 end
@@ -721,6 +724,7 @@ end
 function SetActiveEndQuizitPanel(active)
 	local obj = LuaGo.Find(_endQuizitPanel)
 	obj.SetActive(active);
+	numQuizit = 0
 end
 
 function Hide()

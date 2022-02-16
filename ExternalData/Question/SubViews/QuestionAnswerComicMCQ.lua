@@ -55,7 +55,7 @@ local _correctBtnId
 function SetupBtnOnclick(btnId, isCorrect, idPopup)
 		local obj = LuaGo.Find(_buttonPaths[btnId])
 		obj.RegisterButtonPressedCallback(function ()
-			Question.LuaCall_PlayFXOnclickMCQAnswer(btnId)
+			--Question.LuaCall_PlayFXOnclickMCQAnswer(btnId)
 			ChooseAnswer(isCorrect, btnId, idPopup)
 		end)	
 end
@@ -85,6 +85,8 @@ function ChooseAnswer(isCorrect, btnId, idPopup)
 		WrongAnswerMultipleChoiceWithId(btnId)
 	end
 
+	Question.LuaCall_AudioCorrectAnswer(isCorrect)
+	
 	if idPopup != "" then
 		Question.LuaCall_ShowPopup(idPopup)
 	end
@@ -165,7 +167,7 @@ function SetActiveUI(isActive)
 				objImage.SetButtonEnabled(true)
 				local objText = LuaGo.Find(_textButtonPaths[i])
 				objText.DoFadeText(1.0, 0.75, objText)
-				Question.LuaCall_PlayFXOnclickMCQAnswer(-1)
+				--Question.LuaCall_PlayFXOnclickMCQAnswer(-1)
 				
 			end
 		end)

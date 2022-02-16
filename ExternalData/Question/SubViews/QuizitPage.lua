@@ -60,6 +60,7 @@ function SetupBtnOnclick(btnId, isCorrect)
 end
 
 function ChooseAnswer(isCorrect, btnId)
+	Question.LuaCall_AudioCorrectAnswer(isCorrect)
 	if (isCorrect) then
 		Question.LuaCall_PlaySFXAnswerCorrect()
 		CorrectAnswerMultipleChoice()

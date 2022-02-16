@@ -38,10 +38,10 @@ end
 
 function ChooseAnswer(btnId, imageName)
 	if imageName == _correctArray[_currentCorrectIndex] then
-		Question.LuaCall_PlaySFXAnswerCorrect()
+		Question.LuaCall_AudioCorrectAnswer(true)
 		CorrectAnswerMultipleChoiceWithId(btnId)
 	else
-		Question.LuaCall_PlaySFXAnswerWrong()
+		Question.LuaCall_AudioCorrectAnswer(false)
 		WrongAnswerMultipleChoiceWithId(btnId)
 	end
 	

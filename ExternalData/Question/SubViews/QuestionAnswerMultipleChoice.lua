@@ -66,6 +66,8 @@ function ChooseAnswer(isCorrect, btnId, idPopup)
 		--Question.LuaCall_SetActiveWrongPanel2(word, mean)
 	end
 
+	Question.LuaCall_AudioCorrectAnswer(isCorrect)
+
 	if idPopup != "" then
 		Question.LuaCall_ShowPopup(idPopup)
 	end

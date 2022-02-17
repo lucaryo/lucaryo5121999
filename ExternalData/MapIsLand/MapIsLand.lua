@@ -10,8 +10,7 @@ end
 local _isLandItem = "MapIsLand/SubViews/MapIsLandSubViews"
 local _btnJoinIsLand = "Bg/body/btnJoinIsLand"
 local _btnBackLobby = "Bg/body/btnBack"
-local _buttonRight = "Bg/body/button Right"
-local _buttonLeft = "Bg/body/button Left"
+local _handIcon = "Bg/body/Hand Icon"
 local _goHorizontalSnap = "Horizontal Scroll Snap"
 
 local _planetLocation = "Horizontal Scroll Snap/Content/planet";
@@ -22,13 +21,14 @@ local _planetLocation = "Horizontal Scroll Snap/Content/planet";
 
 local _planetTxtLevel = "Bg/PlanetView/Info/Level"
 local _planetTxtName = "Bg/PlanetView/Info/Name"
+local _planetEnergyText = "Bg/PlanetView/Info/Energy"
 local _goLock = "Bg/PlanetView/Lock"
 local _goInfo = "Bg/PlanetView"
 function OnReady()
 	--SetupBtnPlanet()
 	SetupButtonBackLobby(_btnBackLobby)
 	SetupHorizontalSnap(_goHorizontalSnap)
-    SetupAnimationButtonLeftRight(3)
+    SetupHandTutorialAnimation(3)
 end
 
 function SetPlanetTxtLevel(level)
@@ -39,6 +39,11 @@ end
 function SetPlanetTxtName(name)
 	local txtName = LuaGo.Find(_planetTxtName)
     txtName.SetText(name)
+end
+
+function SetPlanetTextEnergy(energy, maxEnergy)
+    local textName = LuaGo.Find(_planetEnergyText)
+    textName.SetText(string.format("%d/%d", energy, maxEnergy))
 end
 
 function EnableLock()
@@ -89,13 +94,12 @@ function SetupButtonBackLobby(btnPath)
 		MapIsLand.LuaCall_BackLobby()
     end)
 end
-function SetupAnimationButtonLeftRight(loops)
-    SetupAnimation(_buttonLeft, loops)
-    SetupAnimation(_buttonRight, loops)
+function SetupHandTutorialAnimation(loops)
+    SetupAnimation(_handIcon, loops)
 end
-function SetupAnimation(buttonPath, loops)
-    local button = LuaGo.Find(buttonPath)
-    MapIsLand.LuaCall_BlinkingAnimation(button, loops)
+function SetupAnimation(iconPath, loops)
+    local icon = LuaGo.Find(iconPath)
+    MapIsLand.LuaCall_SwipeAnimation(icon, loops)
 end
 function CreateSubViewIsLand(sum)
 	_scrollContent = LuaGo.Find("Bg/body/Scroll/pannel")

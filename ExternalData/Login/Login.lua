@@ -16,6 +16,8 @@ local _btnCreateNow = "Login/Body/ObjLogin/btnCreateNow"
 local _inputFieldNamePath = "Login/Body/ObjLogin/inputFileldUserName"
 local _inputFieldPassPath = "Login/Body/ObjLogin/inputFileldPassWord"
 
+local _inputBtnLogin ="Login/Body/ObjLogin/btnLogin"
+
 local _txtVersion = "Login/Bot/txtInfoApp"
 local _txtVersionBg = "Login/Bot/iconBg"
 local _versionBtnLogin = "Login/Bot/iconBtn"
@@ -26,9 +28,24 @@ local _objCreate = "Create"
 local _objLogin ="Login"
 local _objPopup = "Popup"
 local _versionBtnCreate = "Create/Bot/iconBtn"
-local _btnCreateAccount = "Create/Body/ObjCreate/btnCreateAccount"
+
+
+local _btnRegister = "Create/Body/ObjCreate/btnCreateAccount"
+local _inputFieldUserNameRegister = "Create/Body/ObjCreate/inputFileldUserName"
+local _inputFieldEmailRegister = "Create/Body/ObjCreate/inputFileldEmail"
+local _inputFieldPasswordRegister = "Create/Body/ObjCreate/inputFileldPassWord"
+local _inputFieldRePasswordRegister = "Create/Body/ObjCreate/inputFileldRePassWord"
+local _buttonShowPassRegister = "Create/Body/ObjCreate/inputFileldPassWord/btnShowPass"
+local _buttonShowRePassRegister = "Create/Body/ObjCreate/inputFileldRePassWord/btnShowPass"
+local _buttonBack = "Create/BtnBack"
+
 local _btnClosePopupOutScreen ="Popup/btnCloseOutOfScreen"
 local _btnClosePopup ="Popup/BgPopup/btnClose"
+local _btnOkPopup = "Popup/BgPopup/BtnOk"
+local _titlePopup = "Popup/BgPopup/title"
+local _txtDesPopup = "Popup/BgPopup/des_Login"
+
+
 
 local _isShowPass = false
 
@@ -39,21 +56,32 @@ function OnReady()
 	SetupButtonLoginGuest(_buttonsLoginGuestPath)
 	SelectInputField(_inputFieldNamePath)
 	SelectInputField(_inputFieldPassPath)
-	SetButtonShowPass(_buttonShowPassPath)
+	SetButtonShowPass(_buttonShowPassPath,_inputFieldPassPath)
+	SetButtonShowPass(_buttonShowPassRegister,_inputFieldPasswordRegister)
+	SetButtonShowPass(_buttonShowRePassRegister,_inputFieldRePasswordRegister)
 
 	SetActiveInfoObject(_isActiveInfo)
 	SetButtonInfo(_versionBtnLogin)
-	SetButtonInfo(_versionBtnCreate)
+	--SetButtonInfo(_versionBtnCreate)
 	SetActiveObjCreate(false)
-	SetActivePopup(false)
+	SetActivePopup(false,"","")
 	SetupButtonCreateNow(_btnCreateNow)
-	SetupButtonCreateAccount(_btnCreateAccount)
+	SetupButtonRegister(_btnRegister)
 	SetupButtonClosePopup(_btnClosePopupOutScreen)
 	SetupButtonClosePopup(_btnClosePopup)
+	SetupButtonClosePopup(_btnOkPopup)
+	SetupButtonLogin(_inputBtnLogin)
+	SetupButtonBackRegister(_buttonBack)
 
 end
 
-
+function SetupButtonBackRegister(btnPath)
+	local btn = LuaGo.Find(btnPath)
+	btn.RegisterButtonPressedCallback(function ()
+		SetActiveObjCreate(false)
+		SetActivePopup(false,"","")
+	end)
+end
 
 function SetupButtonLoginGuest(btnPath)
 	local btn = LuaGo.Find(btnPath)	
@@ -62,6 +90,13 @@ function SetupButtonLoginGuest(btnPath)
 		--SetText(_inputFieldNamePath)
 
     end)
+end
+function SetupButtonLogin(btnPath)
+	local btn = LuaGo.Find(btnPath)
+	btn.RegisterButtonPressedCallback(function ()
+		CallLogin() 
+	end)
+	
 end
 
 function SelectInputField(inputField)
@@ -87,15 +122,15 @@ function GetText(btnPath)
 	Login.LuaCall_LoginGuest_OnClicked(text)
 end
 
-function ShowPassClick()
-	local obj = LuaGo.Find(_inputFieldPassPath)
+function ShowPassClick(pathInputField)
+	local obj = LuaGo.Find(pathInputField)
 	obj.SwitchInputFieldPassType(obj)
 end
 
-function SetButtonShowPass(btnPath)
+function SetButtonShowPass(btnPath,pathInputField )
 	local btn = LuaGo.Find(btnPath)	
 	btn.RegisterButtonPressedCallback(function ()
-		ShowPassClick()
+		ShowPassClick(pathInputField)
 		btn.SetSprite("",icon_eye_1)
 		SetSpriteButtonShowPass(btnPath)
     end)
@@ -108,10 +143,10 @@ function SetupButtonCreateNow(btnpath)
 	end)
 	
 end
-function SetupButtonCreateAccount(btnpath)
+function SetupButtonRegister(btnpath)
 	local btn = LuaGo.Find(btnpath)
 	btn.RegisterButtonPressedCallback(function ()
-		Login.LuaCall_CreateAccount()
+		CallRegisterAccount()
 	end)
 	
 end
@@ -177,10 +212,38 @@ function SetupButtonClosePopup(btnpath)
 		
 	end)
 end
-function SetActivePopup(isActive)
+function SetActivePopup(isActive,titlePopup,desPopup)
 	local objPop = LuaGo.Find(_objPopup)
 	objPop.SetActive(isActive)
+	if(isActive) then
+		local title = LuaGo.Find(_titlePopup)
+		title.SetText(titlePopup)
+		local des = LuaGo.Find(_txtDesPopup)
+		des.SetText(desPopup)
+	end
 	
+end
+function CallLogin()
+	local inputTextMailObj = LuaGo.Find(_inputFieldNamePath)
+	local textMail = inputTextMailObj.GetText()
+
+	local inputPassObj = LuaGo.Find(_inputFieldPassPath)
+	local textpass = inputPassObj.GetText()
+	Login.LuaCall_Login(textMail,textpass)
+end
+function CallRegisterAccount()
+	local inputUserName = LuaGo.Find(_inputFieldUserNameRegister)
+	local textUserName = inputUserName.GetText()
+
+	local inputEmailRegister = LuaGo.Find(_inputFieldEmailRegister)
+	local textInputMailRegister = inputEmailRegister.GetText()
+	
+	local inputPassword = LuaGo.Find(_inputFieldPasswordRegister)
+	local textInputPassword = inputPassword.GetText()
+
+	local inputRePassword = LuaGo.Find(_inputFieldRePasswordRegister)
+	local textInputRePassword = inputRePassword.GetText()
+	Login.LuaCall_Register(textUserName,textInputMailRegister,textInputPassword,textInputRePassword)
 end
 function Hide()
 end

@@ -29,7 +29,11 @@ local _btnInfoPath ="head/InfoBtn"
 local _btnNextTransitionPath ="PopupGroup/TransitionScreenPanel/btnNextTransition"
 local _btnNextEndScreenPath ="PopupGroup/EndScreenPanel/imgBg/btnNextEndScreen"
 local _btnExitEndScreenPath = "PopupGroup/EndScreenPanel/imgBg/btnExitEndScreen"
-local _optionalPanelPath ="PopupGroup/OptionPanel"
+
+local _optionalPanelPath = "PopupGroup/OptionPanel"
+local _optionCellPath = "PopupGroup/OptionPanel/OptionPopup/Info/Cell"
+local _optionQuestionPath = "PopupGroup/OptionPanel/OptionPopup/Info/Answer"
+
 local _loadingPanelPath ="PopupGroup/LoadingPanel"
 local _transitionPanelPath ="PopupGroup/TransitionScreenPanel"
 local _endScreenPanelPath ="PopupGroup/EndScreenPanel"
@@ -119,7 +123,7 @@ local _commingSoonBtnPath = "PopupGroup/CommingSoonPanel"
 local _commingSoonCloseBtnPath = "PopupGroup/CommingSoonPanel/CommingSoonPopup/quitBtn"
 
 local _pauseBtnPath = "head/QuizitHead/PauseBtnBG/pauseBtn"
-local _continuedBtnPath = "PopupGroup/PausePanel/Popup/continuedBtn"
+local _closeBtnPath = "PopupGroup/PausePanel/Popup/closeBtn"
 local _resetQuizitPath = "PopupGroup/PausePanel/Popup/resetBtn"
 local _quitQuizitPath = "PopupGroup/PausePanel/Popup/quitBtn"
 
@@ -181,8 +185,7 @@ function OnReady()
 
 	SetupPauseBtn(_pauseBtnPath, true)
 	SetupPauseBtn(_pausePanelPath, false)
-	SetupPauseBtn(_continuedBtnPath, false)
-
+	SetupPauseBtn(_closeBtnPath, false)
 
 	Question.LuaCall_CreatePages()
 
@@ -277,6 +280,12 @@ function LoadAnswerObject(type)
 end
 
 function SetActiveOptionPanel(isActive)
+	local cellTxt = LuaGo.Find(_optionCellPath)
+	cellTxt.SetText("Cell: " .. Question.Model.CurrentCell)
+
+	local answerTxt = LuaGo.Find(_optionQuestionPath)
+	answerTxt.SetText(Question.Model.QuestionIndex .. "/" .. Question.Model.NumberQuestion)
+
 	local obj = LuaGo.Find(_optionalPanelPath)
 	obj.SetActive(isActive)
 end

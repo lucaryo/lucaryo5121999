@@ -468,10 +468,18 @@ function SetActiveEndScreenPanel(isActive)
 end
 
 function SetDataTransitionScreen(title,des)
-	local obj = LuaGo.Find(_txtTopicNameTransitionPath)
-	obj.SetText(title);
-	local objDes = LuaGo.Find(_txtTopicDesTransitionPath)
-	objDes.SetTextDoTweenAnimation(des,2,objDes)
+	local co = coroutine.create(function ()
+		local objDes = LuaGo.Find(_txtTopicDesTransitionPath)
+		objDes.SetTextDoTweenAnimation(des,2,objDes)
+		
+		Wait(2)
+			
+		local obj = LuaGo.Find(_txtTopicNameTransitionPath)
+		obj.SetTextDoTweenAnimation(title,2,obj)
+    end)
+	coroutine.resume(co)
+	
+	
 end
 function SetDataEndScreen(keyTopic, score, fillAmount,timeDuration, numPoint, imgPathPoint,opacity,gold, gem)
 

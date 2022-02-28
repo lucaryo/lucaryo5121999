@@ -27,8 +27,8 @@ local _panelWrongMeanPath2 = "PopupGroup/WrongPanel2/OptionPopup/meanTxt"
 local _btnAudioPath ="soundBtn"
 local _btnInfoPath ="head/InfoBtn"
 local _btnNextTransitionPath ="PopupGroup/TransitionScreenPanel/btnNextTransition"
-local _btnNextEndScreenPath ="PopupGroup/EndScreenPanel/imgBg/btnNextEndScreen"
-local _btnExitEndScreenPath = "PopupGroup/EndScreenPanel/imgBg/btnExitEndScreen"
+local _btnNextEndScreenPath ="PopupGroup/EndScreenPanel/btnNextEndScreen"
+local _btnExitEndScreenPath = "PopupGroup/EndScreenPanel/btnExitEndScreen"
 
 local _optionalPanelPath = "PopupGroup/OptionPanel"
 local _optionCellPath = "PopupGroup/OptionPanel/OptionPopup/Info/Cell"
@@ -38,7 +38,8 @@ local _loadingPanelPath ="PopupGroup/LoadingPanel"
 local _transitionPanelPath ="PopupGroup/TransitionScreenPanel"
 local _endScreenPanelPath ="PopupGroup/EndScreenPanel"
 local _txtTopicNameTransitionPath = "PopupGroup/TransitionScreenPanel/imgBg/txtKeyTransition"
-local _txtTopicNameEndScreenPath = "PopupGroup/EndScreenPanel/imgBg/IGKeyTransition/txtKeyTransition"
+local _txtTopicDesTransitionPath = "PopupGroup/TransitionScreenPanel/imgBg/txtDesTransition"
+local _txtTopicNameEndScreenPath = "PopupGroup/EndScreenPanel/IGKeyTransition/txtKeyTransition"
 
 local _openOptionPath = "head/closeBtn"
 local _closeOptionPath = "PopupGroup/OptionPanel/OptionPopup/closeOptionBtn"
@@ -100,20 +101,20 @@ local _tutorialButtonPaths ={
 	"tapNext"
 }
 local _imgPointPath ={
-	"PopupGroup/EndScreenPanel/imgBg/imgBg2/bg_bar/point1",
-	"PopupGroup/EndScreenPanel/imgBg/imgBg2/bg_bar/point2",
-	"PopupGroup/EndScreenPanel/imgBg/imgBg2/bg_bar/point3"
+	"PopupGroup/EndScreenPanel/imgBg/bg_bar/fillbar/point1",
+	"PopupGroup/EndScreenPanel/imgBg/bg_bar/fillbar/point2",
+	"PopupGroup/EndScreenPanel/imgBg/bg_bar/fillbar/point3"
 }
 local _imgEnergyPath={
-		"PopupGroup/EndScreenPanel/imgBg/imgBg2/bg_bar/energy1",
-		"PopupGroup/EndScreenPanel/imgBg/imgBg2/bg_bar/energy2",
-		"PopupGroup/EndScreenPanel/imgBg/imgBg2/bg_bar/energy3"
+		"PopupGroup/EndScreenPanel/imgBg/imgBg2/energy1",
+		"PopupGroup/EndScreenPanel/imgBg/imgBg2/energy2",
+		"PopupGroup/EndScreenPanel/imgBg/imgBg2/energy3"
 
 }
-local _txtTexScore ="PopupGroup/EndScreenPanel/imgBg/imgBg2/bg_bar/fillbar/txtScore"
-local _txtImgFillScore = "PopupGroup/EndScreenPanel/imgBg/imgBg2/bg_bar/fillbar"
-local _txtGemFinal = "PopupGroup/EndScreenPanel/imgBg/objCurrency/Gem/txtGem"
-local _txtGoldFinal = "PopupGroup/EndScreenPanel/imgBg/objCurrency/Gold/txtGold"
+local _txtTexScore ="PopupGroup/EndScreenPanel/imgBg/bg_bar/fillbar/txtScore"
+local _txtImgFillScore = "PopupGroup/EndScreenPanel/imgBg/bg_bar/fillbar"
+local _txtGemFinal = "PopupGroup/EndScreenPanel/objCurrency/Gem/txtGem"
+local _txtGoldFinal = "PopupGroup/EndScreenPanel/objCurrency/Gold/txtGold"
 
 
 local _tutorialCloseBtnPath = "PopupGroup/TutorialContainer/QuestionPageTutorial/TutorialCloseBtn"
@@ -466,9 +467,11 @@ function SetActiveEndScreenPanel(isActive)
 	obj.SetActive(isActive)
 end
 
-function SetDataTransitionScreen(text)
+function SetDataTransitionScreen(title,des)
 	local obj = LuaGo.Find(_txtTopicNameTransitionPath)
-	obj.SetText(text);
+	obj.SetText(title);
+	local objDes = LuaGo.Find(_txtTopicDesTransitionPath)
+	objDes.SetTextDoTweenAnimation(des,2,objDes)
 end
 function SetDataEndScreen(keyTopic, score, fillAmount,timeDuration, numPoint, imgPathPoint,opacity,gold, gem)
 

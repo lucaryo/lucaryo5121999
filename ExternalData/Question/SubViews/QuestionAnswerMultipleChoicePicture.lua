@@ -108,28 +108,32 @@ function SetUpCorrectAnswer(id, value)
 	_correctArray[id] = value
 end
 
-function SetActiveUI(isActive)
+function SetActiveUI(isActive, isFinishQuestion)
 	local obj = LuaGo.Find(_desGroupPath)
 	obj.SetActive(isActive)
 
 	if isActive then
-		ResetData()
-		local co = coroutine.create(function ()
-			SetTextQuestion(_textArray[_currentCorrectIndex])
-			Wait(1)
-			for i = 1 , #_buttonPaths do 
 
-				Wait(0.25)
+		if(isFinishQuestion == false) then
+			ResetData()
 
-				local objImage = LuaGo.Find(_buttonPaths[i])
-				objImage.DoFadeImage(1.0, 0.75, objImage)
-				objImage.SetButtonEnabled(true)
-				local objImage2 = LuaGo.Find(_buttonImagePaths[i])
-				objImage2.DoFadeImage(1.0, 0.75, objImage2)
+			local co = coroutine.create(function ()
+				SetTextQuestion(_textArray[_currentCorrectIndex])
+				Wait(1)
+				for i = 1 , #_buttonPaths do 
+
+					Wait(0.25)
+
+					local objImage = LuaGo.Find(_buttonPaths[i])
+					objImage.DoFadeImage(1.0, 0.75, objImage)
+					objImage.SetButtonEnabled(true)
+					local objImage2 = LuaGo.Find(_buttonImagePaths[i])
+					objImage2.DoFadeImage(1.0, 0.75, objImage2)
 				
-			end
-    	end)
-		coroutine.resume(co)
+				end
+    		end)
+			coroutine.resume(co)
+		end
 	end
 end
 

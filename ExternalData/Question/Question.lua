@@ -51,12 +51,18 @@ local _wrongPanelPath = "foot/WrongPanel"
 
 local _questionContainer = "QuestionContainer"
 
+local _qciaTypes = {
+	"Question/SubViews/QCIASlotItem",
+	"Question/SubViews/QCIADragItem"
+}
+
 local _mainPagePath = {
 	"Question/SubViews/QuestionMainPage",
 	"Question/SubViews/QuestionMainPage2",
 	"Question/SubViews/QuestionMainPage3",
 	"Question/SubViews/QuestionMainPage4",
-	"Question/SubViews/QuestionMainPageComicWithInputText"
+	"Question/SubViews/QuestionMainPageComicWithInputText",
+	"Question/SubViews/QuestionMainPage5"
 }
 
 local _learningPagePath = {
@@ -64,7 +70,9 @@ local _learningPagePath = {
 	"Question/SubViews/QuestionLearningPageAudio",
 	"Question/SubViews/QuestionLearningPageComic",
 	"Question/SubViews/QuestionLearningPageAudioTextSync",
-	"Question/SubViews/QuestionLearningPageSpeedRecognition"
+	"Question/SubViews/QuestionLearningPageSpeedRecognition",
+	"",
+	"Question/SubViews/QuestionLearningPageImage"
 }
 
 local _dragItemPath = "Question/SubViews/DragItem"
@@ -78,7 +86,7 @@ local _questions = {
 	"Question/SubViews/QuestionAnswerComicMCQ",
 	"Question/SubViews/QuestionAnswerComicText",
 	"Question/SubViews/QuestionAnswerSpeedRecognition",
-	"",
+	"Question/SubViews/QuestionAnswerComicInteractive",
 	"Question/SubViews/QuizitPage",
 	"Question/SubViews/QuestionAnswerMultipleChoicePicture"
 }
@@ -193,6 +201,11 @@ function OnReady()
 	SetActiveFalseWrongPanel2()
 end
 
+function LoadQCIAItem(type)
+	local content = LuaGo.Find(_questionContainer);
+	CreateSubView(_qciaTypes[type], content.Transform)
+end
+
 function FindUI()
 	_popup = LuaGo.Find(_popupPath)
 	_popupTitle = LuaGo.Find(_popupTitlePath)
@@ -268,7 +281,7 @@ function LoadQuestionMainPage(type)
 end
 
 function LoadQuestionLearningPage(type)
-Log(_learningPagePath[type])
+	Log(_learningPagePath[type])
 	local content = LuaGo.Find(_questionContainer);
 	CreateSubView(_learningPagePath[type], content.Transform)
 end

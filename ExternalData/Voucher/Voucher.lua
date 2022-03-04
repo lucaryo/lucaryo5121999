@@ -21,6 +21,7 @@ local _pathBtnCloseOutScreen ="Bg/WalletItemPopupSubView/btnCloseOutScreen"
 local _pathBtnUse = "Bg/WalletItemPopupSubView/PopupUse/Bg/footer/objButtonUse/btnUse"
 local _pathTextBtnUse = "Bg/WalletItemPopupSubView/PopupUse/Bg/footer/objButtonUse/btnUse/txtUse"
 local _pathBtnDownLoadQR = "Bg/WalletItemPopupSubView/PopupQRCode/Bg/footer/objButtonDownload/btnDownLoad"
+local _pathBtnClosePopupDownloadQR = "Bg/WalletItemPopupSubView/PopupQRCode/Bg/header/btnClose"
 local _pathImg = "Bg/WalletItemPopupSubView/PopupUse/Bg/body/imgBg/imgVoucher"
 local _pathName = "Bg/WalletItemPopupSubView/PopupUse/Bg/body/objDesVoucher/imgTitleVoucher/txtTitleVoucher"
 local _pathTitleDisCount = "Bg/WalletItemPopupSubView/PopupQRCode/Bg/body/txtTitle"
@@ -34,6 +35,7 @@ function OnReady()
 	SettupButtonClosePopup(_pathBtnClosePopup)
 	SettupButtonClosePopup(_pathBtnCloseOutScreen)
 	SetupButtonDownLoadQRCode()
+	SetupButtonCloseDownloadPopupQRCode()
 	SetupButtonUse()
 	SetupToggle()
 	SetupButtonTapToCointinue()
@@ -74,6 +76,13 @@ function  SetupButtonUse()
 	btn.RegisterButtonPressedCallback(function ()
 		Voucher.LuaCall_UseConfirm()
 	end)
+end
+function SetupButtonCloseDownloadPopupQRCode()
+	local btn = LuaGo.Find(_pathBtnClosePopupDownloadQR)
+	btn.RegisterButtonPressedCallback(function ()
+		SetActivePopupQRCode(false)
+		SetActivePopupCongratulation(true)
+    end)
 end
 function SetupButtonDownLoadQRCode()
 	local btn = LuaGo.Find(_pathBtnDownLoadQR)

@@ -34,6 +34,18 @@ local _txtStarPath = "MainMenu/Bg/header/currencyGroup/Energy/EnergyTxt"
 local _pathHeader ="MainMenu/Bg/header"
 local _pathFooter = "MainMenu/Bg/footer"
 
+local _pathMainMenu ="MainMenu"
+local _pathPopupSetting = "PopupSetting"
+local _pathBtnSetting = "MainMenu/Bg/header/settingBtn"
+local _pathCloseSetting ="PopupSetting/Bg/Header/btnClose"
+local _pathOutScreenSetting = "PopupSetting/btnCloseOutScreen"
+local _pathTogleHigh ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/High"
+local _pathTogleMedium ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/Medium"
+local _pathTogleLow ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/Low"
+local _pathTextHigh ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/High/Label"
+local _pathTextMedium ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/Medium/Label"
+local _pathTextLow ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/Low/Label"
+
 local _scrollContent = nil
 local _animator = nil
 
@@ -49,9 +61,75 @@ function OnReady()
 	SetupButtonVoucher(_buttonVoucherPath)
 
 	local objHeader = LuaGo.Find(_pathHeader)
-	objHeader.SetActive(true);
+	objHeader.SetActive(true)
+	SetActivePopupSetting(false)
+	SettupButtonSetting()
+	SettupCloseButtonSetting(_pathCloseSetting)
+	SettupCloseButtonSetting(_pathOutScreenSetting)
+	SetupToggleHigh()
+	SetupToggMedium()
+	SetupToggLow()
 
+end
 
+function SetActivePopupSetting(isActive)
+	local objSetting = LuaGo.Find(_pathPopupSetting)
+	objSetting.SetActive(isActive)
+end
+function SettupButtonSetting()
+	local btnSetting = LuaGo.Find(_pathBtnSetting)
+	btnSetting.RegisterButtonPressedCallback(function ()
+		SetActivePopupSetting(true)
+		
+	end)
+	
+end
+function SettupCloseButtonSetting(btnPath)
+	local btn = LuaGo.Find(btnPath)
+	btn.RegisterButtonPressedCallback(function ()
+		SetActivePopupSetting(false)
+	end)
+	
+end
+
+function SetupToggleHigh()
+	local objToggle = LuaGo.Find(_pathTogleHigh)
+	local _pathTextHigh = LuaGo.Find(_pathTextHigh)
+	objToggle.OnEventToggleChange(function (boolValue) 
+		if(boolValue)
+			then
+				_pathTextHigh.SetTextHexColor("#00adff",_pathTextHigh)
+			else
+				_pathTextHigh.SetTextHexColor("#09679e",_pathTextHigh)	
+		end
+	end)
+end
+function SetupToggMedium()
+	local objToggle = LuaGo.Find(_pathTogleMedium)
+	local _pathTextMedium = LuaGo.Find(_pathTextMedium)
+	objToggle.OnEventToggleChange(function (boolValue) 
+		
+		if(boolValue)
+			then
+				_pathTextMedium.SetTextHexColor("#00adff",_pathTextMedium)
+			else
+				_pathTextMedium.SetTextHexColor("#09679e",_pathTextMedium)
+		end
+	end)
+end
+
+function SetupToggLow()
+	local objToggle = LuaGo.Find(_pathTogleLow)
+	local _pathTextLow = LuaGo.Find(_pathTextLow)
+	objToggle.OnEventToggleChange(function (boolValue) 
+		
+		if(boolValue)
+			then
+				_pathTextLow.SetTextHexColor("#00adff",_pathTextLow)
+			else
+				_pathTextLow.SetTextHexColor("#09679e",_pathTextLow)
+		end
+	end)
 end
 
 function SetupButton(animName, btnPath, index)

@@ -47,12 +47,11 @@ function SetActiveUI(isActive)
 end
 
 function SetImage(imgName)
-	Log(imgName)
     _img.SetSprite(imgName)
 end
 
 function SetImagePos(x, y, z)
-    --_img.SetAnchoredPosition(x, y, z)
+    _img.SetAnchoredPosition(x, y, z)
 end
 
 function SetImageRot(x, y, z, w)

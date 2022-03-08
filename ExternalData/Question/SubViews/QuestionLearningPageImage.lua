@@ -55,15 +55,15 @@ function SetImagePos(x, y, z)
 end
 
 function SetImageRot(x, y, z, w)
-    --_img.SetLocalRotation(x, y, z, w)
+    _img.SetLocalRotation(x, y, z, w)
 end
 
 function SetImageScale(x, y, z)
-    --_img.SetLocalScale(x, y, z)
+    _img.SetLocalScale(x, y, z)
 end
 
 function SetRectSize(x, y)
-    --_img.SetRectSize(x, y)
+    _img.SetRectSize(x, y)
 end
 
 function Hide()

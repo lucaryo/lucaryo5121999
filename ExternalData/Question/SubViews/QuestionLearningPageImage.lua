@@ -63,7 +63,7 @@ function SetImageScale(x, y, z)
 end
 
 function SetRectSize(x, y)
-    _img.SetRectSize(x, y)
+    --_img.SetRectSize(x, y)
 end
 
 function Hide()

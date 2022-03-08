@@ -14,11 +14,11 @@ function OnReady()
 end
 
 function SetImage(imgName)
-    --_img.SetSprite(imgName)
+    _img.SetSprite(imgName)
 end
 
 function SetImagePos(x, y, z)
-    _img.SetAnchoredPosition(x, y, z)
+    --_img.SetAnchoredPosition(x, y, z)
 end
 
 function SetImageRot(x, y, z, w)
@@ -26,7 +26,7 @@ function SetImageRot(x, y, z, w)
 end
 
 function SetImageScale(x, y, z)
-    _img.SetLocalScale(x, y, z)
+    --_img.SetLocalScale(x, y, z)
 end
 
 function Hide()

@@ -47,7 +47,7 @@ function SetActiveUI(isActive)
 end
 
 function SetImage(imgName)
-    _img.SetSprite(imgName)
+    --_img.SetSprite(imgName)
 end
 
 function SetImagePos(x, y, z)
@@ -63,7 +63,7 @@ function SetImageScale(x, y, z)
 end
 
 function SetRectSize(x, y)
-    _img.SetRectSize(x, y)
+    --_img.SetRectSize(x, y)
 end
 
 function Hide()

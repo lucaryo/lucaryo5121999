@@ -2,7 +2,10 @@
 function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/Question/QuestionView.prefab",
-		Config = ""
+	Config = "",
+	Anchor = "CamScale",
+	AnchorPreset = "StretchAll",
+	SizeDelta = "{x: 0, y: 0}"
     }
 end
 

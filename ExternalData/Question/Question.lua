@@ -276,7 +276,6 @@ end
 
 function LoadQuestionMainPage(type)
 	local content = LuaGo.Find(_questionContainer);
-	Log('LoadQuestionMainPage: '.. type )
 	CreateSubView(_mainPagePath[type], content.Transform)
 end
 

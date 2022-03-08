@@ -18,7 +18,7 @@ function SetImage(imgName)
 end
 
 function SetLocalPosition(x, y, z)
-    --_img.SetAnchoredPosition(x, y, z)
+    _img.SetAnchoredPosition(x, y, z)
 end
 
 function SetLocalRotation(x, y, z, w)
@@ -30,7 +30,7 @@ function SetLocalScale(x, y, z)
 end
 
 function SetRectSize(x, y)
-    --_img.SetRectSize(x, y)
+    _img.SetRectSize(x, y)
 end
 
 function Hide()

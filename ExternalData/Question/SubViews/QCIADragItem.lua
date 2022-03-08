@@ -18,7 +18,7 @@ function SetImage(imgName)
 end
 
 function SetLocalPosition(x, y, z)
-    --_img.SetAnchoredPosition(x, y, z)
+    _img.SetAnchoredPosition(x, y, z)
 end
 
 function SetLocalRotation(x, y, z, w)

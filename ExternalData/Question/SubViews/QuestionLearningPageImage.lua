@@ -47,6 +47,7 @@ function SetActiveUI(isActive)
 end
 
 function SetImage(imgName)
+	Log(imgName)
     _img.SetSprite(imgName)
 end
 

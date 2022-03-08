@@ -47,7 +47,7 @@ function SetActiveUI(isActive)
 end
 
 function SetImage(imgName)
-    _img.SetSprite(imgName)
+    --_img.SetSprite(imgName)
 end
 
 function SetImagePos(x, y, z)

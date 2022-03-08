@@ -59,7 +59,7 @@ function SetImageRot(x, y, z, w)
 end
 
 function SetImageScale(x, y, z)
-    _img.SetLocalScale(x, y, z)
+    --_img.SetLocalScale(x, y, z)
 end
 
 function SetRectSize(x, y)

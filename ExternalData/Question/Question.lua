@@ -2,7 +2,7 @@
 function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/Question/QuestionView.prefab",
-	Config = ""
+		Config = ""
     }
 end
 

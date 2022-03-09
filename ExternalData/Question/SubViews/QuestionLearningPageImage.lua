@@ -47,7 +47,7 @@ function SetActiveUI(isActive)
 end
 
 function SetImage(imgName)
-    _img.SetSprite(imgName)
+    --_img.SetSprite(imgName)
 end
 
 function SetImagePos(x, y, z)
@@ -55,11 +55,11 @@ function SetImagePos(x, y, z)
 end
 
 function SetImageRot(x, y, z, w)
-    _img.SetLocalRotation(x, y, z, w)
+    --_img.SetLocalRotation(x, y, z, w)
 end
 
 function SetImageScale(x, y, z)
-    _img.SetLocalScale(x, y, z)
+    --_img.SetLocalScale(x, y, z)
 end
 
 function SetRectSize(x, y)

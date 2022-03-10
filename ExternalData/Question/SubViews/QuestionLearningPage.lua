@@ -31,6 +31,7 @@ function SetActiveUI(isActive)
 	obj.SetActive(isActive)
 
 	if isActive then
+		Question.SetTitleQuestion("LEARN PAGE")
 		local objImage = LuaGo.Find(_desImgPath)
 		objImage.DoFadeImage(1.0, 0.75, objImage)
 		objImage.DOGlitchEffect(2, objImage)

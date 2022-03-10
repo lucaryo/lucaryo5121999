@@ -35,7 +35,9 @@ function ShowComic()
 end
 
 function SetActiveUI(isActive)
-
+	if isActive then
+		Question.SetTitleQuestion("QUESTION")
+	end
 end
 
 function SetDesText(path)

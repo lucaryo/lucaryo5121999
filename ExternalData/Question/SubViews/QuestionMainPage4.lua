@@ -25,6 +25,9 @@ end
 local _desPath = "DesGroup"
 
 function SetActiveUI(isActive)
+	if isActive then
+		Question.SetTitleQuestion("QUESTION")
+	end
 	local obj = LuaGo.Find(_desPath)
 	obj.SetActive(isActive)
 end

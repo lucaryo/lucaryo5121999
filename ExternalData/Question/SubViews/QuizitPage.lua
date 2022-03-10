@@ -159,6 +159,9 @@ end
 local _timeObjectPath = "DesGroup/clockIcon"
 
 function SetActiveTime(isActive)
+	if isActive then
+		Question.SetTitleQuestion("QUIZ IT")
+	end
 	local obj = LuaGo.Find(_timeObjectPath)
 	obj.SetActive(isActive)
 end

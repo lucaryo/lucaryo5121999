@@ -14,6 +14,9 @@ function OnReady()
 end
 
 function SetActiveUI(isActive)
+	if isActive then
+		Question.SetTitleQuestion("LEARN PAGE")
+	then
 	local obj = LuaGo.Find(_desGroupPath)
 	obj.SetActive(isActive)
 end

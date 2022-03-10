@@ -159,6 +159,8 @@ local _resetPopupAnim = "ResetPopup"
 local _pauseIcon = "Btn_pause"
 local _playIcon = "Btn_Play"
 
+local _titleQuestionPath = "head/headBg/title"
+
 function OnReady()
 	FindUI()
 
@@ -757,6 +759,11 @@ function SetActiveEndQuizitPanel(active)
 	local obj = LuaGo.Find(_endQuizitPanel)
 	obj.SetActive(active);
 	numQuizit = 0
+end
+
+function SetTitleQuestion(title)
+	local titleObject = LuaGo.Find(_titleQuestionPath)
+	titleObject.SetText(title)
 end
 
 function Hide()

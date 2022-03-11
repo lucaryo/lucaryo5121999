@@ -21,9 +21,6 @@ local _desPathAnswer ={
 	"DesGroup/GroupAnswer/txtGroup2/answer_4"
 }
 
-local _checkBtnPath = "DesGroup/CheckBtn"
-local _checkTxtPath = "DesGroup/CheckBtn/CheckTxt"
-
 local _txtAnswer = {}
 
 function OnReady()
@@ -44,6 +41,10 @@ end
 
 function  SetAnswerData(index, text)
 	_txtAnswer[index+1] = text;
+end
+
+function SetInputFieldLimit(charLimit)
+	Question.LuaCall_SetSignalForKeyboardInputField(LuaGo.Find(_desImgInputField), charLimit)
 end
 
 function SetActiveUI(isActive)
@@ -78,13 +79,13 @@ function SetActiveUI(isActive)
 			objTextInput.SetTextDoTweenAnimation("Text will appear here", 0.5,objTextInput)
 			objTextInput.SetTextOpacity(0.2)
 			Wait(0.25)
-			local btnCheck = LuaGo.Find(_checkBtnPath)
-			btnCheck.DoFadeImage(1.0,0.76,btnCheck)
-			btnCheck.RegisterButtonPressedCallback(function ()
-				Question.LuaCall_CheckFinishAction();
-			end)
-			local checkTxt = LuaGo.Find(_checkTxtPath)
-			checkTxt.SetTextDoTweenAnimation("Check", 0.5,checkTxt)
+			--local btnCheck = LuaGo.Find(_checkBtnPath)
+			--btnCheck.DoFadeImage(1.0,0.76,btnCheck)
+			--btnCheck.RegisterButtonPressedCallback(function ()
+				--Question.LuaCall_CheckFinishAction();
+			--end)
+			--local checkTxt = LuaGo.Find(_checkTxtPath)
+			--checkTxt.SetTextDoTweenAnimation("Check", 0.5,checkTxt)
 		end)
 		coroutine.resume(co)
 	end

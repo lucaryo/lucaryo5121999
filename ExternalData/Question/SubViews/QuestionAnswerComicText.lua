@@ -1,4 +1,4 @@
-﻿function GetConfig ()
+function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/Question/Answers/ComicText.prefab",
 		Config = ""
@@ -8,13 +8,18 @@ end
 local _desImgInputField = "DesGroup/Input"
 
 local _txtInputField = "DesGroup/Input/TextArea/InputField"
-local _desImgBg = "DesGroup/GroupAnswer"
 local _desTitleImage = "DesGroup/ImageDes"
 local _desTxtPath = "DesGroup/ImageDes/des"
 local _desGroupPath = "DesGroup"
 local _text = nil;
 local _btnNextAnswerPath = "DesGroup/GameObject/correct/correct/btn_Next"
-local _desPathAnswer ={
+local _desPathAnswerText ={
+	"DesGroup/GroupAnswer/txtGroup1/answer_1/text",
+	"DesGroup/GroupAnswer/txtGroup1/answer_2/text",
+	"DesGroup/GroupAnswer/txtGroup2/answer_3/text",
+	"DesGroup/GroupAnswer/txtGroup2/answer_4/text"
+}
+local _desPathAnswer = {
 	"DesGroup/GroupAnswer/txtGroup1/answer_1",
 	"DesGroup/GroupAnswer/txtGroup1/answer_2",
 	"DesGroup/GroupAnswer/txtGroup2/answer_3",
@@ -64,11 +69,14 @@ function SetActiveUI(isActive)
 			objText.SetTextDoTweenAnimation(_text,3.0,objText)
 
 			Wait(3)
-			local objBg = LuaGo.Find(_desImgBg)
-			objBg.DoFadeImage(1.0, 0.75, objBg)
 			for i = 1 , #_desPathAnswer do 
 				Wait(0.5)
-				local objText = LuaGo.Find(_desPathAnswer[i])
+				local objImg = LuaGo.Find(_desPathAnswer[i])
+				objImg.DoFadeImage(0.4, 0.75, objImg)
+			end
+			for i = 1 , #_desPathAnswerText do 
+				Wait(0.5)
+				local objText = LuaGo.Find(_desPathAnswerText[i])
 				local textAnswer = _txtAnswer[i]
 				objText.SetTextDoTweenAnimation(textAnswer,0.25,objText)
 			end
@@ -79,13 +87,6 @@ function SetActiveUI(isActive)
 			objTextInput.SetTextDoTweenAnimation("Text will appear here", 0.5,objTextInput)
 			objTextInput.SetTextOpacity(0.2)
 			Wait(0.25)
-			--local btnCheck = LuaGo.Find(_checkBtnPath)
-			--btnCheck.DoFadeImage(1.0,0.76,btnCheck)
-			--btnCheck.RegisterButtonPressedCallback(function ()
-				--Question.LuaCall_CheckFinishAction();
-			--end)
-			--local checkTxt = LuaGo.Find(_checkTxtPath)
-			--checkTxt.SetTextDoTweenAnimation("Check", 0.5,checkTxt)
 		end)
 		coroutine.resume(co)
 	end

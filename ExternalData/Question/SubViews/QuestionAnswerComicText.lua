@@ -60,25 +60,23 @@ function SetActiveUI(isActive)
 
 		local co = coroutine.create(function ()
 
-			--Wait(3)
+			Wait(1)
 			local objTitleDes = LuaGo.Find(_desTitleImage)
 			objTitleDes.DoFadeImage(1.0,0.75,objTitleDes)
-
+			Wait(1)
 			local objText = LuaGo.Find(_desTxtPath)
 			objText.SetText("")
 			objText.SetTextDoTweenAnimation(_text,3.0,objText)
 
-			Wait(3)
+			Wait(2)
 			for i = 1 , #_desPathAnswer do 
-				Wait(0.5)
+				Wait(1)
 				local objImg = LuaGo.Find(_desPathAnswer[i])
 				objImg.DoFadeImage(0.4, 0.75, objImg)
-			end
-			for i = 1 , #_desPathAnswerText do 
-				Wait(0.5)
 				local objText = LuaGo.Find(_desPathAnswerText[i])
 				local textAnswer = _txtAnswer[i]
 				objText.SetTextDoTweenAnimation(textAnswer,0.25,objText)
+				objText.DoFadeText(1, 0.25, objText)
 			end
 			Wait(0.25)
 			local objImgInput = LuaGo.Find(_desImgInputField)

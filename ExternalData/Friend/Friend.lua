@@ -5,7 +5,7 @@ function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/Friend/Friend.prefab",
 		Config = "",
-		Anchor = "Root",
+		Anchor = "Cam",
 		AnchorPreset = "StretchAll",
 		SizeDelta = "{x: 0, y: 0}"
     }
@@ -43,6 +43,9 @@ local _imgEnmpty = "Bg/body/objScrollAddFriend/ScrollAddFriend/imgEnmpty"
 
 local _btnBackLobbyPath = "Bg/header/imgButton/btnBack"
 
+local objFriend = nil;
+local objInvite =nil
+local objAdd = nil
 
 function OnReady()
 	SetupButtonBackLobby(_btnBackLobbyPath)
@@ -55,10 +58,22 @@ function OnReady()
 	SetupButtonClose(_btnCancle)
 	SetupButtonClose(_btnClose)
 	SetupButtonConfirmDeleteRequestFriend(_btnOk)
+	GetObj()
+end
+function GetObj()
+	objFriend = LuaGo.Find(_pathScrollFriendTab)
+	objInvite = LuaGo.Find(_pathScrollFriendInviteTab)
+	objAdd = LuaGo.Find(_pathScrollAddFriend)
+end
+function SetAllActive()
+	objFriend.SetActive(true)
+	objInvite.SetActive(true)
+	objAdd.SetActive(true)
 end
 function SetupButtonBackLobby(btnPath)
 	local btn = LuaGo.Find(btnPath)
 	btn.RegisterButtonPressedCallback(function ()
+		SetAllActive()
 		Friend.LuaCall_BackLobby()
     end)
 end
@@ -79,7 +94,7 @@ function SetupToggFriendTab()
 		if(boolValue)
 			then
 				objText.SetTextHexColor("#FFFFFF")
-				Friend.LuaCall_ToggleFriendActive();
+				Friend.LuaCall_ToggleFriendActive()
 			else
 				objText.SetTextHexColor("#515d75")
 		end
@@ -184,6 +199,7 @@ function SetImageEmpty(isActive)
 	
 	
 end
+
 
 function Hide()
 end

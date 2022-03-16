@@ -5,9 +5,16 @@ function GetConfig ()
 		Config = ""
     }
 end
-
-local _nextBtnPath = "foot/nextBtn"
-local _backBtnPath = "foot/backBtn"
+local _abGroupPath ="ABGroup"
+local _nextBtnPath = "ABGroup/ABPanelUp/nextBtn"
+local _nextBtnPath2 = "ABGroup/ABPanelDown/nextBtn"
+local _backBtnPath = "ABGroup/ABPanelUp/backBtn"
+local _backBtnPath2 = "ABGroup/ABPanelDown/backBtn"
+local _panelABUpPath = "ABGroup/ABPanelUp"
+local _panelABDownPath = "ABGroup/ABPanelDown"
+local _txtABPath = "ABGroup/ABPanelUp/DataTxt"
+local _btnOpenAbPath = "ABGroup/ABPanelDown/abOpenBtn"
+local _btnCloseAbPath = "ABGroup/ABPanelUp/abCloseBtn"
 
 local _panelCorrectPath = "PopupGroup/CorrectPanel"
 
@@ -169,10 +176,15 @@ function OnReady()
 	SetupBtnPlayAudio()
 
 	SetupButtonNext(_nextBtnPath)
+	SetupButtonNext(_nextBtnPath2)
 	SetupButtonNext(_panelCorrectPath)
 	SetupButtonNext(_panelWrongPath)
 
+	SetupButtonOpenAb()
+	SetupButtonCloseAb()
+
 	SetupButtonBack(_backBtnPath)
+	SetupButtonBack(_backBtnPath2)
 
 	SetupOptionBtn(_openOptionPath, true)
 	SetupOptionBtn(_closeOptionPath, false)
@@ -215,6 +227,39 @@ function FindUI()
 	_popupImg = LuaGo.Find(_popupImgPath)
 	_popupAudioBtn = LuaGo.Find(_popupAudioBtnPath)
 	_popupBigAudioBtn = LuaGo.Find(_popupBigAuidoBtnPath)
+end
+
+function SetActiveABPanel(isActive)
+	local panel1 = LuaGo.Find(_panelABUpPath)
+	local panel2 = LuaGo.Find(_panelABDownPath)
+	panel1.SetActive(isActive)
+	panel2.SetActive(not isActive)
+end
+
+function SetTextAB(text)
+	local txt = LuaGo.Find(_txtABPath)
+	txt.SetTextHexColor("#FFFFFF")
+	txt.SetTextAB(text)
+end
+
+function LoopRandomText()
+	local txt = LuaGo.Find(_txtABPath)
+	txt.SetTextHexColor("#004F90")
+	txt.LoopRandomText()
+end
+
+function SetupButtonOpenAb()
+	local btn = LuaGo.Find(_btnOpenAbPath)	
+	btn.RegisterButtonPressedCallback(function ()
+		SetActiveABPanel(true)
+    end)
+end
+
+function SetupButtonCloseAb()
+	local btn = LuaGo.Find(_btnCloseAbPath)	
+	btn.RegisterButtonPressedCallback(function ()
+		SetActiveABPanel(false)
+    end)
 end
 
 function SetupButtonNext(btnPath)
@@ -325,11 +370,15 @@ end
 function SetActiveBtnNext(isActive)
 	local obj = LuaGo.Find(_nextBtnPath)
 	obj.SetActive(isActive)
+	local obj2 = LuaGo.Find(_nextBtnPath2)
+	obj2.SetActive(isActive)
 end
 
 function SetActiveBtnBack(isActive)
 	local obj = LuaGo.Find(_backBtnPath)
 	obj.SetActive(isActive)
+	local obj2 = LuaGo.Find(_backBtnPath2)
+	obj2.SetActive(isActive)
 end
 
 function SetupBtnPlayAudio()

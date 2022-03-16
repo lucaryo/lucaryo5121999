@@ -42,27 +42,25 @@ end
 
 local _correctBtnId
 
-function SetupBtnOnclick(btnId, isCorrect, idPopup)
+function SetupBtnOnclick(btnId, isCorrect, idPopup, idAb)
 		local obj = LuaGo.Find(_buttonPaths[btnId])
 		obj.RegisterButtonPressedCallback(function ()
-			ChooseAnswer(isCorrect, btnId, idPopup)
+			ChooseAnswer(isCorrect, btnId, idPopup, idAb)
 		end)	
 end
 
 
 
-function ChooseAnswer(isCorrect, btnId, idPopup)
+function ChooseAnswer(isCorrect, btnId, idPopup, idAb)
 	if isCorrect then
 		CorrectAnswerMultipleChoiceWithId(btnId)
 		ClearAllButtonClick()
 
-		Question.LuaCall_ShowButtonNext()
-
+		Question.LuaCall_ShowButtonNext()		
 		--Question.LuaCall_EndQuestionPanelData(isCorrect, word, mean)
 	else
 
 		WrongAnswerMultipleChoiceWithId(btnId)
-
 		--Question.LuaCall_SetActiveWrongPanel2(word, mean)
 	end
 
@@ -70,6 +68,12 @@ function ChooseAnswer(isCorrect, btnId, idPopup)
 
 	if idPopup != "" then
 		Question.LuaCall_ShowPopup(idPopup)
+	end
+
+	if idAb != "" then
+		Question.LuaCall_SetTextABWithId("Correct \nGood job \nMove next \n:)")
+	else
+		Question.LuaCall_SetTextAB("_No data to output\n_................\n_................\n_................\n")
 	end
 end
 
@@ -118,6 +122,7 @@ function SetActiveUI(isActive)
 	obj.SetActive(isActive)
 
 	if isActive then
+		Question.LuaCall_LoopRandomText()
 		local co = coroutine.create(function ()
 			Wait(3)
 			for i = 1 , #_buttonPaths do 

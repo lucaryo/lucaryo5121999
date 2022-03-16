@@ -10,15 +10,36 @@ function GetConfig ()
 		SizeDelta = "{x: 0, y: 0}"
     }
 end
+local _txtCoinPath = "Bg/header/objCoin/txtCoin"
+local _txtGemPath = "Bg/header/objGem/txtGem"
+local _txtObjEnergyPath = "Bg/header/objEnergy/txtEnergy"
+
 local _pathFriendTab ="Bg/body/ToggleGroup/FriendToggle"
 local _pathFriendInviteTab ="Bg/body/ToggleGroup/PendingInviteToggle"
 local _pathAddFriendTab = "Bg/body/ToggleGroup/AddFriendToggle"
 local _pathScrollFriendTab ="Bg/body/objScrollFriend"
 local _pathScrollFriendInviteTab= "Bg/body/objScrollPendingInvite"
-local _pathObjAddFriend ="Bg/body/objScrollAddFriend"
+local _pathScrollAddFriend ="Bg/body/objScrollAddFriend"
+local _pathPannelFriend = "Bg/body/objScrollFriend/ScrollFriend/pannelFriend"
+local _pathPannelInvite = "Bg/body/objScrollPendingInvite/ScrollPendingInvite/pannelPendingInvite"
+local _pathPannelAdd = "Bg/body/objScrollAddFriend/ScrollAddFriend/pannelPendingInvite"
 local _txtTextTabFriend = "Bg/body/ToggleGroup/FriendToggle/Label"
 local _txtTextTabInvite ="Bg/body/ToggleGroup/PendingInviteToggle/Label"
 local _txtTextTabAdd = "Bg/body/ToggleGroup/AddFriendToggle/Label"
+local _txtInputField = "Bg/body/objScrollAddFriend/inputFindFriend"
+local _btnFindFriendPath = "Bg/body/objScrollAddFriend/inputFindFriend/btnFindFriend"
+
+local _txtNumberFriend = "Bg/body/objScrollFriend/txtNumberFriend"
+local _txtNumberInvite = "Bg/body/objScrollPendingInvite/txtNumberFriendInvite"
+
+local _txtDesPopup = "Bg/Popup/BgPopup/des_popup"
+local _objPopup = "Bg/Popup"
+local _btnCloseOutscreen = "Bg/Popup/btnCloseOutScreen"
+local _btnClose = "Bg/Popup/BgPopup/btnClose"
+local _btnCancle = "Bg/Popup/BgPopup/ObjButton/BtnCancle"
+local _btnOk = "Bg/Popup/BgPopup/ObjButton/BtnOk"
+
+local _imgEnmpty = "Bg/body/objScrollAddFriend/ScrollAddFriend/imgEnmpty"
 
 local _btnBackLobbyPath = "Bg/header/imgButton/btnBack"
 
@@ -28,11 +49,25 @@ function OnReady()
 	SetupToggFriendTab()
 	SetupToggInviteFriendTab()
 	SetupToggAddFriendTab()
+	SetupButtonFindFriend(_btnFindFriendPath)
+	SetScrollPanel()
+	SetupButtonClose(_btnCloseOutscreen)
+	SetupButtonClose(_btnCancle)
+	SetupButtonClose(_btnClose)
+	SetupButtonConfirmDeleteRequestFriend(_btnOk)
 end
 function SetupButtonBackLobby(btnPath)
 	local btn = LuaGo.Find(btnPath)
 	btn.RegisterButtonPressedCallback(function ()
 		Friend.LuaCall_BackLobby()
+    end)
+end
+function SetupButtonFindFriend(btnPath)
+	local btn = LuaGo.Find(btnPath)
+	btn.RegisterButtonPressedCallback(function ()
+		local objInputField = LuaGo.Find(_txtInputField)
+		local textFind = objInputField.GetText()
+		Friend.LuaCall_FindFriend(textFind)
     end)
 end
 function SetupToggFriendTab()
@@ -44,8 +79,9 @@ function SetupToggFriendTab()
 		if(boolValue)
 			then
 				objText.SetTextHexColor("#FFFFFF")
+				Friend.LuaCall_ToggleFriendActive();
 			else
-				objText.SetTextHexColor("#8C8A8A")
+				objText.SetTextHexColor("#515d75")
 		end
 		
 	end)
@@ -60,14 +96,14 @@ function SetupToggInviteFriendTab()
 			then
 				objText.SetTextHexColor("#FFFFFF")
 			else
-				objText.SetTextHexColor("#8C8A8A")
+				objText.SetTextHexColor("#515d75")
 		end
 		
 	end)
 end
 function SetupToggAddFriendTab()
 	local objToggle = LuaGo.Find(_pathAddFriendTab)
-	local _pathAddFriend = LuaGo.Find(_pathObjAddFriend)
+	local _pathAddFriend = LuaGo.Find(_pathScrollAddFriend)
 	local objText = LuaGo.Find(_txtTextTabAdd)
 	objToggle.OnEventToggleChange(function (boolValue) 
 		_pathAddFriend.SetActive(boolValue)
@@ -75,10 +111,78 @@ function SetupToggAddFriendTab()
 			then
 				objText.SetTextHexColor("#FFFFFF")
 			else
-				objText.SetTextHexColor("#8C8A8A")
+				objText.SetTextHexColor("#515d75")
 		end
 		
 	end)
+end
+function SetScrollPanel()
+	local scrollFriend = LuaGo.Find(_pathPannelFriend)
+	local scrollInvite = LuaGo.Find(_pathPannelInvite)
+	local scrollAdd = LuaGo.Find(_pathPannelAdd)
+	Friend.LuaCall_SetTransform(scrollFriend,scrollInvite,scrollAdd)
+	
+end
+function Refresh()
+	local objCoin = LuaGo.Find(_txtCoinPath)
+	objCoin.SetText(Friend.Model.Gold,objCoin)
+
+	local objGem = LuaGo.Find(_txtGemPath)
+	objGem.SetText(Friend.Model.Gem,objGem)
+
+	local objEnergy = LuaGo.Find(_txtObjEnergyPath)
+	objEnergy.SetText(Friend.Model.Energy,objEnergy)
+end
+function SetInfoFriend(friend,invite)
+	local objFriend = LuaGo.Find(_txtNumberFriend)
+	objFriend.SetText(friend)
+	local objInvite = LuaGo.Find(_txtNumberInvite)
+	objInvite.SetText(invite)
+end
+function ShowPopupFriendFull(des)
+	local objPopup = LuaGo.Find(_objPopup)
+	objPopup.SetActive(true)
+
+	local objDes = LuaGo.Find(_txtDesPopup)
+	objDes.SetText(des)
+
+	local btnCancle = LuaGo.Find(_btnCancle)
+	btnCancle.SetActive(false)
+
+	
+end
+function ShowPopupDeleteFriend(des)
+	local objPopup = LuaGo.Find(_objPopup)
+	objPopup.SetActive(true)
+
+	local objDes = LuaGo.Find(_txtDesPopup)
+	objDes.SetText(des)
+
+	local btnCancle = LuaGo.Find(_btnCancle)
+	btnCancle.SetActive(true)
+
+end
+function SetupButtonClose(btnPath)
+	local btn = LuaGo.Find(btnPath)
+	btn.RegisterButtonPressedCallback(function ()
+		local objPopup = LuaGo.Find(_objPopup)
+		objPopup.SetActive(false)
+    end)
+end
+function SetupButtonConfirmDeleteRequestFriend(btnPath)
+	local btn = LuaGo.Find(btnPath)
+	btn.RegisterButtonPressedCallback(function ()
+
+		Friend.LuaCall_ConfirmDeleteFriendRequest()
+		local objPopup = LuaGo.Find(_objPopup)
+		objPopup.SetActive(false)
+    end)
+end
+function SetImageEmpty(isActive)
+	local objActive = LuaGo.Find(_imgEnmpty)
+	objActive.SetActive(isActive)
+	
+	
 end
 
 function Hide()

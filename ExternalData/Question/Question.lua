@@ -168,6 +168,9 @@ local _playIcon = "Btn_Play"
 
 local _titleQuestionPath = "head/headBg/title"
 
+local _islandTxtPath = "head/infoBg/islandTxt"
+local _cellIdTxtPath = "head/infoBg/cellTxt"
+
 function OnReady()
 	FindUI()
 
@@ -213,6 +216,15 @@ function OnReady()
 	Question.LuaCall_CreatePages()
 
 	SetActiveFalseWrongPanel2()
+end
+
+
+function SetDataHead()
+	local islandTxt = LuaGo.Find(_islandTxtPath)
+	islandTxt.SetText("Module ".. Question.Model.IslandId)
+
+	local cellTxt = LuaGo.Find(_cellIdTxtPath)
+	cellTxt.SetText("Objective ".. Question.Model.CellId)
 end
 
 function LoadQCIAItem(type)
@@ -293,6 +305,7 @@ function SetupButtonReset(btnPath)
 		SetActiveOptionPanel(false)
 		SetActivePausePanel(false)
 		SetActiveEndQuizitPanel(false);
+		LoopRandomText()
     end)
 end
 
@@ -341,7 +354,7 @@ end
 
 function SetActiveOptionPanel(isActive)
 	local cellTxt = LuaGo.Find(_optionCellPath)
-	cellTxt.SetText("Cell: " .. Question.Model.CurrentCell)
+	cellTxt.SetText("Cell: " .. Question.Model.CellId)
 
 	local answerTxt = LuaGo.Find(_optionQuestionPath)
 	answerTxt.SetText(Question.Model.QuestionIndex .. "/" .. Question.Model.NumberQuestion)

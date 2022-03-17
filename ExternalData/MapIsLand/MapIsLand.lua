@@ -7,7 +7,7 @@ function GetConfig ()
 		SizeDelta = "{x: 0, y: 0}"
     }
 end
-local _isLandItem = "MapIsLand/SubViews/MapIsLandSubViews"
+
 local _btnJoinIsLand = "Bg/body/btnJoinIsLand"
 local _btnBackLobby = "Bg/body/btnBack"
 local _handIcon = "Bg/body/Hand Icon"
@@ -28,7 +28,6 @@ function OnReady()
 	--SetupBtnPlanet()
 	SetupButtonBackLobby(_btnBackLobby)
 	SetupHorizontalSnap(_goHorizontalSnap)
-    SetupHandTutorialAnimation(3)
 end
 
 function SetPlanetTxtLevel(level)
@@ -97,17 +96,14 @@ end
 function SetupHandTutorialAnimation(loops)
     SetupAnimation(_handIcon, loops)
 end
+function ActiveHandTutorial(active)
+    local icon = LuaGo.Find(_handIcon)
+    icon.SetActive(active)
+end
 function SetupAnimation(iconPath, loops)
     local icon = LuaGo.Find(iconPath)
     MapIsLand.LuaCall_SwipeAnimation(icon, loops)
 end
-function CreateSubViewIsLand(sum)
-	_scrollContent = LuaGo.Find("Bg/body/Scroll/pannel")
-	for i = 1, sum do
-           CreateSubView(_isLandItem, _scrollContent.Transform)
-    end
-end
-
 function Hide()
 end
 

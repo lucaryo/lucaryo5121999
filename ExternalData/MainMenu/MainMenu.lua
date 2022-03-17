@@ -52,6 +52,9 @@ local _animator = nil
 local _unSelectColor = nil
 local _selectColor = nil
 
+local _subviewContainerPath = "MainMenu/Bg/SubViews"
+local _elderDialogView = "MainMenu/SubViews/ElderDialog"
+
 function OnReady()
 
 	SetupButtonIsland(_buttonIslandPath)
@@ -239,6 +242,11 @@ function SetSelectColorButton(buttonPath)
 		local icon = LuaGo.Find(string.format("%s%s",buttonPath ,"/Icon"))
 		Log(string.gsub(string.format("%s%s",buttonPath ,"/_2"),"/",""))
 		icon.SetSprite(string.gsub(string.format("%s%s",buttonPath ,"/_2"),"/",""), icon)
+end
+
+function CreateSubViewElderDialogue()
+    local content = LuaGo.Find(_subviewContainerPath)
+    CreateSubView(_elderDialogView, content.Transform)
 end
 
 function Hide()

@@ -19,6 +19,8 @@ local pathTxtAmountLeft ="Item/imgLeft/txtAmountLeft"
 local pathImgActive ="Item/imgActive"
 local pathTxtTotal = "Item/objLock/imgText/txtTotal"
 local pathImgLock = "Item/objLock/imgIconLock"
+local pathEffectFillImage = "Item/objLock/imgBar/fillBar/Effect"
+
 
 function OnReady()
 	SetupButtonBuyPopupVoucher();
@@ -53,7 +55,7 @@ function Refresh()
 	local objQuantity = LuaGo.Find(pathTxtAmountLeft)
 		objQuantity.SetText(ShopItem.Model.ItemEntity.Total,objQuantity)
 end
-function SetDataInView(isActive,fillImage,iconLock,total)
+function SetDataInView(isActive,fillImage,iconLock,total,isActiveEffectFill)
 	local objFill = LuaGo.Find(pathFillImage)
 		objFill.DoFill(fillImage,1)
 	local objImgActive = LuaGo.Find(pathImgActive)
@@ -62,6 +64,8 @@ function SetDataInView(isActive,fillImage,iconLock,total)
 		objLock.SetSprite(iconLock);
 	local objTotal = LuaGo.Find(pathTxtTotal)
 		objTotal.SetText(total,objTotal)
+	local objEffectFill = LuaGo.Find(pathEffectFillImage)
+	objEffectFill.SetActive(isActiveEffectFill)
 	
 
 end

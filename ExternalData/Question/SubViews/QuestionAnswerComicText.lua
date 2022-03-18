@@ -57,7 +57,7 @@ function SetActiveUI(isActive)
 	obj.SetActive(isActive)
 
 	if isActive then
-
+		Question.LuaCall_SetActiveABGroup(false)
 		local co = coroutine.create(function ()
 
 			Wait(1)

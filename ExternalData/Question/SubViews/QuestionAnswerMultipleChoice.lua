@@ -122,6 +122,7 @@ function SetActiveUI(isActive)
 	obj.SetActive(isActive)
 
 	if isActive then
+		Question.LuaCall_SetActiveABGroup(true)
 		Question.LuaCall_LoopRandomText()
 		local co = coroutine.create(function ()
 			Wait(3)

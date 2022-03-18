@@ -5,6 +5,11 @@ function GetConfig ()
 		Config = ""
     }
 end
+
+local _footGroupPath = "foot/GroupBtn"
+local _nextBtnPath3 = "foot/GroupBtn/nextBtn"
+local _backBtnPath3 = "foot/GroupBtn/backBtn"
+
 local _abGroupPath ="ABGroup"
 local _nextBtnPath = "ABGroup/ABPanelUp/nextBtn"
 local _nextBtnPath2 = "ABGroup/ABPanelDown/nextBtn"
@@ -180,6 +185,7 @@ function OnReady()
 
 	SetupButtonNext(_nextBtnPath)
 	SetupButtonNext(_nextBtnPath2)
+	SetupButtonNext(_nextBtnPath3)
 	SetupButtonNext(_panelCorrectPath)
 	SetupButtonNext(_panelWrongPath)
 
@@ -188,6 +194,7 @@ function OnReady()
 
 	SetupButtonBack(_backBtnPath)
 	SetupButtonBack(_backBtnPath2)
+	SetupButtonBack(_backBtnPath3)
 
 	SetupOptionBtn(_openOptionPath, true)
 	SetupOptionBtn(_closeOptionPath, false)
@@ -246,6 +253,13 @@ function SetActiveABPanel(isActive)
 	local panel2 = LuaGo.Find(_panelABDownPath)
 	panel1.SetActive(isActive)
 	panel2.SetActive(not isActive)
+end
+
+function SetActiveABGroup(isActive)
+	local abGroup = LuaGo.Find(_abGroupPath)
+	abGroup.SetActive(isActive)
+	local footGroup = LuaGo.Find(_footGroupPath)
+	footGroup.SetActive(not isActive)
 end
 
 function SetTextAB(text)
@@ -385,6 +399,8 @@ function SetActiveBtnNext(isActive)
 	obj.SetActive(isActive)
 	local obj2 = LuaGo.Find(_nextBtnPath2)
 	obj2.SetActive(isActive)
+	local obj3 = LuaGo.Find(_nextBtnPath3)
+	obj3.SetActive(isActive)
 end
 
 function SetActiveBtnBack(isActive)
@@ -392,6 +408,8 @@ function SetActiveBtnBack(isActive)
 	obj.SetActive(isActive)
 	local obj2 = LuaGo.Find(_backBtnPath2)
 	obj2.SetActive(isActive)
+	local obj3 = LuaGo.Find(_backBtnPath3)
+	obj3.SetActive(isActive)
 end
 
 function SetupBtnPlayAudio()

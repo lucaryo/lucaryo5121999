@@ -144,7 +144,7 @@ function SetActiveUI(isActive)
 	obj.SetActive(isActive)
 
 	if isActive then
-
+		Question.LuaCall_SetActiveABGroup(true)
 		local co = coroutine.create(function ()
 
 			local objText = LuaGo.Find(_desTxtPath)

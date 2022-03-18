@@ -15,6 +15,7 @@ end
 
 function SetActiveUI(isActive)
 	if isActive then
+		Question.LuaCall_SetActiveABGroup(false)
 		Question.SetTitleQuestion("LEARN PAGE")
 	end
 

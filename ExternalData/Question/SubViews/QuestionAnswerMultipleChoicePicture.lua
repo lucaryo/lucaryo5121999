@@ -113,7 +113,7 @@ function SetActiveUI(isActive, isFinishQuestion)
 	obj.SetActive(isActive)
 
 	if isActive then
-
+		Question.LuaCall_SetActiveABGroup(true)
 		if(isFinishQuestion == false) then
 			ResetData()
 

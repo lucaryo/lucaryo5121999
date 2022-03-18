@@ -73,6 +73,9 @@ end
 function SetActiveUI(isActive)
 	local obj = LuaGo.Find(_desGroupPath)
 	obj.SetActive(isActive)
+	if isActive then
+		Question.LuaCall_SetActiveABGroup(false)
+	end
 end
 
 function Hide()

@@ -9,6 +9,7 @@ local _imgPath = "DesGroup/Page/comicImg"
 local _img = nil
 
 function OnReady()
+    Question.LuaCall_SetActiveABGroup(false)
     Question.SubViewReady(LuaGo)
     _img = LuaGo.Find(_imgPath)
 end

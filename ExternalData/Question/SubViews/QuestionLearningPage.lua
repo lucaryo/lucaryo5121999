@@ -31,6 +31,7 @@ function SetActiveUI(isActive)
 	obj.SetActive(isActive)
 
 	if isActive then
+		Question.LuaCall_SetActiveABGroup(true)
 		Question.SetTitleQuestion("LEARN PAGE")
 		local objImage = LuaGo.Find(_desImgPath)
 		objImage.DoFadeImage(1.0, 0.75, objImage)

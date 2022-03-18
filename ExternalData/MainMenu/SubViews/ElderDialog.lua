@@ -29,7 +29,7 @@ end
 function SetupSkipButton()
 	local button = LuaGo.Find(_skipButtonPath)
 	button.RegisterButtonPressedCallback(function ()
-		MainMenu.LuaCall_SetActiveElderDialogSubView(false)
+		MainMenu.LuaCall_SetupNextButton()
 	end)
 end
 
@@ -40,6 +40,7 @@ function SetTextDialogContent(sentenceIndex, time)
 		textObj.SetTextDoTweenAnimation(_sentences[sentenceIndex], time)
 	else
 		MainMenu.LuaCall_SetActiveElderDialogSubView(false)
+		MainMenu.LuaCall_GoToCellView()
 	end
 end
 function Hide()

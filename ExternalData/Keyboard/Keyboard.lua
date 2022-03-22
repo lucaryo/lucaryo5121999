@@ -10,10 +10,6 @@ end
 
 local _inputFieldPath = "InputField"
 local _keyboardBackgroundPath = "Background"
-local _capslockImagePath = "Assets/GameData/Art/UI_SCI_/Keyboard/icon_capital.png"
-local _capslockImageSelectPath = "Assets/GameData/Art/UI_SCI_/Keyboard/icon_capital_select.png"
-local _deleteImagePath = "Assets/GameData/Art/UI_SCI_/Keyboard/icon_delete.png"
-local _deleteImageSelectPath = "Assets/GameData/Art/UI_SCI_/Keyboard/icon_delete_select.png"
 
 local _deleteIcon = "icon_delete"
 local _deleteIcon_Selected = "icon_delete_select"

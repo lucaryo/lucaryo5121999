@@ -29,7 +29,8 @@ end
 function SetupSkipButton()
 	local button = LuaGo.Find(_skipButtonPath)
 	button.RegisterButtonPressedCallback(function ()
-		MainMenu.LuaCall_SetupNextButton()
+		MainMenu.LuaCall_SetActiveElderDialogSubView(false)
+		MainMenu.LuaCall_GoToCellView()
 	end)
 end
 

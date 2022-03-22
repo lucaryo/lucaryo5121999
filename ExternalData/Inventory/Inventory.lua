@@ -6,37 +6,45 @@
 end
 
 
-local _txtCoinPath 		= "Scene_Skin/TopBar/txt_Coin/txt_Value"
-local _txtGemPath 		= "Scene_Skin/TopBar/txt_Gem/txt_Value"
-local _txtEnergyPath 		= "Scene_Skin/TopBar/txt_Energy/txt_Value"
+local _txtCoinPath = "Scene_Skin/TopBar/txt_Coin/txt_Value"
+local _txtGemPath = "Scene_Skin/TopBar/txt_Gem/txt_Value"
+local _txtEnergyPath = "Scene_Skin/TopBar/txt_Energy/txt_Value"
 
-local _btnCheat 		= "Scene_Skin/TopBar/CheckButton"
+local _btnCheat = "Scene_Skin/TopBar/CheckButton"
 
-local _buttonBackPath 		= "Scene_Skin/TopBar/group_btn_Cancel/btn_Cancel"
-local _buttonGenderPath 	= "Scene_Skin/CenterBar/Center_Left_Bar/gender"
-local _buttonBagPath 		= "Scene_Skin/CenterBar/Center_Left_Bar/bag"
-local _txtBagPath 			= "Scene_Skin/CenterBar/Center_Left_Bar/bag/ellipse/txtVolBag"
-local _goBagPath 			= "Scene_Skin/CenterBar/Center_Left_Bar/bag/ellipse"
+local _buttonBackPath = "Scene_Skin/TopBar/group_btn_Cancel/btn_Cancel"
+local _buttonGenderPath = "Scene_Skin/CenterBar/Center_Left_Bar/gender"
+local _buttonBagPath = "Scene_Skin/CenterBar/Center_Left_Bar/bag"
+local _txtBagPath = "Scene_Skin/CenterBar/Center_Left_Bar/bag/ellipse/txtVolBag"
+local _goBagPath = "Scene_Skin/CenterBar/Center_Left_Bar/bag/ellipse"
 
-local _tabBarPath 			= "Scene_Skin/Inventory/Tab_Bar"
+local _tabBarPath = "Scene_Skin/Inventory/Tab_Bar"
 
-local _buttonHatPath 		= "Scene_Skin/Inventory/Tab_Bar/TabItem_hat"
-local _buttonOutFitPath 	= "Scene_Skin/Inventory/Tab_Bar/TabItem_outfit"
-local _buttonWeaponPath 	= "Scene_Skin/Inventory/Tab_Bar/TabItem_weapon"
-local _buttonSkinColorPath	= "Scene_Skin/Inventory/Tab_Bar/TabItem_skincolor"
-local _buttonFacePath 		= "Scene_Skin/Inventory/Tab_Bar/TabItem_face"
+local _buttonHatPath = "Scene_Skin/Inventory/Tab_Bar/TabItem_hat"
+local _buttonOutFitPath = "Scene_Skin/Inventory/Tab_Bar/TabItem_outfit"
+local _buttonWeaponPath = "Scene_Skin/Inventory/Tab_Bar/TabItem_weapon"
+local _buttonSkinColorPath = "Scene_Skin/Inventory/Tab_Bar/TabItem_skincolor"
+local _buttonFacePath = "Scene_Skin/Inventory/Tab_Bar/TabItem_face"
 
-local _buttonNormalSkinPath 	= "Scene_Skin/Inventory/Tab_Bar/TabItem_normalSkin"
-local _buttonLimitSkinPath 		= "Scene_Skin/Inventory/Tab_Bar/TabItem_limitSkin"
+local _buttonNormalSkinPath = "Scene_Skin/Inventory/Tab_Bar/TabItem_normalSkin"
+local _buttonLimitSkinPath = "Scene_Skin/Inventory/Tab_Bar/TabItem_limitSkin"
 
-local _keyNameHat 			= "Hat"
-local _keyNameOutFit 		= "OutFit"
-local _keyNameWeapon 		= "Weapon"
-local _keyNameSkinColor 	= "SkinColor"
-local _keyNameFace			= "Face"
-local _keyNameOutFitFull	= "OutfitFull"
-local _keyNameNormalOutFitFull	= "NormalOutfitFull"
-local _keyNameLimitOutFitFull	= "LimitOutfitFull"
+local _keyNameHat = "Hat"
+local _keyNameOutFit = "OutFit"
+local _keyNameWeapon = "Weapon"
+local _keyNameSkinColor = "SkinColor"
+local _keyNameFace = "Face"
+local _keyNameOutFitFull = "OutfitFull"
+local _keyNameNormalOutFitFull = "NormalOutfitFull"
+local _keyNameLimitOutFitFull = "LimitOutfitFull"
+
+local _itemSubView = "Inventory/SubViews/InventoryItemSubView"
+local _listItemPath = "Scene_Skin/Inventory/ListItem/Content"
+
+local _popupParentPath = "Popup"
+local _popupBuySubview = "Inventory/SubViews/InventoryPopupBuyConfirm"
+local _popupCongratSubview = "Inventory/SubViews/InventoryPopupBuySuccess"
+local _buyLoadingSuccessPath = "Popup/Loading"
 
 function OnReady()
 
@@ -112,6 +120,11 @@ function SetTextBag(vol)
 	end
 end
 
+function StartLoading()
+	local loading = LuaGo.Find(_buyLoadingSuccessPath)
+	loading.SetActive(true)
+	Inventory.LuaCall_StarLoading(loading, 2.0)
+end
 
 function SetupButtonBack(btnPath)
 	local btn = LuaGo.Find(btnPath)
@@ -146,18 +159,23 @@ function UpdateCurrency(gemValue,goldValue,energyValue)
 
 end
 
-local _ItemSubView = "Inventory/SubViews/InventoryItemSubView"
-local listItemPath = "Scene_Skin/Inventory/ListItem/Content"
-
-
 function CreateSubItem(id)
-	_goListItem = LuaGo.Find(listItemPath)
-	CreateSubViewParam(_ItemSubView, _goListItem.Transform,id)
+	_goListItem = LuaGo.Find(_listItemPath)
+	CreateSubViewParam(_itemSubView, _goListItem.Transform,id)
+end
 
+function CreatePopupSubviewConfirm()
+	popupParent = LuaGo.Find(_popupParentPath)
+	CreateSubView(_popupBuySubview, popupParent.Transform)
+end
+
+function CreatePopupSubviewCongrat()
+	popupParent = LuaGo.Find(_popupParentPath)
+	CreateSubView(_popupCongratSubview, popupParent.Transform)
 end
 
 function CleanItemChild()
-	_goListItem = LuaGo.Find(listItemPath)
+	_goListItem = LuaGo.Find(_listItemPath)
 	_goListItem.CleanChild();
 end
 

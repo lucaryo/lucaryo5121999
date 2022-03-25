@@ -98,26 +98,25 @@ function SetupButtonShowReward(btnPath)
         obj.SetActive(true)
     end)
 end
+
 function SetupToggleDayTab()
-	local objToggle = LuaGo.Find(_pathDayToggle)
-	local _pathScrollFriend = LuaGo.Find(_pathScrollDay)
-	local objText = LuaGo.Find(_txtTextDay)
-	objToggle.OnEventToggleChange(function (boolValue) 
-		_pathScrollFriend.SetActive(boolValue)
-		if(boolValue)
-			then
-				objText.SetTextHexColor("#FFFFFF")
+    local objToggle = LuaGo.Find(_pathDayToggle)
+    local _pathScrollFriend = LuaGo.Find(_pathScrollDay)
+    local objText = LuaGo.Find(_txtTextDay)
+    objToggle.OnEventToggleChange(function (boolValue)
+        _pathScrollFriend.SetActive(boolValue)
+        if(boolValue)
+            then
+                objText.SetTextHexColor("#FFFFFF")
                 LeaderBoard.LuaCall_DayTabActive(true)
-                objReward = _pathPannelDay
-
-			else
-				objText.SetTextHexColor("#515d75")
+                objReward = _pathRewardDay
+            else
+                objText.SetTextHexColor("#515D75")
                 LeaderBoard.LuaCall_DayTabActive(false)
-
-		end
-		
-	end)
+        end
+    end)
 end
+
 function SetupToggleWeekTab()
 	local objToggle = LuaGo.Find(_pathWeekToggle)
 	local _pathScrollInviteFriend = LuaGo.Find(_pathScrollWeek)

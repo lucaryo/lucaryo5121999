@@ -23,8 +23,26 @@ local _buttonTextPaths = {
 	"DesGroup/AnswerGroup/DesGroup/answerBtnD/Text"
 }
 
+local _buttonPlayerChoosePaths = {
+	"DesGroup/AnswerGroup/DesGroup/answerBtnA/red_icon",
+	"DesGroup/AnswerGroup/DesGroup/answerBtnB/red_icon",
+	"DesGroup/AnswerGroup/DesGroup/answerBtnC/red_icon",
+	"DesGroup/AnswerGroup/DesGroup/answerBtnD/red_icon"
+}
+
+local _buttonBotChoosePaths = {
+	"DesGroup/AnswerGroup/DesGroup/answerBtnA/blue_icon",
+	"DesGroup/AnswerGroup/DesGroup/answerBtnB/blue_icon",
+	"DesGroup/AnswerGroup/DesGroup/answerBtnC/blue_icon",
+	"DesGroup/AnswerGroup/DesGroup/answerBtnD/blue_icon"
+}
+
+local _colorRed = "#ff6b80"
+local _colorGreen = "#89ff33"
+local _colorWhite = "#b4eeff"
+
 function OnReady()
-	Quizziz.SubViewReady(LuaGo)
+	QuizitPvp.SubViewReady(LuaGo)
 end
 
 function SetDesText(path)
@@ -46,8 +64,6 @@ end
 
 local _correctBtnId
 
-local _turn = 3
-
 function SetupBtnOnclick(btnId, isCorrect)
 		if isCorrect then
 			_correctBtnId = btnId;
@@ -63,55 +79,67 @@ function ChooseAnswer(isCorrect, btnId)
 	if (isCorrect) then
 		CorrectAnswerMultipleChoice()
 		ClearAllButtonClick()
-		Quizziz.LuaCall_SetEndQuizziz()
-		Quizziz.LuaCall_IsCorrectAnswer(_turn)
 	else
-		_turn = _turn - 1
-		if(_turn == 0) then
-			WrongAnswerMultipleChoiceAll()
-			CorrectAnswerMultipleChoice()
-			ClearAllButtonClick()
-			Quizziz.LuaCall_SetEndQuizziz()
-			Quizziz.LuaCall_IsCorrectAnswer(0)
-		else
-			WrongAnswerMultipleChoice(btnId)
-			ClearButtonClick(btnId)
-		end
+		WrongAnswerMultipleChoice(btnId)
+		ClearAllButtonClick()
 	end
 
-	Quizziz.LuaCall_ColorCurrentScore(_turn)
+	QuizitPvp.LuaCall_PlayerBtnIdChoose(btnId)
 end
 
 function ShowWhenTimeOut()
-	WrongAnswerMultipleChoiceAll()
-	CorrectAnswerMultipleChoice()
-	ClearAllButtonClick()
-	Quizziz.LuaCall_IsCorrectAnswer(0)
-	Quizziz.LuaCall_ColorCurrentScore(0)
+	local co = coroutine.create(function ()
+		WrongAnswerMultipleChoiceAll()
+		CorrectAnswerMultipleChoice()
+		ClearAllButtonClick()
+		ShowChoosen()
+		Wait(1)
+		QuizitPvp.LuaCall_MoveToNextQuizit()
+	end)
+	coroutine.resume(co)
 end
 
-local _correctBtnPath ="button_green_long"
-local _wrongBtnPath ="button_red_long"
-local _normalBtnPath ="button_blue_long"
+function ShowChoosen()
+	if QuizitPvp.Model.PlayerBtnId > 0 then
+		local playerChoose = LuaGo.Find(_buttonPlayerChoosePaths[QuizitPvp.Model.PlayerBtnId])
+		playerChoose.SetActive(true)
+	end
+
+	local botChoose = LuaGo.Find(_buttonBotChoosePaths[QuizitPvp.Model.BotBtnId])
+	botChoose.SetActive(true)
+end
+
+local _correctBtnPath ="button_green_pvp"
+local _wrongBtnPath ="button_red_pvp"
+local _normalBtnPath ="button_blue_pvp"
 
 function CorrectAnswerMultipleChoice()
 		local obj = LuaGo.Find(_buttonPaths[_correctBtnId])
 		obj.SetSprite(_correctBtnPath)
-		Quizziz.LuaCall_PlaySFXAnswerCorrect()
 
+		local objText = LuaGo.Find(_buttonTextPaths[_correctBtnId])
+		objText.SetTextHexColor(_colorGreen)
+
+		QuizitPvp.LuaCall_PlaySFXAnswerCorrect()
 end
 
 function WrongAnswerMultipleChoice(btnId)
 		local obj = LuaGo.Find(_buttonPaths[btnId])
 		obj.SetSprite(_wrongBtnPath)
-		Quizziz.LuaCall_PlaySFXAnswerWrong()
 
+		local objText = LuaGo.Find(_buttonTextPaths[btnId])
+		objText.SetTextHexColor(_colorRed)
+
+		QuizitPvp.LuaCall_PlaySFXAnswerWrong()
 end
 
 function WrongAnswerMultipleChoiceAll()
 	for i = 1, #_buttonPaths do
 		local obj = LuaGo.Find(_buttonPaths[i])
 		obj.SetSprite(_wrongBtnPath)
+
+		local objText = LuaGo.Find(_buttonTextPaths[i])
+		objText.SetTextHexColor(_colorRed)
 	end
 end
 
@@ -148,10 +176,6 @@ function SetActiveUI(isActive)
 		coroutine.resume(co)
 	end
 
-end
-
-function ResetData()
-	_turn = 3
 end
 
 local _timeObjectPath = "DesGroup/clockIcon"

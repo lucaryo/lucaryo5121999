@@ -2,52 +2,43 @@
 function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/Quizziz/QuizzizView.prefab",
+		Anchor = "Front",
 		Config = ""
     }
 end
 
-local _optionalPanelPath ="PopupGroup/OptionPanel"
-local _loadingPanelPath ="PopupGroup/LoadingPanel"
+local _playerNamePath = "head/PlayerAvatar/nameBg/nameTxt"
+local _botNamePath = "head/BotAvatar/nameBg/nameTxt"
 
-local _openOptionPath = "head/closeBtn"
-local _closeOptionPath = "PopupGroup/OptionPanel/OptionPopup/closeOptionBtn"
-local _resetBtnPath = "PopupGroup/OptionPanel/OptionPopup/resetBtn"
-local _quitBtnPath = "PopupGroup/OptionPanel/OptionPopup/quitBtn"
+local _loadingPanelPath ="PopupGroup/LoadingPanel"
 
 local _container = "QuestionContainer"
 
 local _quizzizPagePath = "Quizziz/QuizzizPage"
 
-function OnReady()
-	SetupOptionBtn(_openOptionPath, true)
-	SetupOptionBtn(_closeOptionPath, false)
-	SetupOptionBtn(_optionalPanelPath, false)
+local _nextPanel = "PopupGroup/NextPanel"
 
-	SetupButtonReset(_resetBtnPath)
+local _countDownPanel = "PopupGroup/CountDownPanel"
+local _countDownObject = "PopupGroup/CountDownPanel/panel"
+
+local _endPanelPath = "PopupGroup/EndPanel"
+local _endPlayerName ="PopupGroup/EndPanel/head/PlayerAvatar/name"
+local _endBotName = "PopupGroup/EndPanel/head/BotAvatar/name"
+local _endTitlePath = "PopupGroup/EndPanel/head/Type"
+local _endPointpath = "PopupGroup/EndPanel/head/Score"
+
+local _quitBtnPath = "PopupGroup/EndPanel/head/BackBtn"
+
+function OnReady()
 	SetupButtonQuit(_quitBtnPath)
 
-	Quizziz.LuaCall_CreatePages()
-end
-
-function SetupOptionBtn(btnPath, isActive)
-	local btn = LuaGo.Find(btnPath)	
-	btn.RegisterButtonPressedCallback(function ()
-		SetActiveOptionPanel(isActive)
-    end)
-end
-
-function SetupButtonReset(btnPath)
-	local btn = LuaGo.Find(btnPath)	
-	btn.RegisterButtonPressedCallback(function ()
-		Quizziz.LuaCall_ResetQuestionOnClick()
-		SetActiveOptionPanel(false)
-    end)
+	QuizitPvp.LuaCall_CreatePages()
 end
 
 function SetupButtonQuit(btnPath)
 	local btn = LuaGo.Find(btnPath)	
 	btn.RegisterButtonPressedCallback(function ()
-		Quizziz.LuaCall_StopPlayOnclick()
+		QuizitPvp.LuaCall_GoBack()
     end)
 end
 
@@ -56,40 +47,21 @@ function LoadQuizzizPage()
 	CreateSubView(_quizzizPagePath, content.Transform)
 end
 
-function SetActiveOptionPanel(isActive)
-	local obj = LuaGo.Find(_optionalPanelPath)
-	obj.SetActive(isActive)
-	Quizziz.LuaCall_PauseQuizziz(isActive)
-end
-
 function SetActiveLoadingPanel(isActive)
 	local obj = LuaGo.Find(_loadingPanelPath)
 	obj.SetActive(isActive)
 end
 
-local _leftPath = "head/questionLeft/text"
-local _correctPath = "head/questionCorrect/text"
-local _wrongPath = "head/questionWrong/text"
+function SetActiveEndPanel(title, point)
+	local endTitleTxt = LuaGo.Find(_endTitlePath)
+	endTitleTxt.SetText(title)
 
-local _finishOptionPath = "PopupGroup/OptionPanel/OptionPopup/pageFinish"
-local _scorePath = "PopupGroup/OptionPanel/OptionPopup/sc"
+	local endPointTxt = LuaGo.Find(_endPointpath)
+	endPointTxt.SetText(point)
 
-function SetDataQuizziz(left ,correct ,wrong, point, total)
-	local obj1 = LuaGo.Find(_leftPath)
-	obj1.SetText(left)
-	local obj2 = LuaGo.Find(_correctPath)
-	obj2.SetText(correct)
-	local obj3 = LuaGo.Find(_wrongPath)
-	obj3.SetText(wrong)
-	local obj4 = LuaGo.Find(_finishOptionPath)
-	obj4.SetText(total)
-
-	local obj6 = LuaGo.Find(_scorePath)
-	obj6.SetText(point)
+	local endPanel = LuaGo.Find(_endPanelPath)
+	endPanel.SetActive(true)
 end
-
-local _countDownPanel = "PopupGroup/CountDownPanel"
-local _countDownObject = "PopupGroup/CountDownPanel/panel"
 
 function SetActiveCountDown(isActive)
 	local obj = LuaGo.Find(_countDownPanel)
@@ -101,13 +73,26 @@ function SetActiveCountDown(isActive)
 	end
 end
 
-local _namePath = "head/bg2/name"
-
 function SetPlayerName(name)
-	local obj = LuaGo.Find(_namePath)
+	local obj = LuaGo.Find(_playerNamePath)
 	obj.SetText(name)
+
+	local obj2 = LuaGo.Find(_endPlayerName)
+	obj2.SetText(name)
 end
 
+function SetBotName(name)
+	local obj = LuaGo.Find(_botNamePath)
+	obj.SetText(name)
+
+	local obj2 = LuaGo.Find(_endBotName)
+	obj2.SetText(name)
+end
+
+function SetActiveNextPanel(isActive)
+	local obj = LuaGo.Find(_nextPanel)
+	obj.SetActive(isActive)
+end
 
 function Hide()
 end

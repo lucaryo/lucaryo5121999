@@ -5,7 +5,7 @@ function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/LeaderBoard/LeaderBoard.prefab",
 		Config = "",
-		Anchor = "Cam",
+		Anchor = "Front",
 		AnchorPreset = "StretchAll",
 		SizeDelta = "{x: 0, y: 0}"
     }

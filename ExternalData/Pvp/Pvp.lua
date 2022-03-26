@@ -5,7 +5,7 @@ function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/Pvp/Pvp.prefab",
 		Config = "",
-		Anchor = "Root",
+		Anchor = "Front",
 		AnchorPreset = "StretchAll",
 		SizeDelta = "{x: 0, y: 0}"
     }

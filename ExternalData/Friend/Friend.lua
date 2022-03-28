@@ -43,6 +43,11 @@ local _imgEnmpty = "Bg/body/objScrollAddFriend/ScrollAddFriend/imgEnmpty"
 
 local _btnBackLobbyPath = "Bg/header/imgButton/btnBack"
 
+local _subviewContainer = "Bg/body/SubViews"
+local _popupConfirmPath = "Friend/SubViews/AddFriendConfirm"
+
+local _friendButtonExtendPath = "Item/ImageAvata/btnExtend"
+
 local objFriend = nil;
 local objInvite =nil
 local objAdd = nil
@@ -84,6 +89,17 @@ function SetupButtonFindFriend(btnPath)
 		local textFind = objInputField.GetText()
 		Friend.LuaCall_FindFriend(textFind)
     end)
+end
+function DisableInvitedAndAddFriendExtendButtons()
+	local inviteContainer = LuaGo.Find(_pathPannelInvite)
+	local addContainer = LuaGo.Find(_pathPannelAdd)
+	Friend.LuaCall_GetInvitedFriends(inviteContainer)
+	Friend.LuaCall_GetInvitedFriends(addContainer)
+end
+function DisableFriendExtendButton(invitedFriend)
+	local extendButton = invitedFriend.Find(_friendButtonExtendPath)
+	extendButton.UnregisterButtonPressedCallback()
+	extendButton.SetActive(false)
 end
 function SetupToggFriendTab()
 	local objToggle = LuaGo.Find(_pathFriendTab)
@@ -196,10 +212,12 @@ end
 function SetImageEmpty(isActive)
 	local objActive = LuaGo.Find(_imgEnmpty)
 	objActive.SetActive(isActive)
-	
-	
 end
 
+function CreateConfirmPopup()
+	local content = LuaGo.Find(_subviewContainer)
+	CreateSubView(_popupConfirmPath, content.Transform)
+end
 
 function Hide()
 end

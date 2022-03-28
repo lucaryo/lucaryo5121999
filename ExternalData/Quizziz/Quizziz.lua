@@ -53,14 +53,20 @@ function SetActiveLoadingPanel(isActive)
 end
 
 function SetActiveEndPanel(title, point)
-	local endTitleTxt = LuaGo.Find(_endTitlePath)
-	endTitleTxt.SetText(title)
+	local co = coroutine.create(function ()
+		Wait(3)
 
-	local endPointTxt = LuaGo.Find(_endPointpath)
-	endPointTxt.SetText(point)
+		local endTitleTxt = LuaGo.Find(_endTitlePath)
+		endTitleTxt.SetText(title)
 
-	local endPanel = LuaGo.Find(_endPanelPath)
-	endPanel.SetActive(true)
+		local endPointTxt = LuaGo.Find(_endPointpath)
+		endPointTxt.SetText(point)
+
+		local endPanel = LuaGo.Find(_endPanelPath)
+		endPanel.SetActive(true)
+    end)
+	coroutine.resume(co)
+
 end
 
 function SetActiveCountDown(isActive)

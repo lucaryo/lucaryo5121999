@@ -35,6 +35,7 @@ local _pathHeader ="MainMenu/Bg/header"
 local _pathFooter = "MainMenu/Bg/footer"
 
 local _pathMainMenu ="MainMenu"
+local _pathAvatarbtn = "MainMenu/Bg/header/avatarFrame/mask/avatarImg"
 local _pathPopupSetting = "PopupSetting"
 local _pathBtnSetting = "MainMenu/Bg/header/settingBtn"
 local _pathCloseSetting ="PopupSetting/Bg/Header/btnClose"
@@ -214,6 +215,13 @@ end
 function SetColorButton(select, unselect)
 	_unSelectColor = unselect
 	_selectColor = select
+end
+
+function SetupAvatarButton()
+	local button = LuaGo.Find(_pathAvatarbtn)
+	button.RegisterButtonPressedCallback(function ()
+		MainMenu.LuaCall_LoadUserProfile()
+	end)
 end
 
 function SetUnSelectColorForButtons()

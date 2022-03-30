@@ -25,8 +25,6 @@ local _txtTimeLineInvite = "Item/ImageAvata/FriendInvite/txtTimeInvite"
 local _btnAccept = "Item/ImageAvata/FriendInvite/btnAccept"
 local _btnDelete = "Item/ImageAvata/FriendInvite/btnDelete"
 
-local _objSentFriend = "Item/ImageAvata/SentFriend"
-
 local _btnExtend = "Item/ImageAvata/btnExtend"
 local _btnCloseExtend = "Item/ImageAvata/unfriendGroup/btnBackground"
 local _btnUnfriendConfirm = "Item/ImageAvata/unfriendGroup/btnUnfriend"
@@ -117,15 +115,6 @@ function Refresh()
 			imgOnline.SetSprite("icon_offline")
 		
 	end
-	local btnSetting = LuaGo.Find(_btnExtend)
-	if FriendItem.Model.ItemEntity.TypeFriend == 3 
-		then
-			btnSetting.SetActive(true)
-		else
-			btnSetting.SetActive(false)
-
-		
-	end
 
 	local txtTimeInvite = LuaGo.Find(_txtTimeLineInvite)
 	txtTimeInvite.SetText(FriendItem.Model.ItemEntity.DateInvite)
@@ -146,9 +135,7 @@ function SetDataInViewInvited()
     local objFriend = LuaGo.Find(_objFriend)
 	local objInvite = LuaGo.Find(_objFriendInvite)
 	local objAddFriend = LuaGo.Find(_objAddFriend)
-	local objSendFriend = LuaGo.Find(_objSentFriend)
 
-	objSendFriend.SetActive(true)
 	objFriend.SetActive(false)
 	objInvite.SetActive(false)
 	objAddFriend.SetActive(false)
@@ -161,9 +148,7 @@ function SetDataInViewAddFriend()
     local objFriend = LuaGo.Find(_objFriend)
 	local objInvite = LuaGo.Find(_objFriendInvite)
 	local objAddFriend = LuaGo.Find(_objAddFriend)
-	local objSendFriend = LuaGo.Find(_objSentFriend)
 
-	objSendFriend.SetActive(false)
 	objFriend.SetActive(false)
 	objInvite.SetActive(false)
 	objAddFriend.SetActive(true)
@@ -175,13 +160,10 @@ function SetDataInViewReceiveFriend()
 	local objFriend = LuaGo.Find(_objFriend)
 	local objInvite = LuaGo.Find(_objFriendInvite)
 	local objAddFriend = LuaGo.Find(_objAddFriend)
-	local objSendFriend = LuaGo.Find(_objSentFriend)
 
-	objSendFriend.SetActive(false)
 	objFriend.SetActive(false)
 	objInvite.SetActive(true)
 	objAddFriend.SetActive(false)
 end
-
 function Hide()
 end

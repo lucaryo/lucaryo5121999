@@ -66,6 +66,13 @@ function SetActiveFriendButton(active)
 	end
 end
 
+function SetupCopyButton()
+	local button = LuaGo.Find(_copyButtonPath)
+	button.RegisterButtonPressedCallback(function ()
+			UserProfilePopup.LuaCall_CopyID("User ID copied to clipboard")
+		end)
+end
+
 function SetupCloseButton()
 	local button = LuaGo.Find(_closePath)
 	button.RegisterButtonPressedCallback(function ()

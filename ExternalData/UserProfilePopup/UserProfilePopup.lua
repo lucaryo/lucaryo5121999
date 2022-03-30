@@ -1,4 +1,4 @@
-﻿function GetConfig ()
+function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/UserProfile/UserProfile.prefab",
 		Config = "",
@@ -50,6 +50,7 @@ function SetupProfile(name, level, highScores, id, activeAddFriendButton)
 	SetupCloseButton()
 	SetActiveFriendButton(activeAddFriendButton)
 	SetHighScoreValue(highScores)
+	SetupCopyButton()
 end
 
 function SetHighScoreValue(highScores)

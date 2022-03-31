@@ -80,8 +80,8 @@ function SetupPlanetButtons(length)
             MapIsLand.LuaCall_JoinIsLandSubView(i)
         end)
     end
-    local container = LuaGo.Find(_planetContainerPath)
-    MapIsLand.LuaCall_DisableHorizontalLayoutGroup(container)
+    --local container = LuaGo.Find(_planetContainerPath)
+    --MapIsLand.LuaCall_DisableHorizontalLayoutGroup(container)
 end
 function SetupButtonJoinIsland(btnPath)
 	local btn = LuaGo.Find(btnPath)

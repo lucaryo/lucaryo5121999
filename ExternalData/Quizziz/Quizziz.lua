@@ -28,6 +28,14 @@ local _endTitlePath = "PopupGroup/EndPanel/head/Type"
 local _endPointpath = "PopupGroup/EndPanel/head/Score"
 
 local _quitBtnPath = "PopupGroup/EndPanel/head/BackBtn"
+local _quickBtnPath = "PopupGroup/EndPanel/head/QuickBtn"
+
+local _playerCrowPath = "PopupGroup/EndPanel/head/PlayerAvatar/crow"
+local _botCrowPath = "PopupGroup/EndPanel/head/BotAvatar/crow"
+
+local _winPanelPath = "PopupGroup/EndPanel/WinGroup"
+local _losePanelPath = "PopupGroup/EndPanel/LoseGroup"
+local _rawPanelPath = "PopupGroup/EndPanel/RawGroup"
 
 local _playerHpPath = "head/BattleBg/PlayerRobo/healthBar/hpTxt"
 local _botHpPath = "head/BattleBg/BotRobo/healthBar/hpTxt"
@@ -35,7 +43,7 @@ local _botHpPath = "head/BattleBg/BotRobo/healthBar/hpTxt"
 
 function OnReady()
 	SetupButtonQuit(_quitBtnPath)
-
+	SetUpButtonQuickPlay(_quickBtnPath)
 	QuizitPvp.LuaCall_CreatePages()
 end
 
@@ -56,21 +64,52 @@ function SetActiveLoadingPanel(isActive)
 	obj.SetActive(isActive)
 end
 
-function SetActiveEndPanel(title, point)
+function SetActiveEndPanel(type)
 	local co = coroutine.create(function ()
 		Wait(3)
 
-		local endTitleTxt = LuaGo.Find(_endTitlePath)
-		endTitleTxt.SetText(title)
-
-		local endPointTxt = LuaGo.Find(_endPointpath)
-		endPointTxt.SetText(point)
+		if(type == 3) then
+			ShowWinPanel()
+		elseif (type == 2) then
+			ShowLosePanel()
+		else
+			ShowRawPanel()
+		end
 
 		local endPanel = LuaGo.Find(_endPanelPath)
 		endPanel.SetActive(true)
     end)
 	coroutine.resume(co)
 
+end
+
+function ShowWinPanel()
+	local winPanel = LuaGo.Find(_winPanelPath)
+	winPanel.SetActive(true)
+
+	local crow = LuaGo.Find(_playerCrowPath)
+	crow.SetActive(true)
+end
+
+function ShowLosePanel()
+	local losePanel = LuaGo.Find(_losePanelPath)
+	losePanel.SetActive(true)
+
+	local crow = LuaGo.Find(_botCrowPath)
+	crow.SetActive(true)
+end
+
+function ShowWinPanel()
+	local winPanel = LuaGo.Find(_winPanelPath)
+	winPanel.SetActive(true)
+
+	local crow = LuaGo.Find(_playerCrowPath)
+	crow.SetActive(true)
+end
+
+function ShowRawPanel()
+	local rawPanel = LuaGo.Find(_rawPanelPath)
+	rawPanel.SetActive(true)
 end
 
 function SetActiveCountDown(isActive)
@@ -110,6 +149,13 @@ function UpdateHp()
 
 	local botHpTxt = LuaGo.Find(_botHpPath)
 	botHpTxt.SetText(QuizitPvp.Model.BotHp)
+end
+
+function SetUpButtonQuickPlay(btnPath)
+	local btn = LuaGo.Find(btnPath)	
+	btn.RegisterButtonPressedCallback(function ()
+		QuizitPvp.LuaCall_QuickPlay()
+    end)
 end
 
 function Hide()

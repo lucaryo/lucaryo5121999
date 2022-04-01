@@ -9,6 +9,7 @@ function GetConfig ()
 end
 
 local _btnJoinIsLand = "Bg/body/btnJoinIsLand"
+local _camPath = "MainCam_PlanetView"
 local _btnBackLobby = "Bg/body/btnBack"
 local _handIcon = "Bg/body/Hand Icon"
 local _goHorizontalSnap = "Horizontal Scroll Snap"
@@ -29,8 +30,12 @@ function OnReady()
 	--SetupBtnPlanet()
 	SetupButtonBackLobby(_btnBackLobby)
 	SetupHorizontalSnap(_goHorizontalSnap)
+    SetupCamera()
 end
-
+function SetupCamera()
+    local cam = LuaGo.Find(_camPath)
+    MapIsLand.LuaCall_SetupPlanetCam(cam)
+end
 function SetPlanetTxtLevel(level)
 	local txtLevel = LuaGo.Find(_planetTxtLevel)
     txtLevel.SetText(level)

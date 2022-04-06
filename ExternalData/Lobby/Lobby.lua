@@ -18,11 +18,14 @@ local _buttonPVPPath = "Bg/footer/groupBtn/pvpBtn"
 local _buttonSkinPath = "Bg/body/groupBtnRight/skinBtn"
 local _buttonMailPath = "Bg/body/groupBtnRight/mailBtn"
 local _noticeMailPath = "Bg/body/groupBtnRight/mailBtn/iconRed"
+local _buttonSubscription = "Bg/body/groupBtnRight/subscriptionBtn"
 
 function OnReady()
 	SetupButtonSkin(_buttonSkinPath)
 
 	SetupButtonMail(_buttonMailPath)
+
+	SetupButtonSubscription(_buttonSubscription)
 end
 
 function SetupButton(animName, btnPath, index)
@@ -44,6 +47,13 @@ function SetupButtonSkin(btnPath)
 	local btn = LuaGo.Find(btnPath)
 	btn.RegisterButtonPressedCallback(function ()
 		Lobby.LuaCall_LoadInventory()
+	end)
+end
+
+function SetupButtonSubscription(btnPath)
+	local btn = LuaGo.Find(btnPath)
+	btn.RegisterButtonPressedCallback(function ()
+		Lobby.LuaCall_LoadSub()
 	end)
 end
 

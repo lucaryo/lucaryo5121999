@@ -8,6 +8,8 @@ end
 local _closePath = "Popup/Button_Close"
 local _buttonJoinPath = "Popup/Button_Join"
 
+local _imageTicketPath = "Popup/Image_Ticket"
+
 local _textJoinPath = "Popup/Button_Join/Text"
 
 --Hex Colors--
@@ -17,6 +19,14 @@ local _disableColor = "#478BA9"
 --Sprites--
 local _spriteButtonEnable = "popup_button_choose"
 local _spriteButtonDisable = "popup_button_not selected"
+local _banners = {
+	"banner_class_1",
+	"banner_class_2",
+	"banner_class_3",
+	"banner_class_4",
+	"banner_concert_1",
+	"banner_concert_2"
+}
 --------
 
 function OnReady()
@@ -43,6 +53,11 @@ function SetupJoinButton()
 		EventVideo.LuaCall_JoinClass()
 		LuaGo.SetActive(false)
 	end)
+end
+
+function SetupTicketImage(index)
+	local image = LuaGo.Find(_imageTicketPath)
+	image.SetSprite(_banners[index])
 end
 
 function CheckTicketAvailable(isAvailable)

@@ -14,12 +14,26 @@ local _textAvailablePath = "Image_Tail/Text_Available"
 local _imagePriceBackgroundPath = "Image_Tail/Image_PriceBg"
 local _textPricePath = "Image_Tail/Image_PriceBg/Text_Price"
 
+local _banners = {
+	"banner_class_1",
+	"banner_class_2",
+	"banner_class_3",
+	"banner_class_4",
+	"banner_concert_1",
+	"banner_concert_2"
+}
+
 function OnReady()
 	Initialize()
 end
 
 function Initialize()
 	SetupButton()
+end
+
+function SetupHeadImage(index)
+	local image = LuaGo.Find(_imageHeadPath)
+	image.SetSprite(_banners[index])
 end
 
 function SetupButton()

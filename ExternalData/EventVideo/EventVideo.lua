@@ -161,5 +161,10 @@ function PlayClassVideo()
 	EventVideo.LuaCall_PlayClassVideo(videoPlayer)
 end
 
+function PlayConcertVideo()
+	local videoPlayer = LuaGo.Find(_videoPlayerPath)
+	EventVideo.LuaCall_PlayConcertVideo(videoPlayer)
+end
+
 function Hide()
 end

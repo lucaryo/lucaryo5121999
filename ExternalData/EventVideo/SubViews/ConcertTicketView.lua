@@ -5,16 +5,18 @@
     }
 end
 
-local _imageHeadPath = "Image_Head"
 local _buttonPath = "Button"
-local _imageTailPath = "Image_Tail"
-local _textTimePath = "Image_Tail/Text_Time"
-local _textAvailablePath = "Image_Tail/Text_Available"
-local _imagePriceBgPath = "Image_Tail/Image_PriceBg"
-local _imageCoinPath = "Image_Tail/Image_PriceBg/Image_Coin"
-local _imageGamePath = "Image_Tail/Image_PriceBg/Image_Gem"
-local _textCoinPath = "Image_Tail/Image_PriceBg/Image_Coin/Text_Price"
-local _textGemPath = "Image_Tail/Image_PriceBg/Image_Gem/Text_Price"
+local _textTimePath = "Button/Image_Tail/Text_Time"
+local _textAvailablePath = "Button/Image_Tail/Text_Available"
+local _textCoinPath = "Button/Image_Tail/Image_PriceBg/Image_Coin/Text_Price"
+local _textGemPath = "Button/Image_Tail/Image_PriceBg/Image_Gem/Text_Price"
+
+local _imageHeadPath = "Button/Image_Head"
+local _imageTailPath = "Button/Image_Tail"
+local _imageDisable = "Button/Image_Disable"
+local _imagePriceBgPath = "Button/Image_Tail/Image_PriceBg"
+local _imageCoinPath = "Button/Image_Tail/Image_PriceBg/Image_Coin"
+local _imageGamePath = "Button/Image_Tail/Image_PriceBg/Image_Gem"
 
 local _banners = {
 	"banner_class_1",
@@ -24,6 +26,10 @@ local _banners = {
 	"banner_concert_1",
 	"banner_concert_2"
 }
+--Hex Color--
+local _availableColor = "#00ff36"
+local _unavailableColor = "#acacac"
+----
 
 function OnReady()
 	Initialize()
@@ -33,18 +39,47 @@ function Initialize()
 	SetupButton()
 end
 
-function SetupHeadImage(index)
+function SetupTicket(index, coin, gem, time)
+	SetHeadImage(index)
+	SetCoinPrice(coin)
+	SetGemPrice(gem)
+	SetTime(time)
+end
+
+function SetHeadImage(index)
 	local image = LuaGo.Find(_imageHeadPath)
 	image.SetSprite(_banners[index])
 end
 
-function SetupGemPrice(value)
+function SetGemPrice(value)
 	local gem = LuaGo.Find(_textGemPath)
 	gem.SetText(value)
 end
-function SetupCoinPrice(value)
+
+function SetCoinPrice(value)
 	local coin = LuaGo.Find(_textCoinPath)
 	coin.SetText(value)
+end
+
+function SetTime(value)
+	local time = LuaGo.Find(_textTimePath)
+	time.SetText(value)
+end
+
+function SetTextOnAvailable(isAvailable)
+	if isAvailable then
+		SetAvailableText("OPEN", _availableColor)
+		SetActiveDisableImage(false)
+	else
+		SetAvailableText("CLOSE", _unavailableColor)
+		SetActiveDisableImage(true)
+	end
+end
+
+function SetAvailableText(text, color)
+	local textObject = LuaGo.Find(_textAvailablePath)
+	textObject.SetTextHexColor(color)
+	textObject.SetText(text)
 end
 
 function SetupButton()
@@ -52,6 +87,19 @@ function SetupButton()
 	button.RegisterButtonPressedCallback(function ()
 		EventVideo.LuaCall_ShowConcertPopup(LuaGo)
 	end)
+end
+
+function SetupBuyableTicket()
+	SetActiveDisableImage(false)
+end
+
+function SetupUnbuyableTicket()
+	SetActiveDisableImage(true)
+end
+
+function SetActiveDisableImage(isActive)
+	local disable = LuaGo.Find(_imageDisable)
+	disable.SetActive(isActive)
 end
 
 function Hide()

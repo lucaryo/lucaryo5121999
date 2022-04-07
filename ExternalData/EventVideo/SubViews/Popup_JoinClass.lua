@@ -11,6 +11,7 @@ local _buttonJoinPath = "Popup/Button_Join"
 local _imageTicketPath = "Popup/Image_Ticket"
 
 local _textJoinPath = "Popup/Button_Join/Text"
+local _textTimePath = "Popup/Text_Time"
 
 --Hex Colors--
 local _enableColor = "#96EEFD"
@@ -20,12 +21,12 @@ local _disableColor = "#478BA9"
 local _spriteButtonEnable = "popup_button_choose"
 local _spriteButtonDisable = "popup_button_not selected"
 local _banners = {
-	"banner_class_1",
-	"banner_class_2",
-	"banner_class_3",
-	"banner_class_4",
-	"banner_concert_1",
-	"banner_concert_2"
+	"popupClass_banner 1",
+	"popupClass_banner 2",
+	"popupClass_banner 3",
+	"popupClass_banner 4",
+	"popupConcert_banner 1",
+	"popupConcert_banner 2"
 }
 --------
 
@@ -35,6 +36,11 @@ end
 
 function Initialize()
 	SetupClosePopup()
+end
+
+function SetTime(value)
+	local time = LuaGo.Find(_textTimePath)
+	time.SetText(value)
 end
 
 function SetupClosePopup()
@@ -63,6 +69,7 @@ end
 function CheckTicketAvailable(isAvailable)
 	local button = LuaGo.Find(_buttonJoinPath)
 	local text = LuaGo.Find(_textJoinPath)
+	EventVideo.LuaCall_ResetButton(button)
 	if isAvailable then
 		button.SetSprite(_spriteButtonEnable)
 		text.SetTextHexColor(_enableColor)

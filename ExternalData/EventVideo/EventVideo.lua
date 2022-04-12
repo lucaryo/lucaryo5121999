@@ -194,7 +194,7 @@ end
 
 function SetLandscapeActive(isActive)
 	local landscape = LuaGo.Find(_videoLandscapePath)
-	EventVideo.LuaCall_ScreenLandscapeOrentation()
+	--EventVideo.LuaCall_ScreenLandscapeOrentation()
 	landscape.SetActive(isActive)
 end
 function SetPortraitActive(isActive)

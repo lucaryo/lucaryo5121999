@@ -236,7 +236,6 @@ function OnReady()
 	Question.LuaCall_CreatePages()
 
 	SetActiveFalseWrongPanel2()
-	SetAbDefaultColor()
 end
 
 
@@ -931,11 +930,6 @@ end
 
 function ChangeWrongAb()
 	ChangeImgAbBox(abRed, abBlue)
-end
-
-function SetAbDefaultColor()
-	local abBox = LuaGo.Find(_abPanel)
-	abBox.SetSprite(abBlue)
 end
 
 function Hide()

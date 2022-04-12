@@ -146,13 +146,13 @@ function SetTextArray(textPaths, arrayText)
 		SetTextObject(textPaths[i], arrayText[i])
 	end
 end
-function SetAvatar(strAvatar)
+function SetAvatar(strAvatar,strName)
 	local avt1 = LuaGo.Find(_userAvatarPath)
 	local avt2 = LuaGo.Find(imgAvatarPopup)
 	local txtName = LuaGo.Find(txtNameAvatar)
 	avt1.SetSprite(strAvatar)
 	avt2.SetSprite(strAvatar)
-	txtName.SetText(strAvatar)
+	txtName.SetText(strName)
 end
 
 function Hide()

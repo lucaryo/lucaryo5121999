@@ -38,6 +38,7 @@ local _buttonShowLandscape = "Preview/Portrait/group_btn_Cancel/btn_Landscape"
 
 local _videoLandscapePath = "Preview/Lanscape"
 local _buttonLandscapeClosePath = "Preview/Lanscape/Border/btn_Cancel"
+local _buttonPortraitPath = "Preview/Lanscape/Border/btn_Portrait"
 
 function OnReady()
 	Initialize()
@@ -55,6 +56,7 @@ function Initialize()
 	SetupBackButton()
 	SetupPreviewButton()
 	SetupShowLandscapeButton()
+	SetupShowPortraitButton()
 	SetLandscapeActive(false)
 end
 
@@ -98,7 +100,8 @@ function SetupPreviewButton()
 	end)
 	local buttonCloseLandscape = LuaGo.Find(_buttonLandscapeClosePath)
 	buttonCloseLandscape.RegisterButtonPressedCallback(function ()
-		SetLandscapeActive(false)
+		button.SetActive(false)
+		EventVideo.LuaCall_ContinueMusicOnClose()
 	end)
 end
 
@@ -181,14 +184,19 @@ function PlayConcertVideo()
 	EventVideo.LuaCall_PlayConcertVideo(videoPlayer)
 end
 
-function ShowPortrait()
-end
-
 function SetupShowLandscapeButton()
 	local button = LuaGo.Find(_buttonShowLandscape)
 	button.RegisterButtonPressedCallback(function ()
 		SetLandscapeActive(true)
 		SetPortraitActive(false)
+	end)
+end
+
+function SetupShowPortraitButton()
+	local button = LuaGo.Find(_buttonPortraitPath)
+	button.RegisterButtonPressedCallback(function ()
+		SetPortraitActive(true)
+		SetLandscapeActive(false)
 	end)
 end
 

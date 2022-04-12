@@ -46,12 +46,17 @@ local _rawPanelPath = "PopupGroup/EndPanel/RawGroup"
 local _playerHpPath = "head/BattleBg/PlayerRobo/healthBar/hpTxt"
 local _botHpPath = "head/BattleBg/BotRobo/healthBar/hpTxt"
 
+local _popupInfoPath = "PopupGroup/OptionPanel"
+local _yesBtnInfoBtnPath = "PopupGroup/OptionPanel/OptionPopup/yesBtn"
+local _noBtnInfoPath = "PopupGroup/OptionPanel/OptionPopup/noBtn"
 
 function OnReady()
-	SetupButtonQuit(_quitBtnPath2)
+	SetupButtonQuit(_yesBtnInfoBtnPath)
 	SetupButtonQuit(_quitBtnPath)
 	SetUpButtonQuickPlay(_quickBtnPath)
 	QuizitPvp.LuaCall_CreatePages()
+	SetUpButtonActivePopupInfo(_noBtnInfoPath, false)
+	SetUpButtonActivePopupInfo(_quitBtnPath2, true)
 end
 
 function SetupButtonQuit(btnPath)
@@ -163,6 +168,18 @@ function SetUpButtonQuickPlay(btnPath)
 	local btn = LuaGo.Find(btnPath)	
 	btn.RegisterButtonPressedCallback(function ()
 		QuizitPvp.LuaCall_QuickPlay()
+    end)
+end
+
+function SetActivePopupInfo(isActive)
+	local popupInfo = LuaGo.Find(_popupInfoPath)
+	popupInfo.SetActive(isActive)
+end
+
+function SetUpButtonActivePopupInfo(btnPath, isActive)
+	local btn = LuaGo.Find(btnPath)	
+	btn.RegisterButtonPressedCallback(function ()
+		SetActivePopupInfo(isActive)
     end)
 end
 

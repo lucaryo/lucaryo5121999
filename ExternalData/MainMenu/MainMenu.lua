@@ -47,7 +47,7 @@ local _pathTogleLow ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/Low"
 local _pathTextHigh ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/High/Label"
 local _pathTextMedium ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/Medium/Label"
 local _pathTextLow ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/Low/Label"
-local _subscriptionBtn ="PopupSetting/Bg/Body/imgSubcrition"
+local _subscriptionBtn ="PopupSetting/Bg/Body/imgSubcrition/btnSub"
 
 local _scrollContent = nil
 local _animator = nil

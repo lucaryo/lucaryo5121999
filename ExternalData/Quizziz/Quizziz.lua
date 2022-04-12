@@ -34,6 +34,8 @@ local _endPlayerNameLose3 ="PopupGroup/EndPanel/RawGroup/lose/BotAvatar/name"
 local _endTitlePath = "PopupGroup/EndPanel/head/Type"
 local _endPointpath = "PopupGroup/EndPanel/head/Score"
 
+local _quitBtnPath2 = "head/QuitBtn"
+
 local _quitBtnPath = "PopupGroup/EndPanel/head/BackBtn"
 local _quickBtnPath = "PopupGroup/EndPanel/head/QuickBtn"
 
@@ -46,6 +48,7 @@ local _botHpPath = "head/BattleBg/BotRobo/healthBar/hpTxt"
 
 
 function OnReady()
+	SetupButtonQuit(_quitBtnPath2)
 	SetupButtonQuit(_quitBtnPath)
 	SetUpButtonQuickPlay(_quickBtnPath)
 	QuizitPvp.LuaCall_CreatePages()

@@ -47,6 +47,7 @@ local _pathTogleLow ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/Low"
 local _pathTextHigh ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/High/Label"
 local _pathTextMedium ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/Medium/Label"
 local _pathTextLow ="PopupSetting/Bg/Body/txtGraphic/ToggleGroup/Low/Label"
+local _subscriptionBtn ="PopupSetting/Bg/Body/imgSubcrition"
 
 local _scrollContent = nil
 local _animator = nil
@@ -81,6 +82,7 @@ function OnReady()
 	SetupToggLow()
 	SetupToggleGroup()
 	SetPopupSubBtn()
+	SetupBtnSubscription(_subscriptionBtn)
 end
 
 function SetActivePopupSetting(isActive)
@@ -294,9 +296,17 @@ function SetPopupSubBtn()
 		SetActivePopupSub(false)
 	end)
 end
+
 function SetAvatar(strAvatar)
 	local objAvatar = LuaGo.Find(_pathAvatarbtn)
 	objAvatar.SetSprite(strAvatar)
+end
+
+function SetupBtnSubscription(btnPath)
+	local btn = LuaGo.Find(btnPath)
+	btn.RegisterButtonPressedCallback(function ()
+		MainMenu.LuaCall_LoadSub()
+	end)
 end
 function Hide()
 end

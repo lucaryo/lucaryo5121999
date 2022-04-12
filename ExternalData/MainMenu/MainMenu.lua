@@ -294,6 +294,9 @@ function SetPopupSubBtn()
 		SetActivePopupSub(false)
 	end)
 end
-
+function SetAvatar(strAvatar)
+	local objAvatar = LuaGo.Find(_pathAvatarbtn)
+	objAvatar.SetSprite(strAvatar)
+end
 function Hide()
 end

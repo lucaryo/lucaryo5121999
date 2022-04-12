@@ -1,4 +1,4 @@
-﻿function GetConfig ()
+function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/EventVideo/EventVideo.prefab",
 		Config = "",
@@ -22,6 +22,7 @@ local _toggleClassTextPath = "Tabs/Toggle_Class/Text"
 local _toggleConcertTabPath = "Tabs/Toggle_Concert"
 local _toggleConcertTextPath = "Tabs/Toggle_Concert/Text"
 
+
 local _buttonBack = "TopBar/group_btn_Cancel/btn_Cancel"
 local _textEnergy = "TopBar/txt_Energy/txt_Value"
 local _textGem = "TopBar/txt_Gem/txt_Value"
@@ -31,7 +32,12 @@ local _toggleDisableColor = "#BBBBBB"
 local _toggleEnableColor = "#FFFFFF"
 
 local _videoPlayerPath = "Preview"
-local _videoBackButtonPath = "Preview/TopBar/group_btn_Cancel/btn_Cancel"
+local _videoBackButtonPath = "Preview/Portrait/group_btn_Cancel/btn_Cancel"
+local _videoPortraitPath = "Preview/Portrait"
+local _buttonShowLandscape = "Preview/Portrait/group_btn_Cancel/btn_Landscape"
+
+local _videoLandscapePath = "Preview/Lanscape"
+local _buttonLandscapeClosePath = "Preview/Lanscape/Border/btn_Cancel"
 
 function OnReady()
 	Initialize()
@@ -48,6 +54,8 @@ function Initialize()
 	SetupPopupConcert()
 	SetupBackButton()
 	SetupPreviewButton()
+	SetupShowLandscapeButton()
+	SetLandscapeActive(false)
 end
 
 function SetupClassTab()
@@ -87,6 +95,10 @@ function SetupPreviewButton()
 	backButton.RegisterButtonPressedCallback(function ()
 		button.SetActive(false)
 		EventVideo.LuaCall_ContinueMusicOnClose()
+	end)
+	local buttonCloseLandscape = LuaGo.Find(_buttonLandscapeClosePath)
+	buttonCloseLandscape.RegisterButtonPressedCallback(function ()
+		SetLandscapeActive(false)
 	end)
 end
 
@@ -167,6 +179,27 @@ end
 function PlayConcertVideo()
 	local videoPlayer = LuaGo.Find(_videoPlayerPath)
 	EventVideo.LuaCall_PlayConcertVideo(videoPlayer)
+end
+
+function ShowPortrait()
+end
+
+function SetupShowLandscapeButton()
+	local button = LuaGo.Find(_buttonShowLandscape)
+	button.RegisterButtonPressedCallback(function ()
+		SetLandscapeActive(true)
+		SetPortraitActive(false)
+	end)
+end
+
+function SetLandscapeActive(isActive)
+	local landscape = LuaGo.Find(_videoLandscapePath)
+	EventVideo.LuaCall_ScreenLandscapeOrentation()
+	landscape.SetActive(isActive)
+end
+function SetPortraitActive(isActive)
+	local portrait = LuaGo.Find(_videoPortraitPath)
+	portrait.SetActive(isActive)
 end
 
 function Hide()

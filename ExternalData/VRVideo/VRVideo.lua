@@ -1,4 +1,4 @@
-﻿function GetConfig ()
+function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/VRVideo/VRVideo.prefab",
 		Config = "",
@@ -32,14 +32,22 @@ local _toggleDisableColor = "#BBBBBB"
 local _toggleEnableColor = "#FFFFFF"
 
 local _videoPlayerPath = "Preview"
-local _videoBackButtonPath = "Preview/Portrait/group_btn_Cancel/btn_Cancel"
+local _videoBackButtonPath = "Preview/Portrait/Border/btn_Cancel"
 local _videoPortraitPath = "Preview/Portrait"
-local _buttonShowLandscape = "Preview/Portrait/group_btn_Cancel/btn_Landscape"
+
+local _buttonShowLandscape = "Preview/Portrait/Border/btn_Landscape"
+local _buttonPlayPortraitVideoPath = "Preview/Portrait/Border/Background/btn_Play"
+
+local _imagePlayPortraitVideoPath = "Preview/Portrait/Border/Background"
 
 local _videoLandscapePath = "Preview/Landscape"
 local _imageVideoLandscapePath = "Preview/Landscape/Video"
+
 local _buttonLandscapeClosePath = "Preview/Landscape/Border/btn_Cancel"
 local _buttonPortraitPath = "Preview/Landscape/Border/btn_Portrait"
+local _buttonPlayLandscapeVideoPath = "Preview/Landscape/Border/Background/btn_Play"
+
+local _imagePlayLandscapeBackgroundPath = "Preview/Landscape/Border/Background"
 
 function OnReady()
 	Initialize()
@@ -59,6 +67,7 @@ function Initialize()
 	SetupShowLandscapeButton()
 	SetupShowPortraitButton()
 	SetLandscapeActive(false)
+	SetupPlayButtons()
 end
 
 function SetupClassTab()
@@ -103,6 +112,23 @@ function SetupPreviewButton()
 	buttonCloseLandscape.RegisterButtonPressedCallback(function ()
 		button.SetActive(false)
 		VRVideo.LuaCall_ContinueMusicOnClose()
+	end)
+end
+
+function SetupPlayButtons()
+	local playLandscapeVideoButton = LuaGo.Find(_buttonPlayLandscapeVideoPath)
+	local playPortraitVideoButton = LuaGo.Find(_buttonPlayPortraitVideoPath)
+	local playLandscapeBackground = LuaGo.Find(_imagePlayLandscapeBackgroundPath)
+	local playPortraitBackground = LuaGo.Find(_imagePlayPortraitVideoPath)
+	playLandscapeVideoButton.RegisterButtonPressedCallback(function ()
+		playLandscapeBackground.SetActive(false)
+		playPortraitBackground.SetActive(false)
+		VRVideo.LuaCall_PlayVideo()
+	end)
+	playPortraitVideoButton.RegisterButtonPressedCallback(function ()
+		playLandscapeBackground.SetActive(false)
+		playPortraitBackground.SetActive(false)
+		VRVideo.LuaCall_PlayVideo()
 	end)
 end
 
@@ -177,12 +203,20 @@ end
 
 function PlayClassVideo()
 	local videoPlayer = LuaGo.Find(_videoPlayerPath)
+	local playLandscapeBackground = LuaGo.Find(_imagePlayLandscapeBackgroundPath)
+	local playPortraitBackground = LuaGo.Find(_imagePlayPortraitVideoPath)
 	VRVideo.LuaCall_PlayClassVideo(videoPlayer)
+	playLandscapeBackground.SetActive(true)
+	playPortraitBackground.SetActive(true)
 end
 
 function PlayConcertVideo()
 	local videoPlayer = LuaGo.Find(_videoPlayerPath)
+	local playLandscapeBackground = LuaGo.Find(_imagePlayLandscapeBackgroundPath)
+	local playPortraitBackground = LuaGo.Find(_imagePlayPortraitVideoPath)
 	VRVideo.LuaCall_PlayConcertVideo(videoPlayer)
+	playLandscapeBackground.SetActive(true)
+	playPortraitBackground.SetActive(true)
 end
 
 function SetupShowLandscapeButton()

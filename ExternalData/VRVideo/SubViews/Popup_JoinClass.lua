@@ -1,11 +1,12 @@
 ﻿function GetConfig ()
 	return {
-        Bundle = "Assets/Bundles/Views/EventVideo/SubViews/Popup_JoinClass.prefab",
+        Bundle = "Assets/Bundles/Views/VRVideo/SubViews/Popup_JoinClass.prefab",
 		Config = ""
     }
 end
 
 local _closePath = "Popup/Button_Close"
+local _buttonBackgroundPath = "Background"
 local _buttonJoinPath = "Popup/Button_Join"
 
 local _imageTicketPath = "Popup/Image_Ticket"
@@ -48,7 +49,8 @@ function SetupClosePopup()
 	button.RegisterButtonPressedCallback(function ()
 		LuaGo.SetActive(false)
 	end)
-	LuaGo.RegisterButtonPressedCallback(function ()
+	local background = LuaGo.Find(_buttonBackgroundPath)
+	background.RegisterButtonPressedCallback(function ()
 		LuaGo.SetActive(false)
 	end)
 end
@@ -56,7 +58,7 @@ end
 function SetupJoinButton()
 	local button = LuaGo.Find(_buttonJoinPath)
 	button.RegisterButtonPressedCallback(function ()
-		EventVideo.LuaCall_JoinClass()
+		VRVideo.LuaCall_JoinClass()
 		LuaGo.SetActive(false)
 	end)
 end
@@ -69,7 +71,7 @@ end
 function CheckTicketAvailable(isAvailable)
 	local button = LuaGo.Find(_buttonJoinPath)
 	local text = LuaGo.Find(_textJoinPath)
-	EventVideo.LuaCall_ResetButton(button)
+	VRVideo.LuaCall_ResetButton(button)
 	if isAvailable then
 		button.SetSprite(_spriteButtonEnable)
 		text.SetTextHexColor(_enableColor)

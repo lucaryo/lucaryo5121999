@@ -1,6 +1,6 @@
 ﻿function GetConfig ()
 	return {
-        Bundle = "Assets/Bundles/Views/EventVideo/EventVideo.prefab",
+        Bundle = "Assets/Bundles/Views/VRVideo/VRVideo.prefab",
 		Config = "",
 		Anchor = "Front",
 		AnchorPreset = "StretchAll",
@@ -9,10 +9,10 @@
 end
 
 --LuaSubviews--
-local _classSubview = "EventVideo/SubViews/ClassView"
-local _concertSubview = "EventVideo/SubViews/ConcertView"
-local _popupClassSubview = "EventVideo/SubViews/Popup_JoinClass"
-local _popupConcertSubview = "EventVideo/SubViews/Popup_JoinConcert"
+local _classSubview = "VRVideo/SubViews/ClassView"
+local _concertSubview = "VRVideo/SubViews/ConcertView"
+local _popupClassSubview = "VRVideo/SubViews/Popup_JoinClass"
+local _popupConcertSubview = "VRVideo/SubViews/Popup_JoinConcert"
 local _tabContainer = "SubViews/Tab_Group"
 local _popupContainer = "SubViews/Popup_Group"
 --------
@@ -36,9 +36,10 @@ local _videoBackButtonPath = "Preview/Portrait/group_btn_Cancel/btn_Cancel"
 local _videoPortraitPath = "Preview/Portrait"
 local _buttonShowLandscape = "Preview/Portrait/group_btn_Cancel/btn_Landscape"
 
-local _videoLandscapePath = "Preview/Lanscape"
-local _buttonLandscapeClosePath = "Preview/Lanscape/Border/btn_Cancel"
-local _buttonPortraitPath = "Preview/Lanscape/Border/btn_Portrait"
+local _videoLandscapePath = "Preview/Landscape"
+local _imageVideoLandscapePath = "Preview/Landscape/Video"
+local _buttonLandscapeClosePath = "Preview/Landscape/Border/btn_Cancel"
+local _buttonPortraitPath = "Preview/Landscape/Border/btn_Portrait"
 
 function OnReady()
 	Initialize()
@@ -83,7 +84,7 @@ end
 function SetupBackButton()
 	local button = LuaGo.Find(_buttonBack)
 	button.RegisterButtonPressedCallback(function ()
-		EventVideo.LuaCall_BackButton()
+		VRVideo.LuaCall_BackButton()
 	end)
 end
 
@@ -91,17 +92,17 @@ function SetupPreviewButton()
 	local button = LuaGo.Find(_videoPlayerPath)
 	button.RegisterButtonPressedCallback(function ()
 		button.SetActive(false)
-		EventVideo.LuaCall_ContinueMusicOnClose()
+		VRVideo.LuaCall_ContinueMusicOnClose()
 	end)
 	local backButton = LuaGo.Find(_videoBackButtonPath)
 	backButton.RegisterButtonPressedCallback(function ()
 		button.SetActive(false)
-		EventVideo.LuaCall_ContinueMusicOnClose()
+		VRVideo.LuaCall_ContinueMusicOnClose()
 	end)
 	local buttonCloseLandscape = LuaGo.Find(_buttonLandscapeClosePath)
 	buttonCloseLandscape.RegisterButtonPressedCallback(function ()
 		button.SetActive(false)
-		EventVideo.LuaCall_ContinueMusicOnClose()
+		VRVideo.LuaCall_ContinueMusicOnClose()
 	end)
 end
 
@@ -110,7 +111,7 @@ function CloseVideoOnCompleteVideo(time)
 	local closeOnComplete = coroutine.create(function ()
 		Wait(time)
 		video.SetActive(false)
-		EventVideo.LuaCall_ContinueMusicOnClose()
+		VRVideo.LuaCall_ContinueMusicOnClose()
 	end)
 	coroutine.resume(closeOnComplete)
 end
@@ -126,7 +127,7 @@ function SetupToggleClassTab()
 	local toggleConcertText = LuaGo.Find(_toggleConcertTextPath)
 	toggleClass.OnEventToggleChange(function(isActive)
 		if isActive == true then
-			EventVideo.LuaCall_OnEnableClassTab()
+			VRVideo.LuaCall_OnEnableClassTab()
 			toggleClassText.SetTextHexColor(_toggleEnableColor)
 			toggleConcertText.SetTextHexColor(_toggleDisableColor)
 		else
@@ -142,7 +143,7 @@ function SetupToggleConcertTab()
 	local toggleConcertText = LuaGo.Find(_toggleConcertTextPath)
 	toggleConcert.OnEventToggleChange(function(isActive)
 		if isActive == true then
-			EventVideo.LuaCall_OnEnableConcertTab()
+			VRVideo.LuaCall_OnEnableConcertTab()
 			toggleClassText.SetTextHexColor(_toggleDisableColor)
 			toggleConcertText.SetTextHexColor(_toggleEnableColor)
 		else
@@ -176,12 +177,12 @@ end
 
 function PlayClassVideo()
 	local videoPlayer = LuaGo.Find(_videoPlayerPath)
-	EventVideo.LuaCall_PlayClassVideo(videoPlayer)
+	VRVideo.LuaCall_PlayClassVideo(videoPlayer)
 end
 
 function PlayConcertVideo()
 	local videoPlayer = LuaGo.Find(_videoPlayerPath)
-	EventVideo.LuaCall_PlayConcertVideo(videoPlayer)
+	VRVideo.LuaCall_PlayConcertVideo(videoPlayer)
 end
 
 function SetupShowLandscapeButton()
@@ -202,7 +203,8 @@ end
 
 function SetLandscapeActive(isActive)
 	local landscape = LuaGo.Find(_videoLandscapePath)
-	--EventVideo.LuaCall_ScreenLandscapeOrentation()
+	local video = LuaGo.Find(_imageVideoLandscapePath)
+	VRVideo.LuaCall_ScreenLandscapeOrentation(video)
 	landscape.SetActive(isActive)
 end
 function SetPortraitActive(isActive)

@@ -1,11 +1,12 @@
 ﻿function GetConfig ()
 	return {
-        Bundle = "Assets/Bundles/Views/EventVideo/SubViews/Popup_JoinConcert.prefab",
+        Bundle = "Assets/Bundles/Views/VRVideo/SubViews/Popup_JoinConcert.prefab",
 		Config = ""
     }
 end
 
 local _closePath = "Popup/Button_Close"
+local _buttonBackgroundPath = "Background"
 local _buttonJoinPath = "Popup/Button_Join"
 
 local _textJoinPath = "Popup/Button_Join/Text"
@@ -47,25 +48,26 @@ function SetupClosePopup()
 	button.RegisterButtonPressedCallback(function ()
 		LuaGo.SetActive(false)
 	end)
-	LuaGo.RegisterButtonPressedCallback(function ()
+	local background = LuaGo.Find(_buttonBackgroundPath)
+	background.RegisterButtonPressedCallback(function ()
 		LuaGo.SetActive(false)
 	end)
 end
 
 function SetupJoinButton()
 	local button = LuaGo.Find(_buttonJoinPath)
-	EventVideo.LuaCall_ResetButton(button)
+	VRVideo.LuaCall_ResetButton(button)
 	button.RegisterButtonPressedCallback(function ()
-		EventVideo.LuaCall_JoinConcert()
+		VRVideo.LuaCall_JoinConcert()
 		LuaGo.SetActive(false)
 	end)
 end
 
 function SetupBuyButton(id)
 	local button = LuaGo.Find(_buttonJoinPath)
-	EventVideo.LuaCall_ResetButton(button)
+	VRVideo.LuaCall_ResetButton(button)
 	button.RegisterButtonPressedCallback(function ()
-		EventVideo.LuaCall_BuyConcert(id)
+		VRVideo.LuaCall_BuyConcert(id)
 	end)
 end
 
@@ -113,7 +115,7 @@ end
 function SetupAvailablePopup(isAvailable)
 	local button = LuaGo.Find(_buttonJoinPath)
 	local text = LuaGo.Find(_textJoinPath)
-	EventVideo.LuaCall_ResetButton(button)
+	VRVideo.LuaCall_ResetButton(button)
 	SetupBoughtPopup()
 	SetupPopup(isAvailable, button, text)
 	if isAvailable then

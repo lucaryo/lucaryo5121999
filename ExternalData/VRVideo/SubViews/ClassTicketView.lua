@@ -1,6 +1,6 @@
 ﻿function GetConfig ()
 	return {
-        Bundle = "Assets/Bundles/Views/EventVideo/SubViews/ClassTicket.prefab",
+        Bundle = "Assets/Bundles/Views/VRVideo/SubViews/ClassTicket.prefab",
 		Config = ""
     }
 end
@@ -52,7 +52,7 @@ end
 function SetupButton()
 	local button = LuaGo.Find(_buttonPath)
 	button.RegisterButtonPressedCallback(function ()
-		EventVideo.LuaCall_ShowClassPopup(LuaGo)
+		VRVideo.LuaCall_ShowClassPopup(LuaGo)
 	end)
 end
 

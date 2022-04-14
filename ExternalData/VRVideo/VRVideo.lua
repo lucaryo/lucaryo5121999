@@ -1,4 +1,4 @@
-function GetConfig ()
+﻿function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/VRVideo/VRVideo.prefab",
 		Config = "",

@@ -32,6 +32,7 @@ local _toggleDisableColor = "#BBBBBB"
 local _toggleEnableColor = "#FFFFFF"
 
 local _videoPlayerPath = "Preview"
+local _buttonVideoBackgroundPath = "Preview/btn_Background"
 local _videoBackButtonPath = "Preview/Portrait/Border/btn_Cancel"
 local _videoPortraitPath = "Preview/Portrait"
 
@@ -98,19 +99,20 @@ function SetupBackButton()
 end
 
 function SetupPreviewButton()
-	local button = LuaGo.Find(_videoPlayerPath)
+	local button = LuaGo.Find(_buttonVideoBackgroundPath)
+	local preview = LuaGo.Find(_videoPlayerPath)
 	button.RegisterButtonPressedCallback(function ()
-		button.SetActive(false)
+		preview.SetActive(false)
 		VRVideo.LuaCall_ContinueMusicOnClose()
 	end)
 	local backButton = LuaGo.Find(_videoBackButtonPath)
 	backButton.RegisterButtonPressedCallback(function ()
-		button.SetActive(false)
+		preview.SetActive(false)
 		VRVideo.LuaCall_ContinueMusicOnClose()
 	end)
 	local buttonCloseLandscape = LuaGo.Find(_buttonLandscapeClosePath)
 	buttonCloseLandscape.RegisterButtonPressedCallback(function ()
-		button.SetActive(false)
+		preview.SetActive(false)
 		VRVideo.LuaCall_ContinueMusicOnClose()
 	end)
 end

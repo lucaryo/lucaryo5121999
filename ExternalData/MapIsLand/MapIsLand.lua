@@ -12,14 +12,15 @@ local _btnJoinIsLand = "Bg/body/btnJoinIsLand"
 local _camPath = "MainCam_PlanetView"
 local _btnBackLobby = "Bg/body/btnBack"
 local _handIcon = "Bg/body/Hand Icon"
-local _goHorizontalSnap = "Horizontal Scroll Snap"
+local _goHorizontalSnap = "scroll_HorizontalSnap"
 
-local _planetContainerPath = "Horizontal Scroll Snap/Content"
-local _planetPath = "Horizontal Scroll Snap/Content/planet";
---local _goHorizontalSnap_planet2 = "Horizontal Scroll Snap/Content/planet2";
---local _goHorizontalSnap_planet3 = "Horizontal Scroll Snap/Content/planet3";
---local _goHorizontalSnap_planet4 = "Horizontal Scroll Snap/Content/planet4";
---local _goHorizontalSnap_planet5 = "Horizontal Scroll Snap/Content/planet5";
+local _planetContainerPath = "scroll_HorizontalSnap/Content"
+local _planetPath = "scroll_HorizontalSnap/Content/planet";
+
+--Locator--
+local _indicatorContainerPath = "scroll_HorizontalSnap/Indicator View"
+local _indicatorLuaPath = "MapIsLand/SubViews/Locator"
+-----
 
 local _planetTxtLevel = "Bg/PlanetView/Info/Level"
 local _planetTxtName = "Bg/PlanetView/Info/Name"
@@ -31,6 +32,7 @@ function OnReady()
 	SetupButtonBackLobby(_btnBackLobby)
 	SetupHorizontalSnap(_goHorizontalSnap)
     SetupCamera()
+    CreateLocator()
 end
 function SetupCamera()
     local cam = LuaGo.Find(_camPath)
@@ -85,8 +87,6 @@ function SetupPlanetButtons(length)
             MapIsLand.LuaCall_JoinIsLandSubView(i)
         end)
     end
-    --local container = LuaGo.Find(_planetContainerPath)
-    --MapIsLand.LuaCall_DisableHorizontalLayoutGroup(container)
 end
 function SetupButtonJoinIsland(btnPath)
 	local btn = LuaGo.Find(btnPath)
@@ -110,6 +110,13 @@ end
 function SetupAnimation(iconPath, loops)
     local icon = LuaGo.Find(iconPath)
     MapIsLand.LuaCall_SwipeAnimation(icon, loops)
+end
+function CreateLocator()
+    local container = LuaGo.Find(_indicatorContainerPath)
+    CreateSubView(_indicatorLuaPath, container.Transform)
+end
+function CreateIndicator(luaPath, container)
+    CreateSubView(luaPath, container.Transform)
 end
 function Hide()
 end

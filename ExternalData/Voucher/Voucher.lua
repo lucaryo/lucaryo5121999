@@ -29,6 +29,8 @@ local _pathDes = "Bg/WalletItemPopupSubView/PopupUse/Bg/body/objDesVoucher/imgDe
 local _pathBtnTapToContinue = "Bg/WalletItemPopupSubView/PopupCongratulation/Congratulation/btnTapToContinue"
 local _pathObjEmpty = "Bg/body/Scroll/imgEmpty"
 local _pathToggle = "Bg/WalletItemPopupSubView/PopupUse/Bg/body/objCheckTerm/toggleCheckTerm" 
+local _rawImageQRCode = "Bg/WalletItemPopupSubView/PopupQRCode/Bg/body/QRCode"
+local _imgLogoVoucher ="Bg/WalletItemPopupSubView/PopupQRCode/Bg/body/QRCode/Image"
 
 function OnReady()
 	SetupButtonBackLobby(_btnBackLobby)
@@ -171,6 +173,12 @@ function ShowPopupCongrationUseVoucher()
 	SetActivePopupQRCode(false)
 	SetActivePopupCongratulation(true)
 	
+end
+function GenrareQRCode(texture2D,nameImage)
+	local rawImage = LuaGo.Find(_rawImageQRCode)	
+	rawImage.SetTexture2D(texture2D)
+	local imgLogo = LuaGo.Find(_imgLogoVoucher)
+	imgLogo.SetSprite(nameImage)
 end
 function Hide()
 end

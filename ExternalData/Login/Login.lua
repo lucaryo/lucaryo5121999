@@ -58,6 +58,9 @@ function OnReady()
 	SelectInputField(_inputFieldPassPath)
 	SelectInputField(_inputFieldPasswordRegister)
 	SelectInputField(_inputFieldRePasswordRegister)
+
+	SelectInputField(_inputFieldUserNameRegister)
+	SelectInputField(_inputFieldEmailRegister)
 	SetButtonShowPass(_buttonShowPassPath,_inputFieldPassPath)
 	SetButtonShowPass(_buttonShowPassRegister,_inputFieldPasswordRegister)
 	SetButtonShowPass(_buttonShowRePassRegister,_inputFieldRePasswordRegister)
@@ -102,7 +105,6 @@ function SetupButtonLogin(btnPath)
 end
 
 function SelectInputField(inputField)
-	Log(inputField)
 	local obj = LuaGo.Find(inputField)
 	obj.RegisterEventTriggerPointerClickCallback(function ()
 		SetInputFieldImage("enter text_choose", inputField)

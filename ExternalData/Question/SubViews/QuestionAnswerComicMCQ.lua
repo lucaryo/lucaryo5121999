@@ -1,4 +1,4 @@
-﻿function GetConfig ()
+function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/Question/Answers/ComicMCQ.prefab",
 		Config = ""
@@ -74,21 +74,25 @@ function SetupColor(wrongTextColor, correctTextColor, wrongButtonColor)
 	_wrongButtonColor = wrongButtonColor
 end
 
-local _isWrong = false
-function UpdateWrongQuestion()
-	if _isWrong == true then
-			Question.LuaCall_UpdateWrongQuestion()
-			_isWrong = true
-	end
+local _maximumPoint = 1
+local _pointWrong = 0.25
+local _currentPoint = 0
+
+function SetUpPoint(max, wrong)
+	_maximumPoint = max
+	_pointWrong = wrong
+	_currentPoint = 0
 end
 
 function ChooseAnswer(isCorrect, btnId, idPopup)
 	if isCorrect then
+		Question.LuaCall_UpdateWrongQuestion(_currentPoint/_maximumPoint)
 		CorrectAnswerMultipleChoiceWithId(btnId)
 		ClearAllButtonClick()
 
 		Question.LuaCall_ShowButtonNext()
 	else
+		_currentPoint = _currentPoint + _pointWrong
 		UpdateWrongQuestion()
 		WrongAnswerMultipleChoiceWithId(btnId)
 	end
@@ -152,7 +156,6 @@ function SetActiveUI(isActive)
 	obj.SetActive(isActive)
 
 	if isActive then
-		_isWrong = false
 		Question.LuaCall_SetActiveABGroup(true)
 		local co = coroutine.create(function ()
 

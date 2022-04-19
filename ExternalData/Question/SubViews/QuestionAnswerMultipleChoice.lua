@@ -51,21 +51,29 @@ function SetupBtnOnclick(btnId, isCorrect, idPopup, idAb)
 		end)	
 end
 
+local _maximumPoint = 1
+local _pointWrong = 0.25
+local _currentPoint = 0
 
+function SetUpPoint(max, wrong)
+	_maximumPoint = max
+	_pointWrong = wrong
+	_currentPoint = 0
+end
 
 function ChooseAnswer(isCorrect, btnId, idPopup, idAb)
 	if isCorrect then
+		Question.LuaCall_UpdateWrongQuestion(_currentPoint/_maximumPoint)
 		Question.LuaCall_ChangeCorrectAb()
 		CorrectAnswerMultipleChoiceWithId(btnId)
 		ClearAllButtonClick()
 		
 		Question.LuaCall_FinishQuestionAction();
 		Question.LuaCall_ShowButtonNext()		
-		--Question.LuaCall_EndQuestionPanelData(isCorrect, word, mean)
 	else
+		_currentPoint = _currentPoint + _pointWrong
 		Question.LuaCall_ChangeWrongAb()
 		WrongAnswerMultipleChoiceWithId(btnId)
-		--Question.LuaCall_SetActiveWrongPanel2(word, mean)
 	end
 
 	Question.LuaCall_AudioCorrectAnswer(isCorrect)
@@ -126,6 +134,7 @@ function SetActiveUI(isActive)
 	obj.SetActive(isActive)
 
 	if isActive then
+		_isWrong = false;
 		Question.LuaCall_SetActiveABGroup(true)
 		Question.LuaCall_LoopRandomText()
 		local co = coroutine.create(function ()

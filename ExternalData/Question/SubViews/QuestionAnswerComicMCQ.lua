@@ -74,6 +74,14 @@ function SetupColor(wrongTextColor, correctTextColor, wrongButtonColor)
 	_wrongButtonColor = wrongButtonColor
 end
 
+local _isWrong = false
+function UpdateWrongQuestion()
+	if _isWrong == true then
+			Question.LuaCall_UpdateWrongQuestion()
+			_isWrong = true
+	end
+end
+
 function ChooseAnswer(isCorrect, btnId, idPopup)
 	if isCorrect then
 		CorrectAnswerMultipleChoiceWithId(btnId)
@@ -81,7 +89,7 @@ function ChooseAnswer(isCorrect, btnId, idPopup)
 
 		Question.LuaCall_ShowButtonNext()
 	else
-
+		UpdateWrongQuestion()
 		WrongAnswerMultipleChoiceWithId(btnId)
 	end
 
@@ -144,6 +152,7 @@ function SetActiveUI(isActive)
 	obj.SetActive(isActive)
 
 	if isActive then
+		_isWrong = false
 		Question.LuaCall_SetActiveABGroup(true)
 		local co = coroutine.create(function ()
 

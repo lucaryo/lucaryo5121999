@@ -39,9 +39,15 @@ function OnReady()
 	Question.SubViewReady(LuaGo)
 end
 
+local _pointWrong = 0.25
+
+function SetUpPoint(wrong)
+	_pointWrong = wrong
+end
+
 function ChooseAnswer(btnId, imageName, idAb)
 	Log(idAb)
-	if imageName == _correctArray[_currentCorrectIndex] then		
+	if imageName == _correctArray[_currentCorrectIndex] then	
 		if(idAb != "") then
 			Question.LuaCall_SetTextABWithId(idAb, _indexCorrect)
 		else
@@ -50,6 +56,7 @@ function ChooseAnswer(btnId, imageName, idAb)
 		Question.LuaCall_AudioCorrectAnswer(true)
 		CorrectAnswerMultipleChoiceWithId(btnId)
 	else
+		Question.LuaCall_UpdateWrongQuestion( _pointWrong)
 		if(idAb != "") then
 			Question.LuaCall_SetTextABWithId(idAb, _indexWrong)
 		else
@@ -155,7 +162,6 @@ end
 
 function ResetData()
 	_currentCorrectIndex = 1
-	Log(_currentCorrectIndex)
 	ResetButtons()
 end
 

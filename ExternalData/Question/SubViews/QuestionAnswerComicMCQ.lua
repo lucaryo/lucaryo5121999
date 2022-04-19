@@ -93,7 +93,6 @@ function ChooseAnswer(isCorrect, btnId, idPopup)
 		Question.LuaCall_ShowButtonNext()
 	else
 		_currentPoint = _currentPoint + _pointWrong
-		UpdateWrongQuestion()
 		WrongAnswerMultipleChoiceWithId(btnId)
 	end
 

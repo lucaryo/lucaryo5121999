@@ -188,10 +188,10 @@ end
 
 function SetRewardData(gem, gold)
 	local gemTxt = LuaGo.Find(_gemTxtPath)
-	gemTxt.SetText(gem)
+	gemTxt.SetText("+".. gem)
 
 	local goldTxt = LuaGo.Find(_goldtxtPath)
-	goldTxt.SetText(gold)
+	goldTxt.SetText("+".. gold)
 end
 
 function Hide()

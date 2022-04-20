@@ -1039,6 +1039,14 @@ function OpenTutorialPopup()
 	_tutorialImgArray = _groupTutorialImgArray[Question.Model.CurrentQuestionType]
 	_tutorialDesArray = _groupTutorialDesArray[Question.Model.CurrentQuestionType]
 
+	if Question.Model.CurrentQuestionType == 6 or Question.Model.CurrentQuestionType == 7 or Question.Model.CurrentQuestionType == 9 then
+		local _popup = LuaGo.Find(_popupTutorialPath)
+		_popup.SetImageOpacity(0.9)
+	else
+		local _popup = LuaGo.Find(_popupTutorialPath)
+		_popup.SetImageOpacity(0.5)
+	end
+
 	if #_tutorialImgArray > 1 then
 		local circleGroup = LuaGo.Find(_groupCirclePath)
 		circleGroup.SetActive(true)

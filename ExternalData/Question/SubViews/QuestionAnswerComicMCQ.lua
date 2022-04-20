@@ -1,4 +1,4 @@
-function GetConfig ()
+﻿function GetConfig ()
 	return {
         Bundle = "Assets/Bundles/Views/Question/Answers/ComicMCQ.prefab",
 		Config = ""
@@ -93,6 +93,7 @@ function ChooseAnswer(isCorrect, btnId, idPopup)
 		Question.LuaCall_ShowButtonNext()
 	else
 		_currentPoint = _currentPoint + _pointWrong
+		UpdateWrongQuestion()
 		WrongAnswerMultipleChoiceWithId(btnId)
 	end
 

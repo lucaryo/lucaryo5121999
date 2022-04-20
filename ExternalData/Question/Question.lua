@@ -105,23 +105,9 @@ local _questions = {
 	"Question/SubViews/QuestionAnswerMultipleChoicePicture"
 }
 
-local _tutorialPath = "PopupGroup/TutorialContainer"
-
 local _popupBalloonPath = "PopupGroup/ResetInputFieldPanel"
 local _popupBalloonObjPath = "PopupGroup/ResetInputFieldPanel/ResetPopup"
 
-local _tutorialButtonGroupPath = "PopupGroup/TutorialContainer/QuestionPageTutorial/ButtonGroup/"
-
-local _tutorialButtonPaths ={
-	"InfoBtn",
-	"closeBtn",
-	"tapInfo",
-	"tapClose",
-	"soundBtn",
-	"tapAudio",
-	"nextBtn",
-	"tapNext"
-}
 local _imgPointPath ={
 	"PopupGroup/EndScreenPanel/imgBg/bg_bar/fillbar/point1",
 	"PopupGroup/EndScreenPanel/imgBg/bg_bar/fillbar/point2",
@@ -139,9 +125,6 @@ local _txtGemFinal = "PopupGroup/EndScreenPanel/objCurrency/Gem/txtGem"
 local _txtGoldFinal = "PopupGroup/EndScreenPanel/objCurrency/Gold/txtGold"
 local _txtEndCurrency ="PopupGroup/EndScreenPanel/objCurrency"
 local _txtEndOld = "PopupGroup/EndScreenPanel/OldTxt"
-
-
-local _tutorialCloseBtnPath = "PopupGroup/TutorialContainer/QuestionPageTutorial/TutorialCloseBtn"
 
 local _commingSoonBtnPath = "PopupGroup/CommingSoonPanel"
 
@@ -188,6 +171,121 @@ local abBlue = "AnalaticBox"
 local abGreen = "AnalaticBox_Green"
 local abRed = "AnalaticBox_Red"
 
+local tutorialImgMCQ = {
+	"tutor_MCQ"
+}
+
+local tutorialDesMCQ = {
+	"This is MCQ"
+}
+
+local tutorialImgMCQv2 = {
+	"tutor_MCQv2"
+}
+
+local tutorialDesMCQv2 = {
+	"This is MCQ v2 page 1"
+}
+
+local tutorialImgTextInput = {
+	"tutor_textInput"
+}
+
+local tutorialDesTextInput = {
+	"This is Input Text"
+}
+
+local tutorialImgComicMCQ = {
+	"tutor_comicMCQ_1",
+	"tutor_comicMCQ_2"
+}
+
+local tutorialDesComicMCQ = {
+	"This is Comic MCQ page 1",
+	"This is Comic MCQ page 2"
+}
+
+local tutorialImgComicTextInput = {
+	"tutor_comicText_1",
+	"tutor_comicText_2"
+}
+
+local tutorialDesComicTextInput = {
+	"This is Comic Input Text page 1",
+	"This is Comic Input Text page 2"
+}
+
+local tutorialImgComicInteractive = {
+	"tutor_comicInteractive"
+}
+
+local tutorialDesComicInteractive = {
+	"This is Comic Interactive"
+}
+
+
+local tutorialImgDragAndDrop = {
+	"tutor_DragAndDrop"
+}
+
+local tutorialDesDragAndDrop = {
+	"This is Drag And Drop"
+}
+
+local _tutorialPageIndex = 1
+local _tutorialImgArray = nil
+local _tutorialDesArray = nil
+
+local _popupTutorialPath = "PopupGroup/PopupTutorial"
+local _imgTutorialPath = "PopupGroup/PopupTutorial/imgTutorial"
+local _desTutorialPath = "PopupGroup/PopupTutorial/desTutorial"
+
+local _nextTutorialPath = "PopupGroup/PopupTutorial/nextBtn"
+local _backTutorialPath = "PopupGroup/PopupTutorial/backBtn"
+
+local _groupCirclePath = "PopupGroup/PopupTutorial/groupCircle"
+local _circleTutorial1Path = "PopupGroup/PopupTutorial/groupCircle/circle_1"
+local _circleTutorial2Path = "PopupGroup/PopupTutorial/groupCircle/circle_2"
+
+local _circleColor1 ="#FFFFFF"
+local _circleColor2 ="#676666"
+
+--MultpleChoice = 1,
+--FillInTextBox = 4,
+--DragAndDrop = 5,
+--ComicWithMCQ = 6,
+--ComicWithTextInput = 7,
+--ComicInteractive = 9,
+--MultpleChoicePicture = 11
+
+local _groupTutorialImgArray = {
+	tutorialImgMCQ,
+	tutorialImgMCQ,
+	tutorialImgMCQ,
+	tutorialImgTextInput,
+	tutorialImgDragAndDrop,
+	tutorialImgComicMCQ,
+	tutorialImgComicTextInput,
+	tutorialImgComicTextInput,
+	tutorialImgComicInteractive,
+	tutorialImgComicInteractive,
+	tutorialImgMCQv2
+}
+
+local _groupTutorialDesArray = {
+	tutorialDesMCQ,
+	tutorialDesMCQ,
+	tutorialDesMCQ,
+	tutorialDesTextInput,
+	tutorialDesDragAndDrop,
+	tutorialDesComicMCQ,
+	tutorialDesComicTextInput,
+	tutorialDesComicTextInput,
+	tutorialDesComicInteractive,
+	tutorialDesComicInteractive,
+	tutorialDesMCQv2
+}
+
 function OnReady()
 	FindUI()
 
@@ -227,7 +325,6 @@ function OnReady()
 	SetupButtonNextEndScreen(_endQuizitLearnMoreBtnPath)
 
 	SetupBtnInfo()
-	SetupTutorialButtons()
 
 	SetupPauseBtn(_pauseBtnPath, true)
 	SetupPauseBtn(_pausePanelPath, false)
@@ -236,6 +333,9 @@ function OnReady()
 	Question.LuaCall_CreatePages()
 
 	SetActiveFalseWrongPanel2()
+
+	SetBtnNextTutorial(_nextTutorialPath)
+	SetBtnBackTutorial(_backTutorialPath)
 end
 
 
@@ -368,7 +468,6 @@ function LoadQuestionMainPage(type)
 end
 
 function LoadQuestionLearningPage(type)
-	Log(_learningPagePath[type])
 	local content = LuaGo.Find(_questionContainer);
 	CreateSubView(_learningPagePath[type], content.Transform)
 end
@@ -444,8 +543,7 @@ end
 function SetupBtnInfo()
 	local obj = LuaGo.Find(_btnInfoPath)
 	obj.RegisterButtonPressedCallback(function ()
-		local tutor = LuaGo.Find(_tutorialPath)
-		tutor.SetActive(true)
+		SetActivePopupTutorial(true)
     end)
 end
 
@@ -547,23 +645,6 @@ function ActivePopup()
 	else
 		_popup.AnimationPlay(_resetPopupAnim)
 	end
-end
-
-function SetupTutorialButtons()
-	local obj = LuaGo.Find(_tutorialCloseBtnPath)
-	obj.RegisterButtonPressedCallback(function ()
-			local tutor = LuaGo.Find(_tutorialPath)
-			tutor.SetActive(false)
-	end)
-	--for i = 1, #_tutorialButtonPaths do
-
-		--local obj = LuaGo.Find(string.format("%s%s",_tutorialButtonGroupPath,_tutorialButtonPaths[i]))
-		--obj.RegisterButtonPressedCallback(function ()
-			--local tutor = LuaGo.Find(_tutorialPath)
-			--tutor.SetActive(false)
-		--end)
-
-	--end
 end
 
 function SetActiveTransitionPanel(isActive)
@@ -930,6 +1011,98 @@ end
 
 function ChangeWrongAb()
 	ChangeImgAbBox(abRed, abBlue)
+end
+
+function SetActivePopupTutorial(isActive)
+	SetDefaultTutorialPopup()
+
+	if isActive == true then
+		OpenTutorialPopup()
+	end
+
+	local _popup = LuaGo.Find(_popupTutorialPath)
+	_popup.SetActive(isActive)
+end
+
+function SetDefaultTutorialPopup()
+	_tutorialPageIndex = 1
+
+	local circleGroup = LuaGo.Find(_groupCirclePath)
+	circleGroup.SetActive(false)
+
+	local btnBackTutorial = LuaGo.Find(_backTutorialPath)
+	btnBackTutorial.SetActive(false)
+end
+
+
+function OpenTutorialPopup()
+	_tutorialImgArray = _groupTutorialImgArray[Question.Model.CurrentQuestionType]
+	_tutorialDesArray = _groupTutorialDesArray[Question.Model.CurrentQuestionType]
+
+	if #_tutorialImgArray > 1 then
+		local circleGroup = LuaGo.Find(_groupCirclePath)
+		circleGroup.SetActive(true)
+
+		SetCircleTutorialColor(_circleColor1, _circleColor2)		
+	end
+
+	SetTutorialPageWithIndex()
+end
+
+function SetTutorialPageWithIndex()
+	local tutorialImg = LuaGo.Find(_imgTutorialPath)
+	tutorialImg.SetSprite(_tutorialImgArray[_tutorialPageIndex])
+
+	local tutorialDes = LuaGo.Find(_desTutorialPath)
+	tutorialDes.SetText(_tutorialDesArray[_tutorialPageIndex])
+end
+
+function SetCircleTutorialColor(color1, color2)
+	local circle1 = LuaGo.Find(_circleTutorial1Path)
+	circle1.SetImgHexColor(color1)
+
+	local circle2 = LuaGo.Find(_circleTutorial2Path)
+	circle2.SetImgHexColor(color2)
+end
+
+function NextTutorialOnclick()
+	if _tutorialPageIndex < #_tutorialImgArray then
+		MoveNextTutorial()
+	else
+		SetActivePopupTutorial(false)
+	end
+end
+
+function MoveNextTutorial()
+		_tutorialPageIndex = _tutorialPageIndex + 1
+		SetTutorialPageWithIndex()
+		SetCircleTutorialColor(_circleColor2, _circleColor1)
+		local btnBackTutorial = LuaGo.Find(_backTutorialPath)
+		btnBackTutorial.SetActive(true)
+end
+
+function MoveBackTutorial()
+		_tutorialPageIndex = _tutorialPageIndex - 1
+		SetTutorialPageWithIndex()
+		SetCircleTutorialColor(_circleColor1, _circleColor2)
+		if _tutorialPageIndex == 1 then
+			local btnBackTutorial = LuaGo.Find(_backTutorialPath)
+			btnBackTutorial.SetActive(false)
+		end
+end
+
+function SetBtnNextTutorial(btnPath)
+	local btn = LuaGo.Find(btnPath)
+	btn.RegisterButtonPressedCallback(function ()
+		NextTutorialOnclick()
+    end)
+end
+
+function SetBtnBackTutorial(btnPath)
+	local btn = LuaGo.Find(btnPath)
+	btn.RegisterButtonPressedCallback(function ()
+		MoveBackTutorial()
+    end)
 end
 
 function Hide()

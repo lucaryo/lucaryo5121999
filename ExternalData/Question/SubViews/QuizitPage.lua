@@ -73,8 +73,7 @@ function ChooseAnswer(isCorrect, btnId)
 		ClearAllButtonClick()
 		Question.LuaCall_SetEndQuizit()
 		Question.LuaCall_IsCorrecQuizittAnswer(_turn)
-	else
-		Question.LuaCall_UpdateWrongQuestion(_pointWrong)
+	else		
 		Question.LuaCall_PlaySFXAnswerWrong()
 		_turn = _turn - 1
 		if(_turn == 0) then
@@ -87,6 +86,8 @@ function ChooseAnswer(isCorrect, btnId)
 			WrongAnswerMultipleChoice(btnId)
 			ClearButtonClick(btnId)
 		end
+
+		Question.LuaCall_UpdateWrongQuestion(_pointWrong)
 	end
 
 	Question.LuaCall_ColorCurrentScore(_turn)

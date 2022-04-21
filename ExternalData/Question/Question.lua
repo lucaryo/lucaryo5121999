@@ -420,9 +420,6 @@ function SetupOptionBtn(btnPath, isActive)
 	btn.RegisterButtonPressedCallback(function ()
 		SetActiveOptionPanel(isActive)
     end)
-	if(isActive) then
-		--numQuizit = 0
-	end
 end
 
 function SetupButtonReset(btnPath)
@@ -480,6 +477,13 @@ function LoadAnswerObject(type)
 end
 
 function SetActiveOptionPanel(isActive)
+	if isActive then
+		Question.LuaCall_PauseSound(Question.Model.CurrentAudioPath)
+		Question.LuaCall_PauseTextSyncAudioSource()
+	else
+		Question.LuaCall_ResumeSound(Question.Model.CurrentAudioPath)
+		Question.LuaCall_ResumeTextSyncAudioSource()
+	end
 	local cellTxt = LuaGo.Find(_optionCellPath)
 	cellTxt.SetText("Cell: " .. Question.Model.CellId)
 
@@ -1016,8 +1020,13 @@ end
 function SetActivePopupTutorial(isActive)
 	SetDefaultTutorialPopup()
 
-	if isActive == true then
+	if isActive then
+		Question.LuaCall_PauseSound(Question.Model.CurrentAudioPath)
+		Question.LuaCall_PauseTextSyncAudioSource()
 		OpenTutorialPopup()
+	else
+		Question.LuaCall_ResumeSound(Question.Model.CurrentAudioPath)
+		Question.LuaCall_ResumeTextSyncAudioSource()
 	end
 
 	local _popup = LuaGo.Find(_popupTutorialPath)

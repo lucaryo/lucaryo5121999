@@ -176,7 +176,7 @@ local tutorialImgMCQ = {
 }
 
 local tutorialDesMCQ = {
-	"This is MCQ"
+	"You need to choose the correct data to decrypt this cell \nCorrect data will turn green, wrong data will turn red."
 }
 
 local tutorialImgMCQv2 = {
@@ -184,7 +184,7 @@ local tutorialImgMCQv2 = {
 }
 
 local tutorialDesMCQv2 = {
-	"This is MCQ v2 page 1"
+	"Guardian, you need to pick the correct picture with the promt above to decrypt this cell"
 }
 
 local tutorialImgTextInput = {
@@ -192,7 +192,7 @@ local tutorialImgTextInput = {
 }
 
 local tutorialDesTextInput = {
-	"This is Input Text"
+	"Guardian, you need to input the correct data by choose the character in the keyboard below. \nIf the all data is correct, this cell will be decrypt."
 }
 
 local tutorialImgComicMCQ = {
@@ -201,8 +201,8 @@ local tutorialImgComicMCQ = {
 }
 
 local tutorialDesComicMCQ = {
-	"This is Comic MCQ page 1",
-	"This is Comic MCQ page 2"
+	"Guardian, you need to read all the page of comic first",
+	"After that, choose the correct data to decrypt this cell"
 }
 
 local tutorialImgComicTextInput = {
@@ -211,8 +211,8 @@ local tutorialImgComicTextInput = {
 }
 
 local tutorialDesComicTextInput = {
-	"This is Comic Input Text page 1",
-	"This is Comic Input Text page 2"
+	"Guardian, you need to read all the page of comic first",
+	"After that, input the correct data with those promt above."
 }
 
 local tutorialImgComicInteractive = {
@@ -220,7 +220,7 @@ local tutorialImgComicInteractive = {
 }
 
 local tutorialDesComicInteractive = {
-	"This is Comic Interactive"
+	"Guardian, decrypt the comic by do exacly what it tell you to do."
 }
 
 
@@ -229,7 +229,7 @@ local tutorialImgDragAndDrop = {
 }
 
 local tutorialDesDragAndDrop = {
-	"This is Drag And Drop"
+	"Guardian, you need drag the data at the bottom of the screen into the place holder when hearing the audio tape.\nWhen everythings is correct. You can finally decrypt this cell"
 }
 
 local _tutorialPageIndex = 1

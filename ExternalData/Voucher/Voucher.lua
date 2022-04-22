@@ -17,7 +17,8 @@ local _pathPopupUse = "Bg/WalletItemPopupSubView/PopupUse"
 local _pathPopupQR = "Bg/WalletItemPopupSubView/PopupQRCode"
 local _pathPopupCongarution = "Bg/WalletItemPopupSubView/PopupCongratulation"
 local _pathBtnClosePopup = "Bg/WalletItemPopupSubView/PopupUse/Bg/header/Image/btnClose"
-local _pathBtnCloseOutScreen ="Bg/WalletItemPopupSubView/btnCloseOutScreen"
+local _pathBtnCloseOutScreenUse ="Bg/WalletItemPopupSubView/PopupUse/btnCloseOutScreen"
+local _pathBtnCloseOutScreenCongration ="Bg/WalletItemPopupSubView/PopupCongratulation/btnCloseOutScreen"
 local _pathBtnUse = "Bg/WalletItemPopupSubView/PopupUse/Bg/footer/objButtonUse/btnUse"
 local _pathTextBtnUse = "Bg/WalletItemPopupSubView/PopupUse/Bg/footer/objButtonUse/btnUse/txtUse"
 local _pathBtnDownLoadQR = "Bg/WalletItemPopupSubView/PopupQRCode/Bg/footer/objButtonDownload/btnDownLoad"
@@ -35,9 +36,11 @@ local _imgLogoVoucher ="Bg/WalletItemPopupSubView/PopupQRCode/Bg/body/QRCode/Ima
 function OnReady()
 	SetupButtonBackLobby(_btnBackLobby)
 	SettupButtonClosePopup(_pathBtnClosePopup)
-	SettupButtonClosePopup(_pathBtnCloseOutScreen)
+	SettupButtonClosePopup(_pathBtnCloseOutScreenUse)
+	SettupButtonClosePopup(_pathBtnCloseOutScreenCongration)
+	SettupButtonClosePopup(_pathBtnCloseOutScreenUse)
 	SetupButtonDownLoadQRCode()
-	SetupButtonCloseDownloadPopupQRCode()
+	--SetupButtonCloseDownloadPopupQRCode()
 	SetupButtonUse()
 	SetupToggle()
 	SetupButtonTapToCointinue()
@@ -89,8 +92,7 @@ end
 function SetupButtonDownLoadQRCode()
 	local btn = LuaGo.Find(_pathBtnDownLoadQR)
 	btn.RegisterButtonPressedCallback(function ()
-		Voucher.LuaCall_SaveImageVoucher()
-		
+		Voucher.LuaCall_DownLoadQRCode()
     end)
 end
 function SetupButtonTapToCointinue()
@@ -147,11 +149,11 @@ end
 
 
 	
-function SetDataPopupConfirmUserVoucher(Img, nameItem, des)
+function SetDataPopupConfirmUserVoucher(sprite, nameItem, des)
 	SetActiveCanvasPopup(true)
 	SetActivePopupUse(true)
 	local objImgItem = LuaGo.Find(_pathImg)
-		objImgItem.SetSprite(Img)
+		objImgItem.SetSpriteForImage(sprite)
 	
 	local objName = LuaGo.Find(_pathName)
 		objName.SetText(nameItem,objName)
@@ -174,11 +176,11 @@ function ShowPopupCongrationUseVoucher()
 	SetActivePopupCongratulation(true)
 	
 end
-function GenrareQRCode(texture2D,nameImage)
+function GenrareQRCode(texture2D,sprite)
 	local rawImage = LuaGo.Find(_rawImageQRCode)	
 	rawImage.SetTexture2D(texture2D)
 	local imgLogo = LuaGo.Find(_imgLogoVoucher)
-	imgLogo.SetSprite(nameImage)
+	imgLogo.SetSpriteForImage(sprite)
 end
 function Hide()
 end

@@ -40,6 +40,10 @@ function ClearAllButtonClick()
 	end
 end
 
+function ClearButtonClick(btn)
+	btn.UnregisterButtonPressedCallback()
+end
+
 local _correctBtnId
 
 local _indexAb = 0
@@ -48,6 +52,7 @@ function SetupBtnOnclick(btnId, isCorrect, idPopup, idAb)
 		local obj = LuaGo.Find(_buttonPaths[btnId])
 		obj.RegisterButtonPressedCallback(function ()
 			ChooseAnswer(isCorrect, btnId, idPopup, idAb)
+			ClearButtonClick(obj)
 		end)	
 end
 

@@ -57,6 +57,7 @@ function SetupBtnOnclick(btnId, isCorrect, idPopup)
 		obj.RegisterButtonPressedCallback(function ()
 			--Question.LuaCall_PlayFXOnclickMCQAnswer(btnId)
 			ChooseAnswer(isCorrect, btnId, idPopup)
+			ClearButtonClick(obj)
 		end)	
 end
 
@@ -101,6 +102,10 @@ function ChooseAnswer(isCorrect, btnId, idPopup)
 	if idPopup != "" then
 		Question.LuaCall_ShowPopup(idPopup)
 	end
+end
+
+function ClearButtonClick(btn)
+	btn.UnregisterButtonPressedCallback()
 end
 
 local _correctBtnPath ="mqc_green_correct"

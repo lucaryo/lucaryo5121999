@@ -1,1 +1,226 @@
 0.0.216
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Helios.Common;
+using Newtonsoft.Json;
+using UnityEngine;
+using UnityEngine.Networking;
+namespace Helios.Http {
+    public delegate void NetworkErrorDelegate();
+    public delegate void TokenExpiredDelegate(HttpRequest request, long httpResponseCode);
+    public class HttpRequest {
+        public enum Method {
+            GET,
+            POST,
+            PUT
+        }
+        public enum Purpose {
+            Connect,
+            Access
+        }
+        public string url;
+        public Method method = Method.GET;
+        public Purpose purpose = Purpose.Connect;
+        public string identity = "anonymous";
+        public string accessToken = "get-from-token-provider";
+        public TokenExpiredDelegate onTokenExpire;
+        public Dictionary<string, string> header = new Dictionary<string, string>();
+        public WWWForm form = new WWWForm();
+        public Dictionary<string, object> body = new Dictionary<string, object>();
+        public string param;
+        public string query;
+        public bool isAuthenticated;
+        /// <summary>
+        /// This usually require UX to let the user know that they are having
+        /// a problem with their internet connection
+        /// </summary>
+        public static NetworkErrorDelegate OnNetworkError;
+        public static TokenExpiredDelegate OnTokenExpire;
+        private HttpRequest() { }
+        public static HttpRequest Create(HttpRequest.Method method, bool shouldAddDeviceHeader = true) {
+            var httpRequest = new HttpRequest();
+            httpRequest.method = method;
+            if (shouldAddDeviceHeader) {
+                httpRequest = httpRequest.AddHeader("deviceId", DeviceInfo.DeviceId);
+                httpRequest = httpRequest.AddHeader("deviceOS", DeviceInfo.DeviceOS);
+                httpRequest = httpRequest.AddHeader("appBundleId", Application.identifier);
+            }
+            return httpRequest;
+        }
+        public string GetFinalUrl() {
+            if(!string.IsNullOrEmpty(param)) {
+                url = string.Format("{0}/{1}", url, param);
+            }
+            if(!string.IsNullOrEmpty(query)) {
+                url = string.Format("{0}/{1}", url, query);
+            }
+            return url;
+        }
+    }
+    public static class HttpRequestBuilder {
+        public static HttpRequest SetUrl(this HttpRequest httpRequest, string host, string controller, string action, string prefix = "https", string suffix = "api") {
+            httpRequest.url = $"{prefix}://{host}/{suffix}/{controller}/{action}";
+            return httpRequest;
+        }
+        public static HttpRequest SetUrlHelu(this HttpRequest httpRequest, string host, string controller, string action, string prefix = "https", string suffix = "api") {
+            httpRequest.url = $"{prefix}://{host}/{suffix}/{controller}{action}";
+            return httpRequest;
+        }
+        public static HttpRequest SetPurpose(this HttpRequest httpRequest, HttpRequest.Purpose purpose) {
+            httpRequest.purpose = purpose;
+            return httpRequest;
+        }
+        public static HttpRequest SetIdentity(this HttpRequest httpRequest, string identity) {
+            httpRequest.identity = identity;
+            return httpRequest;
+        }
+        public static HttpRequest SetAccessToken(this HttpRequest httpRequest, string accessToken, TokenExpiredDelegate onTokenExpire = null) {
+            httpRequest.accessToken = accessToken;
+            httpRequest.onTokenExpire = onTokenExpire;
+            return httpRequest;
+        }
+        public static HttpRequest AddHeader(this HttpRequest httpRequest, string key, string value) {
+            httpRequest.header.Add(key, value);
+            return httpRequest;
+        }
+        public static HttpRequest AddForm(this HttpRequest httpRequest, string key, string value) {
+            httpRequest.form.AddField(key, value);
+            return httpRequest;
+        }
+        public static HttpRequest AddForm(this HttpRequest httpRequest, string key, int value) {
+            httpRequest.form.AddField(key, value);
+            return httpRequest;
+        }
+        public static HttpRequest AddJson(this HttpRequest httpRequest, Dictionary<string, object> json) {
+            httpRequest.body = json;
+            return httpRequest;
+        }
+        public static HttpRequest AddQuery(this HttpRequest httpRequest, string query) {
+            httpRequest.query = query;
+            return httpRequest;
+        }
+        public static HttpRequest AddParam(this HttpRequest httpRequest, string param) {
+            httpRequest.param = param;
+            return httpRequest;
+        }
+        public static HttpRequest SetAuthenticate(this HttpRequest httpRequest, bool isAuthenticated) {
+            httpRequest.isAuthenticated = isAuthenticated;
+            return httpRequest;
+        }
+        public static Task<HttpResponse<T>> Request<T>(this HttpRequest httpRequest, NetworkErrorDelegate onNetworkError = null) {
+            var completion = new TaskCompletionSource<HttpResponse<T>>();
+            if (httpRequest.onTokenExpire == null && HttpRequest.OnTokenExpire == null) {
+                Hls.Log.Info("HttpRequest", "WARNING: OnTokenExpire need to be set", Color.yellow);
+            }
+            try {
+                UnityWebRequest req = null;
+                switch (httpRequest.method) {
+                    case HttpRequest.Method.GET: {
+                            req = UnityWebRequest.Get(httpRequest.GetFinalUrl());
+                        }
+                        break;
+                    case HttpRequest.Method.POST: {
+                            req = SetupPostRequest(httpRequest);
+                        }
+                        break;
+                    case HttpRequest.Method.PUT:{
+                            req = SetupPutRequest(httpRequest);
+                        }
+                        break;
+                    default: {
+                            completion.SetException(new NotImplementedException("Not Supported Method: " + httpRequest.method));
+                        }
+                        break;
+                }
+                // Set Header
+                foreach (var header in httpRequest.header) {
+                    if(header.Value == null) {
+                        continue;
+                    }
+                    req.SetRequestHeader(header.Key, header.Value);
+                }
+                // Set Authorization Header
+                //var authHeader = $"JwtAuth {httpRequest.identity} {httpRequest.purpose} {httpRequest.accessToken}";
+                //req.SetRequestHeader("Authorization", $"JwtAuth {httpRequest.identity} {httpRequest.purpose} {httpRequest.accessToken}");
+                req = SetAuthenticationHeaderIfNeeded(req, httpRequest);
+                // Set Content Type
+                req.SetRequestHeader("Content-Type", "application/json");
+                var requestId = Helios.Common.Tool.GenerateUniqueId();
+                Hls.Log.Info("HttpRequest", $"({requestId}) [{httpRequest.method}]{httpRequest.url}: "
+                    + $"Header: {JsonConvert.SerializeObject(httpRequest.header)} ---- "
+                    + $"Body: {JsonConvert.SerializeObject(httpRequest.body)}",
+                    NiceColor.CyanProcess);
+                // Request
+                req.SendWebRequest().completed += (asyncOp) => {
+                    // Response
+                    var request = ((UnityWebRequestAsyncOperation)asyncOp).webRequest;
+                    var response = new HttpResponse<T>();
+                    response.responseResult = request.result;
+                    response.responseCode = request.responseCode;
+                    if (response.responseResult == UnityWebRequest.Result.ConnectionError) {
+                        if (onNetworkError != null) {
+                            onNetworkError.Invoke();
+                        }
+                        if (HttpRequest.OnNetworkError != null) {
+                            HttpRequest.OnNetworkError.Invoke();
+                        }
+                    } else if (response.responseCode == 403) {
+                        if (httpRequest.onTokenExpire != null) {
+                            httpRequest.onTokenExpire(httpRequest, response.responseCode);
+                        }
+                        if (HttpRequest.OnTokenExpire != null) {
+                            HttpRequest.OnTokenExpire(httpRequest, response.responseCode);
+                        }
+                    }
+                    try {
+                        if(!response.hasError) {
+                            response.result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(request.downloadHandler.text);
+                        }
+                        else {
+                            if(!string.IsNullOrEmpty(request.downloadHandler.text)) {
+                                response.error = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(request.downloadHandler.text);
+                            }
+                        }
+                    }
+                    catch(Exception ex) {
+                        Hls.Log.Info("HttpResponse", $"(requestId): Parse data failed with exception = " + ex.Message);
+                    }
+                    Hls.Log.Info("HttpResponse", $"({requestId}): " + JsonConvert.SerializeObject(response), NiceColor.Aquamarine);
+                    // Complete
+                    completion.SetResult(response);
+                };
+            } catch (Exception ex) {
+                completion.SetException(ex);
+            }
+            return completion.Task;
+        }
+        public static object FromJSON(string json, Type t)
+        {
+            JsonSerializerSettings s = new JsonSerializerSettings();
+            s.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+            s.NullValueHandling = NullValueHandling.Ignore;
+            s.ObjectCreationHandling = ObjectCreationHandling.Replace; // without this, you end up with duplicates.
+            return Newtonsoft.Json.JsonConvert.DeserializeObject(json, t, s);
+        }
+        private static UnityWebRequest SetupPostRequest(HttpRequest request) {
+            var req = UnityWebRequest.Post(request.GetFinalUrl(), request.form);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request.body));
+            req.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            req.downloadHandler = new DownloadHandlerBuffer();
+            return req;
+        }
+        private static UnityWebRequest SetupPutRequest(HttpRequest request) {
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request.body));
+            var req = UnityWebRequest.Put(request.GetFinalUrl(), bodyRaw);
+            return req;
+        }
+        private static UnityWebRequest SetAuthenticationHeaderIfNeeded(UnityWebRequest request, HttpRequest httpRequest) {
+            if(httpRequest.isAuthenticated) {
+                request.SetRequestHeader("Authorization", $"Bearer {httpRequest.accessToken}");
+            }
+            return request;
+        }
+    }
+}

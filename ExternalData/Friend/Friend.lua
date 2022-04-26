@@ -37,7 +37,7 @@ local _txtDesPopup = "Bg/Popup/BgPopup/des_popup"
 local _objPopup = "Bg/Popup"
 local _btnCloseOutscreen = "Bg/Popup/btnCloseOutScreen"
 local _btnClose = "Bg/Popup/BgPopup/btnClose"
-local _btnCancle = "Bg/Popup/BgPopup/ObjButton/BtnCancle"
+local _btnCancel = "Bg/Popup/BgPopup/ObjButton/BtnCancel"
 local _btnOk = "Bg/Popup/BgPopup/ObjButton/BtnOk"
 
 local _imgEnmpty = "Bg/body/objScrollAddFriend/ScrollAddFriend/imgEnmpty"
@@ -62,7 +62,7 @@ function OnReady()
 	SetupButtonFindFriend(_btnFindFriendPath)
 	SetScrollPanel()
 	SetupButtonClose(_btnCloseOutscreen)
-	SetupButtonClose(_btnCancle)
+	SetupButtonClose(_btnCancel)
 	SetupButtonClose(_btnClose)
 	SetupButtonConfirmDeleteRequestFriend(_btnOk)
 	GetObj()
@@ -193,8 +193,8 @@ function ShowPopupFriendFull(des)
 	local objDes = LuaGo.Find(_txtDesPopup)
 	objDes.SetText(des)
 
-	local btnCancle = LuaGo.Find(_btnCancle)
-	btnCancle.SetActive(false)
+	local btnCancel = LuaGo.Find(_btnCancel)
+	btnCancel.SetActive(false)
 
 	
 end
@@ -205,8 +205,8 @@ function ShowPopupDeleteFriend(des)
 	local objDes = LuaGo.Find(_txtDesPopup)
 	objDes.SetText(des)
 
-	local btnCancle = LuaGo.Find(_btnCancle)
-	btnCancle.SetActive(true)
+	local btnCancel = LuaGo.Find(_btnCancel)
+	btnCancel.SetActive(true)
 
 end
 function SetupButtonClose(btnPath)

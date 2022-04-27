@@ -42,6 +42,7 @@ local _btnAudioPath ="soundBtn"
 local _btnInfoPath ="head/InfoBtn"
 local _btnNextTransitionPath ="PopupGroup/TransitionScreenPanel/btnNextTransition"
 local _btnNextEndScreenPath ="PopupGroup/EndScreenPanel/btnNextEndScreen"
+local _btnTryAgainEndScreenPath = "PopupGroup/EndScreenPanel/btnTryAgainEndScreen"
 local _btnExitEndScreenPath = "PopupGroup/EndScreenPanel/btnExitEndScreen"
 
 local _optionalPanelPath = "PopupGroup/OptionPanel"
@@ -138,6 +139,7 @@ local _quitQuizitPath = "PopupGroup/PausePanel/Popup/quitBtn"
 local _pausePanelPath = "PopupGroup/PausePanel"
 
 local _endQuizitLearnMoreBtnPath = "PopupGroup/EndPanelQuizit/ButtonGroup/LearnMoreBtn"
+local _tryAgainQuizitLearnMoreBtnPath = "PopupGroup/EndPanelQuizit/ButtonGroup/TryAgainBtn"
 local _endQuizitQuitBtnPath = "PopupGroup/EndPanelQuizit/ButtonGroup/QuitBtn"
 
 local _popupPath = "PopupGroup/PopupPanel"
@@ -286,6 +288,9 @@ local _groupTutorialDesArray = {
 	tutorialDesMCQv2
 }
 
+local _endGemObjPath = "PopupGroup/EndScreenPanel/objCurrency/Gem"
+local _endGoldObjPath = "PopupGroup/EndScreenPanel/objCurrency/Gold"
+
 function OnReady()
 	FindUI()
 
@@ -310,6 +315,8 @@ function OnReady()
 	SetupOptionBtn(_closeOptionPath, false)
 	SetupOptionBtn(_optionalPanelPath, false)
 
+	SetupButtonReset(_btnTryAgainEndScreenPath)
+	SetupButtonReset(_tryAgainQuizitLearnMoreBtnPath)
 	SetupButtonReset(_resetBtnPath)
 	SetupButtonReset(_resetQuizitPath)
 
@@ -429,8 +436,17 @@ function SetupButtonReset(btnPath)
 		Question.LuaCall_ResetQuestionOnClick()
 		SetActiveOptionPanel(false)
 		SetActivePausePanel(false)
-		SetActiveEndQuizitPanel(false);
+		SetActiveEndQuizitPanel(false)
+		SetActiveEndScreenPanel(false)
 		LoopRandomText()
+		local btnNextEnd = LuaGo.Find(_btnNextEndScreenPath)
+		btnNextEnd.SetOpacityObject(0)
+
+		local btnQuitEnd = Luago.Find(_btnExitEndScreenPath)
+		btnQuitEnd.SetOpacityObject(0)
+	
+		local btnTryAgainEnd = LuaGo.Find(_btnTryAgainEndScreenPath)
+		btnTryAgainEnd.SetOpacityObject(0)
     end)
 end
 
@@ -450,6 +466,13 @@ function SetupButtonNextEndScreen(btnPath)
 	local btn = LuaGo.Find(btnPath)	
 	btn.RegisterButtonPressedCallback(function ()
 		Question.LuaCall_NextEndScreen();
+    end)
+end
+
+function SetupButtonTryAgain(btnPath)
+	local btn = LuaGo.Find(btnPath)	
+	btn.RegisterButtonPressedCallback(function ()
+		Question.LuaCall_TryAgain();
     end)
 end
 function SetupButtonExitEndScreen(btnPath)
@@ -675,64 +698,144 @@ function SetDataTransitionScreen(title,des)
 	
 end
 
-function SetDataEndScreen(keyTopic, score, fillAmount,timeDuration, numPoint, imgPathPoint,opacity,gold, gem)
+function SetDataEndScreen(keyTopic, score, fillAmount, numPoint, imgPathPoint,opacity,gold, gem)
 
 	local textScore = LuaGo.Find(_txtTexScore);
-	textScore.SetText(score)
+	textScore.SetTextDoCounter(0 , score, 3)
 
 	local imgFill = LuaGo.Find(_txtImgFillScore)
-	imgFill.DoFill(fillAmount,timeDuration)
+	imgFill.DoFill(fillAmount,3)
 
+	
+	local gemObj = LuaGo.Find(_endGemObjPath)
+	gemObj.SetImageOpacity(0)
 	local objGem = LuaGo.Find(_txtGemFinal)
 	objGem.SetText(gem)
+	objGem.SetTextOpacity(0)
 
+	local goldObj = LuaGo.Find(_endGoldObjPath)
+	goldObj.SetImageOpacity(0)
 	local objGold = LuaGo.Find(_txtGoldFinal)
 	objGold.SetText(gold)
+	objGold.SetTextOpacity(0)
 
 	local obj = LuaGo.Find(_txtTopicNameEndScreenPath)
 	obj.SetText(keyTopic);
 
 	local co = coroutine.create(function ()
 		for i = 1 , numPoint do 
-			Wait(0.5)
+			Wait(0.4)
 			local objImgPoint = LuaGo.Find(_imgPointPath[i])
 			objImgPoint.SetSprite(imgPathPoint)
 
 			local objEnergyPath = LuaGo.Find(_imgEnergyPath[i])
 			objEnergyPath.SetImageOpacity(opacity)
 		end
+		Wait(1)
+		
+		gemObj.SetActive(true)
+		gemObj.DoFadeImage(1, 0.25)
+		objGem.DoFadeText(1, 0.25)
+
+		Wait(0.35)
+		
+		goldObj.SetActive(true)
+		goldObj.DoFadeImage(1, 0.25)
+		objGold.DoFadeText(1, 0.25)
+
+		Wait(1)
+
+		local btnNextEnd = LuaGo.Find(_btnNextEndScreenPath)
+		btnNextEnd.DoFadeObject(1, 0.5)
+
+		local btnTryAgainEnd = LuaGo.Find(_btnTryAgainEndScreenPath)
+		btnTryAgainEnd.DoFadeObject(1, 0.5)
+
+		Wait(1)
+
+		local btnQuitEnd = LuaGo.Find(_btnExitEndScreenPath)
+		btnQuitEnd.DoFadeObject(1, 0.5)
     end)
 	coroutine.resume(co)
+
+	local co2 = coroutine.create(function ()
+		for i = 1 , numPoint do 
+			Wait(0.4)
+			local objEnergyPath = LuaGo.Find(_imgEnergyPath[i])
+
+			objEnergyPath.DoScaleAnim(1.25, 1.25, 1.25, 0.125)
+			Wait(0.125)
+			objEnergyPath.DoScaleAnim(1, 1, 1, 0.125)
+		end
+    end)
+	coroutine.resume(co2)
 end
 
-function SetDataEndScreenOld(keyTopic, score, fillAmount,timeDuration, numPoint, imgPathPoint,opacity)
+local _endMessageTxtPath = "PopupGroup/EndScreenPanel/OldTxt"
+local _failMessage = "You have fail this cell, please try again."
+local _claimedMessage = "You already claimed your gift last time."
 
+function SetDataEndScreenOld(keyTopic, score, fillAmount, numPoint, imgPathPoint,opacity)
 	local textScore = LuaGo.Find(_txtTexScore);
-	textScore.SetText(score)
+	textScore.SetTextDoCounter(0 , score, 3)
 
 	local imgFill = LuaGo.Find(_txtImgFillScore)
-	imgFill.DoFill(fillAmount,timeDuration)
+	imgFill.DoFill(fillAmount, 3)
 
 	local currencyGroup = LuaGo.Find(_txtEndCurrency)
 	currencyGroup.SetActive(false)
 
 	local oldTxt = LuaGo.Find(_txtEndOld)
-	oldTxt.SetActive(true)
+	oldTxt.SetText("")
 
 	local obj = LuaGo.Find(_txtTopicNameEndScreenPath)
 	obj.SetText(keyTopic);
 
 	local co = coroutine.create(function ()
 		for i = 1 , numPoint do 
-			Wait(0.5)
+			Wait(0.4)
 			local objImgPoint = LuaGo.Find(_imgPointPath[i])
 			objImgPoint.SetSprite(imgPathPoint)
 
 			local objEnergyPath = LuaGo.Find(_imgEnergyPath[i])
 			objEnergyPath.SetImageOpacity(opacity)
 		end
+		Wait(1)
+
+		if numPoint == 0 then
+			oldTxt.SetTextDoTweenAnimation(_failMessage, 1)
+		else
+			oldTxt.SetTextDoTweenAnimation(_claimedMessage, 1)
+		end
+
+		Wait(1)
+
+		local btnNextEnd = LuaGo.Find(_btnNextEndScreenPath)
+		btnNextEnd.DoFadeObject(1, 0.5)
+
+		local btnTryAgainEnd = LuaGo.Find(_btnTryAgainEndScreenPath)
+		btnTryAgainEnd.DoFadeObject(1, 0.5)
+
+		Wait(1)
+
+		local btnQuitEnd = LuaGo.Find(_btnExitEndScreenPath)
+		btnQuitEnd.DoFadeObject(1, 0.5)
+	
+
     end)
 	coroutine.resume(co)
+
+	local co2 = coroutine.create(function ()
+		for i = 1 , numPoint do 
+			Wait(0.4)
+			local objEnergyPath = LuaGo.Find(_imgEnergyPath[i])
+
+			objEnergyPath.DoScaleAnim(1.25, 1.25, 1.25, 0.125)
+			Wait(0.125)
+			objEnergyPath.DoScaleAnim(1, 1, 1, 0.125)
+		end
+    end)
+	coroutine.resume(co2)
 end
 
 function LoadDragItem()
@@ -1120,6 +1223,20 @@ function SetBtnBackTutorial(btnPath)
 	btn.RegisterButtonPressedCallback(function ()
 		MoveBackTutorial()
     end)
+end
+
+function SetActiveTryAgainButtons()
+	local btn1 = LuaGo.Find(_btnNextEndScreenPath)
+	btn1.SetActive(false)
+
+	local btn2 = LuaGo.Find(_endQuizitLearnMoreBtnPath)
+	btn2.SetActive(false)
+
+	local btn3 = LuaGo.Find(_btnTryAgainEndScreenPath)
+	btn3.SetActive(true)
+
+	local btn4 = LuaGo.Find(_tryAgainQuizitLearnMoreBtnPath)
+	btn4.SetActive(true)
 end
 
 function Hide()

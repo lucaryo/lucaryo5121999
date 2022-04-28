@@ -46,7 +46,6 @@ function SetUpPoint(wrong)
 end
 
 function ChooseAnswer(btnId, imageName, idAb)
-	Log(idAb)
 	if imageName == _correctArray[_currentCorrectIndex] then	
 		if(idAb != "") then
 			Question.LuaCall_SetTextABWithId(idAb, _indexCorrect)

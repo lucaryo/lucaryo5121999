@@ -706,6 +706,7 @@ function SetDataEndScreen(keyTopic, score, fillAmount, numPoint, imgPathPoint,op
 	local imgFill = LuaGo.Find(_txtImgFillScore)
 	imgFill.DoFill(fillAmount,3)
 
+	Question.LuaCall_PlaySoundWithDuration("Question/sfx_endscreen_circle", 3)
 	
 	local gemObj = LuaGo.Find(_endGemObjPath)
 	gemObj.SetImageOpacity(0)
@@ -732,13 +733,13 @@ function SetDataEndScreen(keyTopic, score, fillAmount, numPoint, imgPathPoint,op
 			objEnergyPath.SetImageOpacity(opacity)
 		end
 		Wait(1)
-		
+		Question.LuaCall_PlaySound("Question/sfx_endscreen_curency")
 		gemObj.SetActive(true)
 		gemObj.DoFadeImage(1, 0.25)
 		objGem.DoFadeText(1, 0.25)
 
 		Wait(0.35)
-		
+		Question.LuaCall_PlaySound("Question/sfx_endscreen_curency")
 		goldObj.SetActive(true)
 		goldObj.DoFadeImage(1, 0.25)
 		objGold.DoFadeText(1, 0.25)
@@ -746,21 +747,22 @@ function SetDataEndScreen(keyTopic, score, fillAmount, numPoint, imgPathPoint,op
 		Wait(1)
 
 		local btnNextEnd = LuaGo.Find(_btnNextEndScreenPath)
-		btnNextEnd.DoFadeObject(1, 0.5)
+		btnNextEnd.DoFadeObject(1, 0.25)
 
 		local btnTryAgainEnd = LuaGo.Find(_btnTryAgainEndScreenPath)
-		btnTryAgainEnd.DoFadeObject(1, 0.5)
+		btnTryAgainEnd.DoFadeObject(1, 0.25)
 
-		Wait(1)
+		Wait(0.375)
 
 		local btnQuitEnd = LuaGo.Find(_btnExitEndScreenPath)
-		btnQuitEnd.DoFadeObject(1, 0.5)
+		btnQuitEnd.DoFadeObject(1, 0.25)
     end)
 	coroutine.resume(co)
 
 	local co2 = coroutine.create(function ()
 		for i = 1 , numPoint do 
 			Wait(0.4)
+			Question.LuaCall_PlaySound("Question/sfx_endscreen_energy")
 			local objEnergyPath = LuaGo.Find(_imgEnergyPath[i])
 
 			objEnergyPath.DoScaleAnim(1.25, 1.25, 1.25, 0.125)
@@ -811,15 +813,15 @@ function SetDataEndScreenOld(keyTopic, score, fillAmount, numPoint, imgPathPoint
 		Wait(1)
 
 		local btnNextEnd = LuaGo.Find(_btnNextEndScreenPath)
-		btnNextEnd.DoFadeObject(1, 0.5)
+		btnNextEnd.DoFadeObject(1, 0.25)
 
 		local btnTryAgainEnd = LuaGo.Find(_btnTryAgainEndScreenPath)
-		btnTryAgainEnd.DoFadeObject(1, 0.5)
+		btnTryAgainEnd.DoFadeObject(1, 0.25)
 
-		Wait(1)
+		Wait(0.375)
 
 		local btnQuitEnd = LuaGo.Find(_btnExitEndScreenPath)
-		btnQuitEnd.DoFadeObject(1, 0.5)
+		btnQuitEnd.DoFadeObject(1, 0.25)
 	
 
     end)

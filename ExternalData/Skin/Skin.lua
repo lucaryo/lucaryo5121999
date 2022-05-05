@@ -12,6 +12,8 @@ local _textCoinPath = "Scene_Skin/TopBar/txt_Coin/txt_Value"
 local _textGemPath = "Scene_Skin/TopBar/txt_Gem/txt_Value"
 local _textEnergyPath = "Scene_Skin/TopBar/txt_Energy/txt_Value"
 
+local _imageCoinIconPath = "Scene_Skin/TopBar/txt_Coin/Icon"
+
 local _buttonBackPath = "Scene_Skin/TopBar/group_btn_Cancel/btn_Cancel"
 
 local _popupContainer = "Popups"
@@ -22,6 +24,8 @@ local _popupCongratSubview = "Skin/SubViews/SkinPopupBuySuccess"
 local _robotSubview = "Skin/SubViews/Robot"
 --------
 local _buyLoadingSuccessPath = "Popup/Loading"
+
+local _countTime = 0.5
 
 function OnReady()
 	SetupBackButton()
@@ -43,30 +47,43 @@ end
 function CreatePopupBuySuccess()
 	CreateLuaView(_popupCongratSubview, _popupContainer)
 end
-
-function SetText(value, textPath)
-	local text = LuaGo.Find(textPath)
-	text.SetText(value)
+function MinusValueAnimation(startValue, endValue, gameObject)
+	Log("Minus: ")
+	Log(startValue)
+	Log(endValue)
+	gameObject.SetTextDoCounter(startValue, endValue, _countTime)
 end
-
+function AddValueAnimation(startValue, endValue, gameObject)
+	Log("Add: ")
+	Log(startValue)
+	Log(endValue)
+	Skin.LuaCall_GetCurrencyPosition(gameObject)
+	gameObject.SetTextDoCounter(startValue, endValue, _countTime)
+end
 function SetCoin(value)
-	SetText(value, _textCoinPath)
+	local coin = LuaGo.Find(_textCoinPath)
+	Log(value)
+	Skin.LuaCall_SetTextAnimation(value, coin)
 end
 
 function SetGem(value)
-	SetText(value, _textGemPath)
+	local gem = LuaGo.Find(_textGemPath)
+	Skin.LuaCall_SetTextAnimation(value, gem)
 end
 
 function SetEnergy(value)
-	SetText(value, _textEnergyPath)
+	local energy = LuaGo.Find(_textEnergyPath)
+	Skin.LuaCall_SetTextAnimation(value, energy)
 end
 
-function SetCurrencies(coin, gem, energy)
-	SetCoin(coin)
-	SetGem(gem)
-	SetEnergy(energy)
+function SetCurrencies(coinValue, gemValue, energyValue)
+	local coin = LuaGo.Find(_textCoinPath)
+	local gem = LuaGo.Find(_textGemPath)
+	local energy = LuaGo.Find(_textEnergyPath)
+	coin.SetText(coinValue)
+	gem.SetText(gemValue)
+	energy.SetText(energyValue)
 end
-
 function SetupBackButton()
 	local button = LuaGo.Find(_buttonBackPath)
 	button.RegisterButtonPressedCallback(function ()

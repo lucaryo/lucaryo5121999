@@ -53,8 +53,11 @@ local objFriend = nil;
 local objInvite =nil
 local objAdd = nil
 local btnFriend = nil;
+local totalFriend = 50
+local totalInviteFriend = 50
 
 function OnReady()
+	SelectInputField(_txtInputField)
 	SetupButtonBackLobby(_btnBackLobbyPath)
 	SetupToggFriendTab()
 	SetupToggInviteFriendTab()
@@ -67,6 +70,10 @@ function OnReady()
 	SetupButtonConfirmDeleteRequestFriend(_btnOk)
 	GetObj()
 	SetupScroll()
+	SetTotolFriend()
+end
+function SetTotolFriend()
+	Friend.LuaCall_SetTotalFriend(totalFriend,totalInviteFriend)
 end
 function GetObj()
 	objFriend = LuaGo.Find(_pathScrollFriendTab)
@@ -233,6 +240,20 @@ end
 function CreateConfirmPopup()
 	local content = LuaGo.Find(_subviewContainer)
 	CreateSubView(_popupConfirmPath, content.Transform)
+end
+function SelectInputField(inputField)
+	local obj = LuaGo.Find(inputField)
+	obj.RegisterEventTriggerPointerClickCallback(function ()
+		SetInputFieldImage("button_choose_name_or_ID", inputField)
+    end)
+
+	obj.RegisterInputFieldEndEditCallback(function ()
+		SetInputFieldImage("button_name_or_ID", inputField)
+    end)
+end
+function SetInputFieldImage(image, inputField)
+	local obj = LuaGo.Find(inputField)
+	obj.SetSprite(image,obj)
 end
 
 function Hide()

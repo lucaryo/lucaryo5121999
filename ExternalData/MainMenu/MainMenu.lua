@@ -305,9 +305,9 @@ function SetPopupSubBtn()
 	end)
 end
 
-function SetAvatar(strAvatar)
+function SetAvatar(spriteAvatar)
 	local objAvatar = LuaGo.Find(_pathAvatarbtn)
-	objAvatar.SetSprite(strAvatar)
+	objAvatar.SetSpriteForImage(spriteAvatar)
 end
 
 function SetupBtnSubscription(btnPath)

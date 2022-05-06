@@ -82,7 +82,7 @@ function SetupPlanetButtons(length)
     for i = 1, length do
         local planetButtonLocation = string.format("%s%d/Button", _planetPath, i)
         local _planetButton = LuaGo.Find(planetButtonLocation)
-        MapIsLand.LuaCall_InitializePlanetData(i)
+        --MapIsLand.LuaCall_InitializePlanetData(i)
         _planetButton.RegisterButtonPressedCallback(function ()
             MapIsLand.LuaCall_JoinIsLandSubView(i)
         end)

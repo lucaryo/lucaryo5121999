@@ -39,8 +39,8 @@ function OnReady()
 	SetupButtonAvatar()
 	SetupButtonExtend()
 	SetupButtonCancelRequest()
-	--SetupButtonConfirm()
-	SetupButtonCLoseExtend()
+	SetupButtonUnFriend()
+	--SetupButtonCLoseExtend()
 	GetImgAvatarPath(_pathAvatar)
 	--GetExtendPosition()
 end
@@ -59,19 +59,15 @@ function SetupButtonAvatar()
 		FriendItem.LuaCall_LoadUserProfile(LuaGo.name)
 	end)
 end
-function GetExtendPosition()
-	local objExtend = LuaGo.Find(_extendGroup)
-	FriendItem.LuaCall_GetExtendPosition(objExtend)
-end
+
 function SetupButtonExtend()
 	local button = LuaGo.Find(_btnExtend)
-	local objExtend = LuaGo.Find(_extendGroup)
 	button.RegisterButtonPressedCallback(function ()
 		FriendItem.LuaCall_OnExtendEnable()
 	end)
 end
 
-function SetupButtonConfirm()
+function SetupButtonUnFriend()
 	local button = LuaGo.Find(_btnUnfriendConfirm)
 	local objAvatar = LuaGo.Find(_pathAvatar)
 	button.RegisterButtonPressedCallback(function ()

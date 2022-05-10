@@ -146,6 +146,7 @@ function SetupToggInviteFriendTab()
 		if(boolValue)
 			then
 				objText.SetTextHexColor("#FFFFFF")
+				Friend.LuaCall_ToggleFriendInvitedActive()
 			else
 				objText.SetTextHexColor("#515d75")
 		end
@@ -161,6 +162,7 @@ function SetupToggAddFriendTab()
 		if(boolValue)
 			then
 				objText.SetTextHexColor("#FFFFFF")
+				Friend.LuaCall_ToggleAddFriendActive()
 			else
 				objText.SetTextHexColor("#515d75")
 		end

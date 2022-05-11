@@ -66,7 +66,6 @@ local _wrongPanelPath = "foot/WrongPanel"
 
 local _questionContainer = "QuestionContainer"
 
-
 local _qciaTypes = {
 	"Question/SubViews/QCIASlotItem",
 	"Question/SubViews/QCIADragItem"
@@ -304,9 +303,6 @@ function OnReady()
 	SetupButtonNext(_nextBtnPath3)
 	SetupButtonNext(_panelCorrectPath)
 	SetupButtonNext(_panelWrongPath)
-	SetupButtonNext(_correctPanelPath)
-	SetupButtonNext(_wrongPanelPath)
-
 
 	SetupButtonOpenAb()
 	SetupButtonCloseAb()
@@ -705,7 +701,7 @@ end
 function SetDataEndScreen(keyTopic, score, fillAmount, numPoint, imgPathPoint,opacity,gold, gem)
 
 	local textScore = LuaGo.Find(_txtTexScore);
-	textScore.SetTextDoCounterWithMoreText(0 , score, "%", 3)
+	textScore.SetTextDoCounter(0 , score, 3)
 
 	local imgFill = LuaGo.Find(_txtImgFillScore)
 	imgFill.DoFill(fillAmount,3)
@@ -783,7 +779,7 @@ local _claimedMessage = "You already claimed your gift last time."
 
 function SetDataEndScreenOld(keyTopic, score, fillAmount, numPoint, imgPathPoint,opacity)
 	local textScore = LuaGo.Find(_txtTexScore);
-	textScore.SetTextDoCounterWithMoreText(0 , score, "%", 3)
+	textScore.SetTextDoCounter(0 , score, 3)
 
 	local imgFill = LuaGo.Find(_txtImgFillScore)
 	imgFill.DoFill(fillAmount, 3)

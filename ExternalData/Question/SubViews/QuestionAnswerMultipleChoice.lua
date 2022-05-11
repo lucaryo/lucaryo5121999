@@ -134,6 +134,8 @@ function SetupTextForMultipleChoiceButton(btnId, value)
 	obj.SetText(value)
 end
 
+local isFinished = false
+
 function SetActiveUI(isActive)
 	local obj = LuaGo.Find(_desGroupPath)
 	obj.SetActive(isActive)
@@ -142,20 +144,23 @@ function SetActiveUI(isActive)
 		_isWrong = false;
 		Question.LuaCall_SetActiveABGroup(true)
 		Question.LuaCall_LoopRandomText()
-		local co = coroutine.create(function ()
-			Wait(3)
-			for i = 1 , #_buttonPaths do 
-				Wait(0.25)
+		if isFinished == false then
+			local co = coroutine.create(function ()
+				Wait(3)
+				for i = 1 , #_buttonPaths do 
+					Wait(0.25)
 
-				local objImage = LuaGo.Find(_buttonPaths[i])
-				objImage.DoFadeImage(1.0, 0.75, objImage)
-				objImage.SetButtonEnabled(true)
-				local objText = LuaGo.Find(_buttonTextPaths[i])
-				objText.DoFadeText(1.0, 0.75, objText)
+					local objImage = LuaGo.Find(_buttonPaths[i])
+					objImage.DoFadeImage(1.0, 0.75, objImage)
+					objImage.SetButtonEnabled(true)
+					local objText = LuaGo.Find(_buttonTextPaths[i])
+					objText.DoFadeText(1.0, 0.75, objText)
 				
-			end
-    	end)
-		coroutine.resume(co)
+				end
+    		end)
+			coroutine.resume(co)
+			isFinished = true
+		end
 	end
 end
 

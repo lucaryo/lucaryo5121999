@@ -128,7 +128,9 @@ function SetUpCorrectAnswer(id, value)
 	_correctArray[id] = value
 end
 
-function SetActiveUI(isActive, isFinishQuestion)
+local isFinish = false
+
+function SetActiveUI(isActive)
 	local obj = LuaGo.Find(_desGroupPath)
 	obj.SetActive(isActive)
 
@@ -136,7 +138,7 @@ function SetActiveUI(isActive, isFinishQuestion)
 		Question.LuaCall_SetActiveABGroup(true)
 		Question.LuaCall_LoopRandomText()
 
-		if(isFinishQuestion == false) then
+		if(isFinish == false) then
 			ResetData()
 
 			local co = coroutine.create(function ()
@@ -155,6 +157,7 @@ function SetActiveUI(isActive, isFinishQuestion)
 				end
     		end)
 			coroutine.resume(co)
+			isFinish = true
 		end
 	end
 end

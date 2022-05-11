@@ -108,9 +108,9 @@ function ClearButtonClick(btn)
 	btn.UnregisterButtonPressedCallback()
 end
 
-local _correctBtnPath ="mqc_green_correct"
-local _wrongBtnPath ="mqc_red_wrong"
-local _normalBtnPath ="mqc_answer_dark blue"
+local _correctBtnPath ="btn_green_comic_MCQ"
+local _wrongBtnPath ="btn_red_comic_MCQ"
+local _normalBtnPath ="btn_blue_comic_MCQ"
 
 function CorrectAnswerMultipleChoice()
 		local obj = LuaGo.Find(_buttonPaths[_correctBtnId])

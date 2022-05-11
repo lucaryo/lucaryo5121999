@@ -66,6 +66,7 @@ local _wrongPanelPath = "foot/WrongPanel"
 
 local _questionContainer = "QuestionContainer"
 
+
 local _qciaTypes = {
 	"Question/SubViews/QCIASlotItem",
 	"Question/SubViews/QCIADragItem"
@@ -303,6 +304,9 @@ function OnReady()
 	SetupButtonNext(_nextBtnPath3)
 	SetupButtonNext(_panelCorrectPath)
 	SetupButtonNext(_panelWrongPath)
+	SetupButtonNext(_correctPanelPath)
+	SetupButtonNext(_wrongPanelPath)
+
 
 	SetupButtonOpenAb()
 	SetupButtonCloseAb()
@@ -534,7 +538,8 @@ function SetActiveLoadingPanel(isActive)
 	obj.SetActive(isActive)
 end
 
-function SetActiveBtnNext(isActive)
+
+function SetActiveBtnNext(isActive)	
 	local obj = LuaGo.Find(_nextBtnPath)
 	obj.SetActive(isActive)
 	local obj2 = LuaGo.Find(_nextBtnPath2)
@@ -544,6 +549,7 @@ function SetActiveBtnNext(isActive)
 end
 
 function SetActiveBtnBack(isActive)
+	Log("SetActiveBtnBack " .. tostring(isActive))
 	local obj = LuaGo.Find(_backBtnPath)
 	obj.SetActive(isActive)
 	local obj2 = LuaGo.Find(_backBtnPath2)
@@ -551,6 +557,7 @@ function SetActiveBtnBack(isActive)
 	local obj3 = LuaGo.Find(_backBtnPath3)
 	obj3.SetActive(isActive)
 end
+
 
 function SetupBtnPlayAudio()
 	local obj = LuaGo.Find(_btnAudioPath)
@@ -701,7 +708,7 @@ end
 function SetDataEndScreen(keyTopic, score, fillAmount, numPoint, imgPathPoint,opacity,gold, gem)
 
 	local textScore = LuaGo.Find(_txtTexScore);
-	textScore.SetTextDoCounter(0 , score, 3)
+	textScore.SetTextDoCounterWithMoreText(0 , score, "%", 3)
 
 	local imgFill = LuaGo.Find(_txtImgFillScore)
 	imgFill.DoFill(fillAmount,3)
@@ -779,7 +786,7 @@ local _claimedMessage = "You already claimed your gift last time."
 
 function SetDataEndScreenOld(keyTopic, score, fillAmount, numPoint, imgPathPoint,opacity)
 	local textScore = LuaGo.Find(_txtTexScore);
-	textScore.SetTextDoCounter(0 , score, 3)
+	textScore.SetTextDoCounterWithMoreText(0 , score, "%", 3)
 
 	local imgFill = LuaGo.Find(_txtImgFillScore)
 	imgFill.DoFill(fillAmount, 3)

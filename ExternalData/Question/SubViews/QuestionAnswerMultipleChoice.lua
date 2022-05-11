@@ -59,6 +59,7 @@ end
 local _maximumPoint = 1
 local _pointWrong = 0.25
 local _currentPoint = 0
+local isFinished = false
 
 function SetUpPoint(max, wrong)
 	_maximumPoint = max
@@ -119,6 +120,7 @@ function WrongAnswerMultipleChoice()
 end
 
 function ResetButtonsColor()
+	isFinished = false
 	for i = 1, #_buttonPaths do
 		local obj = LuaGo.Find(_buttonPaths[i])
 		obj.SetSprite(_normalBtnPath)
@@ -134,7 +136,7 @@ function SetupTextForMultipleChoiceButton(btnId, value)
 	obj.SetText(value)
 end
 
-local isFinished = false
+
 
 function SetActiveUI(isActive)
 	local obj = LuaGo.Find(_desGroupPath)

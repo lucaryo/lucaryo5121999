@@ -25,9 +25,9 @@ function SetupButtonTapToContinue()
 	end)
 end
 
-function SetItemSprite(spritePath)
+function SetItemSprite(sprite)
 	local image = LuaGo.Find(_itemIconPath)
-	image.SetSprite(spritePath)
+	image.SetSpriteForImage(sprite)
 end
 
 function SetupButtonBackground()

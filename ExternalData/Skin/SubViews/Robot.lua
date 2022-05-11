@@ -60,9 +60,9 @@ function SetButtonImage(imageName)
 	local button = LuaGo.Find(_buttonBuyPath)
 	button.SetSprite(imageName)
 end
-function SetRobotImage(imageName)
+function SetRobotImage(sprite)
 	local image = LuaGo.Find(_imageRobotPath)
-	image.SetSprite(imageName)
+	image.SetSpriteForImage(sprite)
 end
 
 function SetBackgroundImage(imageName, imageBorderName)

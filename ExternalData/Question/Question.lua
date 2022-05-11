@@ -549,7 +549,6 @@ function SetActiveBtnNext(isActive)
 end
 
 function SetActiveBtnBack(isActive)
-	Log("SetActiveBtnBack " .. tostring(isActive))
 	local obj = LuaGo.Find(_backBtnPath)
 	obj.SetActive(isActive)
 	local obj2 = LuaGo.Find(_backBtnPath2)

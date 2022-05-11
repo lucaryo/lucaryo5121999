@@ -48,21 +48,14 @@ function CreatePopupBuySuccess()
 	CreateLuaView(_popupCongratSubview, _popupContainer)
 end
 function MinusValueAnimation(startValue, endValue, gameObject)
-	Log("Minus: ")
-	Log(startValue)
-	Log(endValue)
 	gameObject.SetTextDoCounter(startValue, endValue, _countTime)
 end
 function AddValueAnimation(startValue, endValue, gameObject)
-	Log("Add: ")
-	Log(startValue)
-	Log(endValue)
 	Skin.LuaCall_GetCurrencyPosition(gameObject)
 	gameObject.SetTextDoCounter(startValue, endValue, _countTime)
 end
 function SetCoin(value)
 	local coin = LuaGo.Find(_textCoinPath)
-	Log(value)
 	Skin.LuaCall_SetTextAnimation(value, coin)
 end
 

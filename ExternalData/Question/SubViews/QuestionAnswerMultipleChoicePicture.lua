@@ -35,6 +35,8 @@ local _normalBtnPath ="BG_Picture"
 local _indexCorrect = 0
 local _indexWrong = 1
 
+local isFinish = false
+
 function OnReady()
 	Question.SubViewReady(LuaGo)
 end
@@ -128,7 +130,6 @@ function SetUpCorrectAnswer(id, value)
 	_correctArray[id] = value
 end
 
-local isFinish = false
 
 function SetActiveUI(isActive)
 	local obj = LuaGo.Find(_desGroupPath)
@@ -139,8 +140,8 @@ function SetActiveUI(isActive)
 		Question.LuaCall_LoopRandomText()
 
 		if(isFinish == false) then
-			ResetData()
-
+			ResetButtons()
+			
 			local co = coroutine.create(function ()
 				SetTextQuestion(_textArray[_currentCorrectIndex])
 				Wait(1)
@@ -164,6 +165,7 @@ end
 
 function ResetData()
 	_currentCorrectIndex = 1
+	isFinish = false
 	ResetButtons()
 end
 

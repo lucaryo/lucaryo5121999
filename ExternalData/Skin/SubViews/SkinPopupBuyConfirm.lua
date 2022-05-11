@@ -19,10 +19,10 @@ function OnReady()
 	LuaGo.SetActive(false)
 	SetupCloseButtons()
 end
-function Initialize(id, value, imageName, isBuyable)
+function Initialize(id, value, sprite, isBuyable)
 	SetupButtonConfirm(id, isBuyable)
 	SetCoin(value)
-	SetRobotImage(imageName)
+	SetRobotImage(sprite)
 end
 function SetupButtonConfirm(id, isBuyable)
 	local button = LuaGo.Find(_butttonBuyConfirmPath)
@@ -45,9 +45,9 @@ function SetCoin(value)
 	local coin = LuaGo.Find(_textCoinPath)
 	coin.SetText(value)
 end
-function SetRobotImage(imageName)
+function SetRobotImage(sprite)
 	local image = LuaGo.Find(_imageRobotPath)
-	image.SetSprite(imageName)
+	image.SetSpriteForImage(sprite)
 end
 
 function SetupCloseButtons()

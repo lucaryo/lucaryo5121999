@@ -47,7 +47,7 @@ local _btnBackLobbyPath = "Bg/header/imgButton/btnBack"
 local _subviewContainer = "Bg/body/SubViews"
 local _popupConfirmPath = "Friend/SubViews/AddFriendConfirm"
 
-local _friendButtonExtendPath = "Item/ImageAvata/btnExtend"
+local _btnTest = "Bg/body/objScrollFriend/ScrollFriend/Test"
 
 local objFriend = nil;
 local objInvite =nil
@@ -116,11 +116,7 @@ function DisableInvitedAndAddFriendExtendButtons()
 	Friend.LuaCall_GetInvitedFriends(inviteContainer)
 	Friend.LuaCall_GetInvitedFriends(addContainer)
 end
-function DisableFriendExtendButton(invitedFriend)
-	local extendButton = invitedFriend.Find(_friendButtonExtendPath)
-	extendButton.UnregisterButtonPressedCallback()
-	extendButton.SetActive(false)
-end
+
 function SetupToggFriendTab()
 	local objToggle = LuaGo.Find(_pathFriendTab)
 	local _pathScrollFriend = LuaGo.Find(_pathScrollFriendTab)
